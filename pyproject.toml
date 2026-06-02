@@ -1,0 +1,13 @@
+[project]
+name = "birdies"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "livekit-agents[codecs,turn-detector]==1.5.16",
+    "livekit-plugins-ai-coustics~=0.2",
+    "onnxruntime>=1.18,<1.24 ; platform_machine == 'x86_64' and sys_platform == 'darwin'",
+    "onnxruntime>=1.23,<1.24",
+    "python-dotenv>=1.2.2",
+]

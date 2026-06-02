@@ -1,2 +1,4 @@
 # birdies
-Hear the birds, be the birds
+## Hear the birds, be the birds
+
+Voice-driven birding companion
