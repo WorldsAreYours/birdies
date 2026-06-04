@@ -2,7 +2,7 @@ from silero_vad import load_silero_vad, read_audio, get_speech_timestamps
 from librosa import resample
 from numpy import frombuffer
 from torch import from_numpy
-from birdnet import Birdnet
+from record.birdnet import Birdnet
 
 class AudioBuffer:
     def __init__(self):
