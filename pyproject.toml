@@ -9,10 +9,12 @@ dependencies = [
     "librosa>=0.11.0",
     "livekit-agents[cartesia,codecs,deepgram,openai,silero,turn-detector]==1.5.16",
     "livekit-plugins-ai-coustics~=0.2",
+    "numpy<2",
     "onnxruntime>=1.18,<1.24 ; platform_machine == 'x86_64' and sys_platform == 'darwin'",
     "python-dotenv>=1.2.2",
     "silero-vad>=6.2.1",
     "sounddevice>=0.5.5",
+    "torch>=2.2.2",
 ]
 
 [tool.uv]
