@@ -1,32 +1,23 @@
-    Quick Start
+# Birdies
 
-    Prerequisites
+Local bird audio detection using microphone input, Silero VAD, and BirdNET.
 
-    - Python 3.12+
-    - uv (Python package manager)
-    - LiveKit Cloud account (free tier)
-    - GitHub SSH key or deploy key
+## Quick Start
 
-    Setup
+### Prerequisites
 
-    bash
-    Clone
-    git clone git@github.com:YOUR_USER/birdie.git
-    cd birdie
+- Python 3.10 or 3.11
+- uv
+- A working microphone input
 
-    Install deps
-    uv sync
-    source .venv/bin/activate
+### Setup
 
-    Credentials
-    cp .env.example .env.local
+```bash
+uv sync
+```
 
+### Run
 
-    Fill in LIVEKIT_URL, LIVEKIT_API_KEY, LIVEKIT_API_SECRET in .env.local.
-
-    Run the Agent
-
-    bash
-    cd ~/birdie
-    source .venv/bin/activate
-    python -m src.agent
+```bash
+uv run python src/main.py
+```

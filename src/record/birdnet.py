@@ -17,11 +17,14 @@ class Birdnet:
         self.available = True
 
     def analyze(self, buffer, rate):
-        if not self.available:
+        recording_buffer = self.recording_buffer
+        analyzer = self.analyzer
+
+        if not self.available or recording_buffer is None or analyzer is None:
             print(f'BirdNET unavailable: {self.error}')
             return []
 
-        recording = self.recording_buffer(self.analyzer, buffer, rate)
+        recording = recording_buffer(analyzer, buffer, rate)
         recording.analyze()
         print(f'detections: {recording.detections}')
         return recording.detections

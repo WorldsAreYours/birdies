@@ -17,4 +17,4 @@ print(type(recorder.stream))
 if __name__ == "__main__":
     print('ok')
     with recorder.stream:
-        sd.sleep(5000)
+        sd.sleep(20000)
