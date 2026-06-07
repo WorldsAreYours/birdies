@@ -9,8 +9,7 @@ from record.detection import Detection
 
 load_dotenv()
 
-print(os.path.expanduser)
-path = os.path.expanduser('~/.birdies')
+path = os.path.expanduser('~/.birdie')
 buffer = AudioBuffer(path)
 
 recorder = Recorder(48000, 10, 'float32', blocksize=512*3, callback=buffer)
@@ -20,7 +19,7 @@ if __name__ == "__main__":
     os.makedirs(path, exist_ok=True)
     
     with recorder.stream:
-        sd.sleep(1000)
+        sd.sleep(6000)
     birds = [Detection(bird) for bird  in buffer.detections]
     for bird in birds:
         cur = bird.getBird()
