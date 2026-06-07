@@ -1,12 +1,17 @@
+import os
+from datetime import datetime
 from silero_vad import load_silero_vad, read_audio, get_speech_timestamps
 from librosa import resample
 from numpy import frombuffer
 from torch import from_numpy
 from record.birdnet import Birdnet
 from record.detection import Detection
+import json
+
 
 class AudioBuffer:
-    def __init__(self):
+    def __init__(self, path):
+        self.path = path
         self.data = bytearray()
         self.samplerate = 48000
         self.duration = 3
@@ -32,9 +37,16 @@ class AudioBuffer:
                 else:
                     human_count += 1
             if human_count / (bird_count + human_count) <= 0.5:
-                print('bird away')
                 birds = self.birdnet.analyze(npArrayBuffer, self.samplerate)
+                
+                with open(os.path.join(self.path, "timeline.jsonl"), "a") as file:
+                    for bird in birds:
+                        bird['timestamp'] = datetime.now().isoformat()
+                        file.write(json.dumps(bird) + "\n")
+
                 self.detections.extend(birds)
+                
+
 
             else:
                 print('eww humans')

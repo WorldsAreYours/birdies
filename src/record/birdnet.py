@@ -19,5 +19,5 @@ class Birdnet:
 
         recording = recording_buffer(analyzer, buffer, rate)
         recording.analyze()
-        print(f'detections: {recording.detections}')
+        # print(f'detections: {recording.detections}')
         return recording.detections
