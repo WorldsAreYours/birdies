@@ -11,6 +11,7 @@ ANALYSIS_INTERVAL_SECONDS = 3
 SAMPLE_RATE = 48000
 BUFFER_SECONDS = 3
 BLOCK_SIZE = 3840
+ACTIVE_STATE = False
 
 
 def create_analyzer(path: str | None = None) -> tuple[Recorder, Analysis]:
@@ -25,10 +26,11 @@ def create_analyzer(path: str | None = None) -> tuple[Recorder, Analysis]:
 
 
 async def analysis_loop(analyzer: Analysis) -> None:
+    global ACTIVE_STATE
     while True:
         started_at = asyncio.get_running_loop().time()
-
-        await analyzer.noise_analysis()
+        if not ACTIVE_STATE:
+            await analyzer.noise_analysis()
 
         elapsed = asyncio.get_running_loop().time() - started_at
         await asyncio.sleep(max(0, ANALYSIS_INTERVAL_SECONDS - elapsed))
