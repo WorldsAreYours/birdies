@@ -1,3 +1,4 @@
+import asyncio
 import os
 import json
 from datetime import datetime
@@ -29,7 +30,7 @@ class Analysis:
             human_ratio = self._human_speech_ratio(self.buffer, sample_rate)
 
             if human_ratio <= SPEECH_RATIO_THRESHOLD:
-                birds = self.birdnet.analyze(self.buffer, sample_rate)
+                birds = asyncio.get_running_loop().run_in_executor(None, self.birdnet.analyze, self.buffer, sample_rate)
                 
                 with open(os.path.join(self.path, "timeline.jsonl"), "a") as file:
                     for bird in birds:
