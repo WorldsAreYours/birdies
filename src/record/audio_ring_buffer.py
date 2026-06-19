@@ -1,4 +1,4 @@
-import threading
+from threading import Lock
 import os
 import numpy as np
 
@@ -10,7 +10,7 @@ class AudioRingBuffer:
         self.buffer = np.zeros(self.capacity, dtype=np.float32)
         self.write_pos = 0
         self.total_written = 0
-        self.lock = threading.Lock()
+        self.lock = Lock()
     
     """
     Callable audio buffer. Passed directly to sounddevice InputStream as callback.
@@ -19,6 +19,18 @@ class AudioRingBuffer:
     def __call__(self, indata, frames, time, status):
         self.write(indata[:, 0])
     
+    def getBuffer(self) -> np.ndarray:
+        return self.buffer
+    
+    def getCapacity(self) -> int:
+        return self.capacity
+
+    def getSampleRate(self) -> int:
+        return self.sample_rate
+
+    def getWritePos(self) -> int:
+        return self.write_pos
+
     def write(self, chunk: np.ndarray) -> None:
         with self.lock:
             n = len(chunk)
@@ -32,3 +44,15 @@ class AudioRingBuffer:
 
             self.write_pos = (self.write_pos + n) % self.capacity
             self.total_written += n
+
+    def read_latest(self) -> np.ndarray | None:
+        with self.lock:
+            buffer = self.buffer
+            start = self.write_pos
+            if self.total_written < self.capacity:
+                return None
+
+            return np.concatenate([
+                buffer[start:],
+                buffer[:start]
+            ])

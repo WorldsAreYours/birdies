@@ -7,10 +7,9 @@ class Birdnet:
         self.available = False
         self.error = None
         self.analyzer = Analyzer()
-        self.recording_buffer = RecordingBuffer
 
     def analyze(self, buffer, rate):
-        recording_buffer = self.recording_buffer
+        recording_buffer = RecordingBuffer
         analyzer = self.analyzer
 
         if recording_buffer is None or analyzer is None:

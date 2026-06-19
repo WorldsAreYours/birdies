@@ -1,7 +1,7 @@
 import sounddevice as sd
 
 class Recorder:
-    def __init__(self, fs, duration, dtype, blocksize, callback) -> None:
+    def __init__(self, fs, dtype, blocksize, callback) -> None:
         self.callback = callback
         self.stream = sd.InputStream(samplerate=fs, dtype=dtype, latency='low', channels=1, blocksize=blocksize, callback=self.callback)
     
