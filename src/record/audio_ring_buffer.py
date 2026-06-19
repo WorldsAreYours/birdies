@@ -1,6 +1,7 @@
 from threading import Lock
-import os
+
 import numpy as np
+
 
 class AudioRingBuffer:
     def __init__(self, sample_rate: int = 48000, duration_seconds: int = 3) -> None:
@@ -11,25 +12,34 @@ class AudioRingBuffer:
         self.write_pos = 0
         self.total_written = 0
         self.lock = Lock()
-    
-    """
-    Callable audio buffer. Passed directly to sounddevice InputStream as callback.
-    Sounddevice calls __call__(indata, frames, time, status) on each audio chunk.
-    """
-    def __call__(self, indata, frames, time, status):
+
+    def __call__(self, indata, frames, time, status) -> None:
+        """Accept sounddevice audio chunks as an InputStream callback."""
         self.write(indata[:, 0])
-    
-    def getBuffer(self) -> np.ndarray:
+
+    def get_buffer(self) -> np.ndarray:
         return self.buffer
-    
-    def getCapacity(self) -> int:
+
+    def getBuffer(self) -> np.ndarray:
+        return self.get_buffer()
+
+    def get_capacity(self) -> int:
         return self.capacity
 
-    def getSampleRate(self) -> int:
+    def getCapacity(self) -> int:
+        return self.get_capacity()
+
+    def get_sample_rate(self) -> int:
         return self.sample_rate
 
-    def getWritePos(self) -> int:
+    def getSampleRate(self) -> int:
+        return self.get_sample_rate()
+
+    def get_write_pos(self) -> int:
         return self.write_pos
+
+    def getWritePos(self) -> int:
+        return self.get_write_pos()
 
     def write(self, chunk: np.ndarray) -> None:
         with self.lock:
@@ -47,12 +57,12 @@ class AudioRingBuffer:
 
     def read_latest(self) -> np.ndarray | None:
         with self.lock:
-            buffer = self.buffer
-            start = self.write_pos
             if self.total_written < self.capacity:
                 return None
 
-            return np.concatenate([
-                buffer[start:],
-                buffer[:start]
-            ])
+            return np.concatenate(
+                [
+                    self.buffer[self.write_pos:],
+                    self.buffer[:self.write_pos],
+                ]
+            )
