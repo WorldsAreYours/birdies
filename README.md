@@ -21,3 +21,9 @@ uv sync
 ```bash
 uv run python src/main.py
 ```
+
+### Test
+
+```bash
+uv run pytest
+```
