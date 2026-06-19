@@ -10,6 +10,7 @@ dependencies = [
     "livekit-agents>=1.5.17",
     "numpy<2",
     "python-dotenv>=1.2.2",
+    "ai-edge-litert>=1.0.1 ; sys_platform == 'darwin'",
     "silero-vad>=6.2.1",
     "sounddevice>=0.5.5",
     "tflite-runtime>=2.14.0 ; sys_platform != 'darwin'",

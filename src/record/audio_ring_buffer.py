@@ -34,13 +34,13 @@ class AudioRingBuffer:
     def write(self, chunk: np.ndarray) -> None:
         with self.lock:
             n = len(chunk)
-            wrap_index = self.capacity - self.write_pos
+            tail_len = min(n, self.capacity - self.write_pos)
 
-            tail = chunk[:wrap_index]
-            head = chunk[wrap_index:]
+            tail = chunk[:tail_len]
+            head = chunk[tail_len:]
 
-            self.buffer[self.write_pos:self.write_pos + wrap_index] = tail
-            self.buffer[:n - wrap_index] = head
+            self.buffer[self.write_pos:self.write_pos + tail_len] = tail
+            self.buffer[:len(head)] = head
 
             self.write_pos = (self.write_pos + n) % self.capacity
             self.total_written += n
