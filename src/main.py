@@ -22,11 +22,11 @@ async def main():
 
 if __name__ == "__main__":
 
-    os.makedirs(path, exist_ok=True)
+    # os.makedirs(path, exist_ok=True)
     
-    with recorder.stream:
-        sd.sleep(6000)
-    birds = [Detection(bird) for bird  in buffer.detections]
-    for bird in birds:
-        cur = bird.getBird()
+    # with recorder.stream:
+    #     sd.sleep(6000)
+    # birds = [Detection(bird) for bird  in buffer.detections]
+    # for bird in birds:
+    #     cur = bird.getBird()
 
