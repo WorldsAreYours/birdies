@@ -1,5 +1,5 @@
 import asyncio
-import json
+from datetime import datetime, timezone
 from typing import Any, cast
 
 import numpy as np
@@ -48,11 +48,38 @@ class FakeBirdnet:
         return [detection.copy() for detection in self.detections]
 
 
+class FakeObservationStore:
+    def __init__(self):
+        self.calls: list[dict[str, Any]] = []
+
+    def record_analysis_pass(
+        self,
+        *,
+        session_id: int,
+        sequence_number: int,
+        observed_at: datetime,
+        birds: list[dict[str, Any]],
+        human_speech_ratio: float,
+        analysis_state: str,
+    ) -> int:
+        self.calls.append(
+            {
+                "session_id": session_id,
+                "sequence_number": sequence_number,
+                "observed_at": observed_at,
+                "birds": birds,
+                "human_speech_ratio": human_speech_ratio,
+                "analysis_state": analysis_state,
+            }
+        )
+        return sequence_number
+
+
 def test_human_speech_ratio_counts_windows_above_threshold(monkeypatch):
     monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
     vad_model = FakeVadModel([0.6, 0.5, 0.9])
     audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
-    analyzer = Analysis(audio_buffer, "/tmp", model=vad_model, birdnet=cast(Birdnet, FakeBirdnet()))
+    analyzer = Analysis(audio_buffer, FakeObservationStore(), session_id=1, model=vad_model, birdnet=cast(Birdnet, FakeBirdnet()))
 
     ratio = analyzer._human_speech_ratio(np.zeros(1536, dtype=np.float32), 16000)
 
@@ -63,17 +90,19 @@ def test_human_speech_ratio_counts_windows_above_threshold(monkeypatch):
 def test_human_speech_ratio_returns_zero_when_audio_is_shorter_than_window(monkeypatch):
     monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
     audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
-    analyzer = Analysis(audio_buffer, "/tmp", model=FakeVadModel([]), birdnet=cast(Birdnet, FakeBirdnet()))
+    analyzer = Analysis(audio_buffer, FakeObservationStore(), session_id=1, model=FakeVadModel([]), birdnet=cast(Birdnet, FakeBirdnet()))
 
     assert analyzer._human_speech_ratio(np.zeros(128, dtype=np.float32), 16000) == 0
 
 
 def test_noise_analysis_waits_when_audio_buffer_is_not_full(tmp_path):
     audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
+    store = FakeObservationStore()
     birdnet = FakeBirdnet([{"common_name": "Northern Cardinal"}])
     analyzer = Analysis(
         audio_buffer,
-        tmp_path,
+        store,
+        session_id=7,
         model=FakeVadModel([]),
         birdnet=cast(Birdnet, birdnet),
     )
@@ -82,18 +111,48 @@ def test_noise_analysis_waits_when_audio_buffer_is_not_full(tmp_path):
 
     assert analyzer.detections == []
     assert birdnet.calls == []
-    assert not (tmp_path / "timeline.jsonl").exists()
+    assert store.calls == []
 
 
-def test_noise_analysis_writes_birds_when_human_speech_ratio_is_low(monkeypatch, tmp_path):
+def test_noise_analysis_records_a_window_even_when_human_speech_is_high(monkeypatch):
     monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
     samples = np.zeros(16000, dtype=np.float32)
     audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
     audio_buffer.write(samples)
+    store = FakeObservationStore()
     birdnet = FakeBirdnet([{"common_name": "Northern Cardinal", "confidence": 0.92}])
     analyzer = Analysis(
         audio_buffer,
-        tmp_path,
+        store,
+        session_id=11,
+        model=FakeVadModel([0.9] * 31),
+        birdnet=cast(Birdnet, birdnet),
+    )
+
+    asyncio.run(analyzer.noise_analysis())
+
+    assert analyzer.detections == []
+    assert birdnet.calls == []
+    assert len(store.calls) == 1
+    recorded = store.calls[0]
+    assert recorded["session_id"] == 11
+    assert recorded["sequence_number"] == 1
+    assert recorded["analysis_state"] == "human_speech"
+    assert recorded["birds"] == []
+    assert recorded["human_speech_ratio"] == 1
+
+
+def test_noise_analysis_writes_birds_when_human_speech_ratio_is_low(monkeypatch):
+    monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
+    samples = np.zeros(16000, dtype=np.float32)
+    audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
+    audio_buffer.write(samples)
+    store = FakeObservationStore()
+    birdnet = FakeBirdnet([{"common_name": "Northern Cardinal", "confidence": 0.92}])
+    analyzer = Analysis(
+        audio_buffer,
+        store,
+        session_id=13,
         model=FakeVadModel([0.1] * 31),
         birdnet=cast(Birdnet, birdnet),
     )
@@ -108,28 +167,32 @@ def test_noise_analysis_writes_birds_when_human_speech_ratio_is_low(monkeypatch,
     np.testing.assert_array_equal(analyzed_audio, samples)
     assert analyzed_sample_rate == 16000
 
-    lines = (tmp_path / "timeline.jsonl").read_text().splitlines()
-    assert len(lines) == 1
-    stored_detection = json.loads(lines[0])
-    assert stored_detection["common_name"] == "Northern Cardinal"
-    assert stored_detection["confidence"] == 0.92
-    assert "timestamp" in stored_detection
+    assert len(store.calls) == 1
+    recorded = store.calls[0]
+    assert recorded["session_id"] == 13
+    assert recorded["sequence_number"] == 1
+    assert recorded["analysis_state"] == "birds"
+    assert len(recorded["birds"]) == 1
+    assert recorded["birds"][0]["common_name"] == "Northern Cardinal"
+    assert recorded["birds"][0]["confidence"] == 0.92
 
 
-def test_noise_analysis_skips_birdnet_when_human_speech_ratio_is_high(monkeypatch, tmp_path):
+def test_noise_analysis_uses_next_window_sequence(monkeypatch):
     monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
+    samples = np.zeros(16000, dtype=np.float32)
     audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
-    audio_buffer.write(np.zeros(16000, dtype=np.float32))
+    audio_buffer.write(samples)
+    store = FakeObservationStore()
     birdnet = FakeBirdnet([{"common_name": "Northern Cardinal"}])
     analyzer = Analysis(
         audio_buffer,
-        tmp_path,
-        model=FakeVadModel([0.9] * 31),
+        store,
+        session_id=17,
+        model=FakeVadModel([0.1] * 62),
         birdnet=cast(Birdnet, birdnet),
     )
 
     asyncio.run(analyzer.noise_analysis())
+    asyncio.run(analyzer.noise_analysis())
 
-    assert analyzer.detections == []
-    assert birdnet.calls == []
-    assert not (tmp_path / "timeline.jsonl").exists()
+    assert [call["sequence_number"] for call in store.calls] == [1, 2]
