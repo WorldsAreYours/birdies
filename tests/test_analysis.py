@@ -39,12 +39,22 @@ class FakeVadModel:
 
 
 class FakeBirdnet:
-    def __init__(self, detections: list[dict[str, Any]] | None = None):
+    def __init__(
+        self,
+        detections: list[dict[str, Any]] | None = None,
+        detections_by_call: list[list[dict[str, Any]]] | None = None,
+    ):
         self.detections = detections or []
+        self.detections_by_call = [
+            [detection.copy() for detection in detections_for_call]
+            for detections_for_call in (detections_by_call or [])
+        ]
         self.calls: list[tuple[np.ndarray, int]] = []
 
     def analyze(self, buffer: np.ndarray, sample_rate: int) -> list[dict[str, Any]]:
         self.calls.append((buffer, sample_rate))
+        if self.detections_by_call:
+            return self.detections_by_call.pop(0)
         return [detection.copy() for detection in self.detections]
 
 
@@ -116,7 +126,7 @@ def test_noise_analysis_waits_when_audio_buffer_is_not_full(tmp_path):
 
 def test_noise_analysis_records_a_window_even_when_human_speech_is_high(monkeypatch):
     monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
-    samples = np.zeros(16000, dtype=np.float32)
+    samples = np.full(16000, 0.02, dtype=np.float32)
     audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
     audio_buffer.write(samples)
     store = FakeObservationStore()
@@ -144,7 +154,7 @@ def test_noise_analysis_records_a_window_even_when_human_speech_is_high(monkeypa
 
 def test_noise_analysis_writes_birds_when_human_speech_ratio_is_low(monkeypatch):
     monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
-    samples = np.zeros(16000, dtype=np.float32)
+    samples = np.full(16000, 0.02, dtype=np.float32)
     audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
     audio_buffer.write(samples)
     store = FakeObservationStore()
@@ -177,9 +187,97 @@ def test_noise_analysis_writes_birds_when_human_speech_ratio_is_low(monkeypatch)
     assert recorded["birds"][0]["confidence"] == 0.92
 
 
-def test_noise_analysis_uses_next_window_sequence(monkeypatch):
+def test_noise_analysis_skips_birdnet_when_audio_is_too_quiet(monkeypatch):
     monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
     samples = np.zeros(16000, dtype=np.float32)
+    audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
+    audio_buffer.write(samples)
+    store = FakeObservationStore()
+    birdnet = FakeBirdnet([{"common_name": "Northern Cardinal", "confidence": 0.99}])
+    analyzer = Analysis(
+        audio_buffer,
+        store,
+        session_id=15,
+        model=FakeVadModel([0.1] * 31),
+        birdnet=cast(Birdnet, birdnet),
+    )
+
+    asyncio.run(analyzer.noise_analysis())
+
+    assert analyzer.detections == []
+    assert birdnet.calls == []
+    assert len(store.calls) == 1
+    recorded = store.calls[0]
+    assert recorded["session_id"] == 15
+    assert recorded["sequence_number"] == 1
+    assert recorded["analysis_state"] == "silence"
+    assert recorded["birds"] == []
+    assert recorded["human_speech_ratio"] == 0
+
+
+def test_noise_analysis_filters_low_confidence_birds(monkeypatch):
+    monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
+    samples = np.full(16000, 0.02, dtype=np.float32)
+    audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
+    audio_buffer.write(samples)
+    store = FakeObservationStore()
+    birdnet = FakeBirdnet(
+        [
+            {"common_name": "Northern Cardinal", "confidence": 0.92},
+            {"common_name": "Blue Jay", "confidence": 0.4},
+        ]
+    )
+    analyzer = Analysis(
+        audio_buffer,
+        store,
+        session_id=16,
+        model=FakeVadModel([0.1] * 31),
+        birdnet=cast(Birdnet, birdnet),
+    )
+
+    asyncio.run(analyzer.noise_analysis())
+
+    assert [detection["common_name"] for detection in analyzer.detections] == ["Northern Cardinal"]
+    assert len(store.calls) == 1
+    recorded = store.calls[0]
+    assert [bird["common_name"] for bird in recorded["birds"]] == ["Northern Cardinal"]
+
+
+def test_noise_analysis_requires_repeat_for_mid_confidence_birds(monkeypatch):
+    monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
+    samples = np.full(16000, 0.02, dtype=np.float32)
+    audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
+    audio_buffer.write(samples)
+    store = FakeObservationStore()
+    birdnet = FakeBirdnet(
+        detections_by_call=[
+            [{"common_name": "Blue Jay", "confidence": 0.82}],
+            [{"common_name": "Blue Jay", "confidence": 0.83}],
+        ]
+    )
+    analyzer = Analysis(
+        audio_buffer,
+        store,
+        session_id=18,
+        model=FakeVadModel([0.1] * 62),
+        birdnet=cast(Birdnet, birdnet),
+    )
+
+    asyncio.run(analyzer.noise_analysis())
+    asyncio.run(analyzer.noise_analysis())
+
+    assert len(analyzer.detections) == 1
+    assert analyzer.detections[0]["common_name"] == "Blue Jay"
+    assert analyzer.detections[0]["confidence"] == 0.83
+    assert "timestamp" in analyzer.detections[0]
+    assert [call["analysis_state"] for call in store.calls] == ["no_birds", "birds"]
+    assert store.calls[0]["birds"] == []
+    assert [bird["common_name"] for bird in store.calls[1]["birds"]] == ["Blue Jay"]
+
+
+def test_noise_analysis_uses_next_window_sequence(monkeypatch):
+    monkeypatch.setattr("record.analysis.torch.from_numpy", lambda samples: FakeTensor(samples))
+    samples = np.full(16000, 0.02, dtype=np.float32)
     audio_buffer = AudioRingBuffer(sample_rate=16000, duration_seconds=1)
     audio_buffer.write(samples)
     store = FakeObservationStore()

@@ -32,6 +32,18 @@ uv run python src/main.py
 uv run pytest
 ```
 
+### Rebuild Observations
+
+```bash
+uv run python src/rebuild_observations.py
+```
+
+To rebuild a single session:
+
+```bash
+uv run python src/rebuild_observations.py --session-id 2
+```
+
 ## Platform Notes
 
 - **macOS (development):** `src/tflite_runtime/` shims birdnetlib to use `ai-edge-litert`.

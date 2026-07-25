@@ -58,6 +58,10 @@ class Database:
                 analysis_state text not null,
                 human_speech_ratio real,
                 birds_json text not null,
+                review_status text not null default 'accepted',
+                accepted_at text,
+                rejected_at text,
+                filter_version text,
                 unique(session_id, sequence_number)
             );
 
@@ -72,12 +76,31 @@ class Database:
                 detection_count integer not null,
                 max_confidence real
             );
+            """
+        )
+        self._migrate_detection_windows_schema(conn)
 
-            create table if not exists observation_windows (
-                observation_id integer not null references observations(id) on delete cascade,
-                detection_window_id integer not null references detection_windows(id) on delete cascade,
-                primary key (observation_id, detection_window_id)
-            );
+    def _migrate_detection_windows_schema(self, conn: sqlite3.Connection) -> None:
+        columns = {
+            row["name"]
+            for row in conn.execute("pragma table_info(detection_windows)").fetchall()
+        }
+
+        migrations = [
+            ("review_status", "alter table detection_windows add column review_status text not null default 'accepted'"),
+            ("accepted_at", "alter table detection_windows add column accepted_at text"),
+            ("rejected_at", "alter table detection_windows add column rejected_at text"),
+            ("filter_version", "alter table detection_windows add column filter_version text"),
+        ]
+        for column_name, sql in migrations:
+            if column_name not in columns:
+                conn.execute(sql)
+
+        conn.execute(
+            """
+            update detection_windows
+            set accepted_at = coalesce(accepted_at, observed_at)
+            where review_status = 'accepted' and accepted_at is null
             """
         )
 
@@ -89,6 +112,9 @@ class Database:
             (name, created_at),
         )
         conn.commit()
+
+        if cursor.lastrowid is None:
+            raise RuntimeError("insert resulted in now Row ID")
         return int(cursor.lastrowid)
 
     def create_session(
@@ -115,6 +141,8 @@ class Database:
             ),
         )
         conn.commit()
+        if cursor.lastrowid is None:
+            raise RuntimeError("insert resulted in now Row ID")
         return int(cursor.lastrowid)
 
     def end_session(self, session_id: int, ended_at: str | datetime | None = None) -> None:
@@ -134,10 +162,14 @@ class Database:
         birds: list[dict[str, Any]],
         human_speech_ratio: float,
         analysis_state: str,
+        review_status: str = "accepted",
+        filter_version: str | None = None,
     ) -> int:
         conn = self.connect()
         serialized_observed_at = self._serialize_datetime(observed_at) or self._now()
         stored_birds = [dict(bird) for bird in birds]
+        accepted_at = serialized_observed_at if review_status == "accepted" else None
+        rejected_at = serialized_observed_at if review_status == "rejected" else None
 
         with conn:
             cursor = conn.execute(
@@ -148,8 +180,12 @@ class Database:
                     observed_at,
                     analysis_state,
                     human_speech_ratio,
-                    birds_json
-                ) values (?, ?, ?, ?, ?, ?)
+                    birds_json,
+                    review_status,
+                    accepted_at,
+                    rejected_at,
+                    filter_version
+                ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     session_id,
@@ -158,47 +194,64 @@ class Database:
                     analysis_state,
                     human_speech_ratio,
                     json.dumps(stored_birds),
+                    review_status,
+                    accepted_at,
+                    rejected_at,
+                    filter_version,
                 ),
             )
+            if cursor.lastrowid is None:
+                raise RuntimeError("insert resulted in now Row ID")
             detection_window_id = int(cursor.lastrowid)
 
-            for species_common_name, summary in self._summarize_birds(stored_birds).items():
-                observation_id = self._find_extendable_observation(
-                    conn,
-                    session_id=session_id,
-                    species_common_name=species_common_name,
-                    sequence_number=sequence_number,
-                )
+            if review_status != "accepted":
+                return detection_window_id
 
-                if observation_id is None:
-                    observation_id = self._create_observation(
-                        conn,
-                        session_id=session_id,
-                        species_common_name=species_common_name,
-                        observed_at=serialized_observed_at,
-                        sequence_number=sequence_number,
-                        detection_count=summary["count"],
-                        max_confidence=summary["max_confidence"],
-                    )
-                else:
-                    self._extend_observation(
-                        conn,
-                        observation_id=observation_id,
-                        observed_at=serialized_observed_at,
-                        sequence_number=sequence_number,
-                        detection_count=summary["count"],
-                        max_confidence=summary["max_confidence"],
-                    )
-
-                conn.execute(
-                    """
-                    insert into observation_windows (observation_id, detection_window_id)
-                    values (?, ?)
-                    """,
-                    (observation_id, detection_window_id),
-                )
+            self._record_observation_links(
+                conn,
+                session_id=session_id,
+                sequence_number=sequence_number,
+                observed_at=serialized_observed_at,
+                birds=stored_birds,
+            )
 
         return detection_window_id
+
+    def rebuild_observations(self, *, session_id: int | None = None) -> None:
+        conn = self.connect()
+
+        with conn:
+            if session_id is None:
+                conn.execute("delete from observations")
+                window_rows = conn.execute(
+                    """
+                    select id, session_id, sequence_number, observed_at, birds_json
+                    from detection_windows
+                    where review_status = 'accepted'
+                    order by session_id, sequence_number, id
+                    """
+                ).fetchall()
+            else:
+                conn.execute("delete from observations where session_id = ?", (session_id,))
+                window_rows = conn.execute(
+                    """
+                    select id, session_id, sequence_number, observed_at, birds_json
+                    from detection_windows
+                    where session_id = ? and review_status = 'accepted'
+                    order by sequence_number, id
+                    """,
+                    (session_id,),
+                ).fetchall()
+
+            for row in window_rows:
+                birds = json.loads(row["birds_json"])
+                self._record_observation_links(
+                    conn,
+                    session_id=int(row["session_id"]),
+                    sequence_number=int(row["sequence_number"]),
+                    observed_at=str(row["observed_at"]),
+                    birds=birds,
+                )
 
     def _find_extendable_observation(
         self,
@@ -228,6 +281,43 @@ class Database:
             return None
 
         return int(row["id"])
+
+    def _record_observation_links(
+        self,
+        conn: sqlite3.Connection,
+        *,
+        session_id: int,
+        sequence_number: int,
+        observed_at: str,
+        birds: list[dict[str, Any]],
+    ) -> None:
+        for species_common_name, summary in self._summarize_birds(birds).items():
+            observation_id = self._find_extendable_observation(
+                conn,
+                session_id=session_id,
+                species_common_name=species_common_name,
+                sequence_number=sequence_number,
+            )
+
+            if observation_id is None:
+                observation_id = self._create_observation(
+                    conn,
+                    session_id=session_id,
+                    species_common_name=species_common_name,
+                    observed_at=observed_at,
+                    sequence_number=sequence_number,
+                    detection_count=summary["count"],
+                    max_confidence=summary["max_confidence"],
+                )
+            else:
+                self._extend_observation(
+                    conn,
+                    observation_id=observation_id,
+                    observed_at=observed_at,
+                    sequence_number=sequence_number,
+                    detection_count=summary["count"],
+                    max_confidence=summary["max_confidence"],
+                )
 
     def _create_observation(
         self,
@@ -264,6 +354,8 @@ class Database:
                 max_confidence,
             ),
         )
+        if cursor.lastrowid is None:
+            raise RuntimeError("insert resulted in now Row ID")
         return int(cursor.lastrowid)
 
     def _extend_observation(

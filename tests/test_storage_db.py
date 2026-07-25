@@ -24,6 +24,11 @@ def test_database_initializes_schema_and_enforces_foreign_keys(tmp_path):
 
     assert {"users", "sessions", "detection_windows", "observations", "observation_windows"}.issubset(tables)
     assert conn.execute("pragma foreign_keys").fetchone()[0] == 1
+    detection_window_columns = {
+        row["name"]
+        for row in conn.execute("pragma table_info(detection_windows)").fetchall()
+    }
+    assert {"review_status", "accepted_at", "rejected_at", "filter_version"}.issubset(detection_window_columns)
 
     with pytest.raises(sqlite3.IntegrityError):
         conn.execute(
@@ -148,3 +153,77 @@ def test_record_analysis_pass_links_multiple_species_from_same_window(tmp_path):
     links = conn.execute("select count(*) from observation_windows").fetchone()[0]
     assert links == 2
 
+
+def test_record_analysis_pass_keeps_non_accepted_windows_out_of_observations(tmp_path):
+    db = Database(tmp_path / "birdies.sqlite")
+    conn = db.connect()
+    db.initialize_schema()
+    user_id = db.create_user("Alex")
+    session_id = db.create_session(user_id, started_at=_now().isoformat(), latitude=44.98, longitude=-93.26)
+
+    db.record_analysis_pass(
+        session_id=session_id,
+        sequence_number=1,
+        observed_at=_now().isoformat(),
+        birds=[{"common_name": "Northern Cardinal", "confidence": 0.92}],
+        human_speech_ratio=0.1,
+        analysis_state="birds",
+        review_status="pending",
+        filter_version="rules-v1",
+    )
+
+    window = conn.execute(
+        """
+        select review_status, accepted_at, rejected_at, filter_version
+        from detection_windows
+        where session_id = ?
+        """,
+        (session_id,),
+    ).fetchone()
+    assert dict(window) == {
+        "review_status": "pending",
+        "accepted_at": None,
+        "rejected_at": None,
+        "filter_version": "rules-v1",
+    }
+    assert conn.execute("select count(*) from observations").fetchone()[0] == 0
+
+
+def test_rebuild_observations_recreates_only_accepted_windows(tmp_path):
+    db = Database(tmp_path / "birdies.sqlite")
+    conn = db.connect()
+    db.initialize_schema()
+    user_id = db.create_user("Alex")
+    session_id = db.create_session(user_id, started_at=_now().isoformat(), latitude=44.98, longitude=-93.26)
+
+    db.record_analysis_pass(
+        session_id=session_id,
+        sequence_number=1,
+        observed_at=_now().isoformat(),
+        birds=[{"common_name": "Northern Cardinal", "confidence": 0.92}],
+        human_speech_ratio=0.1,
+        analysis_state="birds",
+        review_status="accepted",
+    )
+    db.record_analysis_pass(
+        session_id=session_id,
+        sequence_number=2,
+        observed_at=_now().isoformat(),
+        birds=[{"common_name": "Blue Jay", "confidence": 0.82}],
+        human_speech_ratio=0.1,
+        analysis_state="birds",
+        review_status="rejected",
+    )
+
+    conn.execute("delete from observation_windows")
+    conn.execute("delete from observations")
+    conn.commit()
+
+    db.rebuild_observations(session_id=session_id)
+
+    observations = conn.execute(
+        "select species_common_name, detection_count from observations order by id"
+    ).fetchall()
+    assert [dict(row) for row in observations] == [
+        {"species_common_name": "Northern Cardinal", "detection_count": 1}
+    ]
