@@ -122,3 +122,33 @@ constraints.
 - The frontend-to-backend microphone streaming integration is not implemented yet.
 - Audio is analyzed in memory; raw recordings are not persisted.
 - The worker currently uses the default system input selected by `sounddevice`.
+
+
+## Streaming architecture
+
+**Status: planned, not yet implemented.** This section documents the design
+decision before the code exists, so the plan doesn't have to be reconstructed
+from memory later.
+
+The backend will accept audio over a WebSocket connection rather than only
+reading from the local machine's microphone, to support multiple concurrent
+users and remote (mobile/web) clients.
+
+- **Audio in**: clients stream raw float32 PCM frames over `/ws/audio`,
+  matching the format `sounddevice` already produces — no conversion needed.
+- **Results out**: clients poll `GET /observations?session_id=X` rather than
+  receiving pushed updates. Simpler for v1; push can be added later if
+  polling proves too slow in practice.
+- **Sessions**: one `AudioRingBuffer` + `Analysis` + `Database` instance per
+  connection, keyed by `(user_id, connection_id)` — not the single global
+  session `main.py`'s CLI worker uses today.
+- **Auth**: a static per-client token/API key passed at connection time,
+  identifying the user for `create_session`. Not a full auth system for v1.
+- **Concurrency**: `birdies.sqlite` runs in WAL mode (`pragma journal_mode =
+  wal`) to support concurrent writes from multiple sessions. BirdNET
+  inference already runs via `run_in_executor`, so it doesn't block the
+  event loop under concurrent connections.
+
+This does not replace the CLI worker in `main.py` — that remains the
+single-machine, single-user path. The WebSocket server is a separate entry
+point for multi-user use.
