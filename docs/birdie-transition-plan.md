@@ -476,6 +476,13 @@ enough of it (robin 3, jay 1, chickadee 1, cardinal 1, dove 0), so CC BY-SA will
 credits page. Audition of the extra robin recordings is **deferred to a dedicated session** (Alex); the
 robin record stays `verified: false` until someone has listened.
 
+Robin curation session 1 (2026-11-22): 22 distinct recordings located, downloaded and SHA1-verified; the
+Commons mirrors carry Xeno-canto's song/call classification, so what each file *is* is now mostly known
+without ears, and a 7-minute pre-dawn recording and an evening recording gave independent measured cadence
+figures. Findings, licence consequences (no plain-CC-BY tier exists in this set — BY-SA is the floor beyond
+PD) and the outstanding ear work are in `docs/curation/american-robin-audio.md` and
+`docs/curation/american-robin-audition.md`.
+
 **D4 — RESOLVED (Alex): `phase-2` is archived, not merged.** Alex chose to rewrite `main` rather than
 carry the Python lineage into the new product. `phase-2` is preserved read-only at
 `archive/legacy-detector`, pinned by tag `legacy-detector-v0.1` at `e39b866`. `phase-1` is a

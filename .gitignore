@@ -21,3 +21,7 @@ dist-ssr/
 # Logs
 *.log
 npm-debug.log*
+
+# Python bytecode from the curation helper scripts
+__pycache__/
+*.pyc

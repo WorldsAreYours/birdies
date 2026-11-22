@@ -68,8 +68,15 @@ describe('american robin record', () => {
     expect(americanRobin.provisional.join('\n')).toContain('calls');
   });
 
-  it('does not claim a repertoire size it cannot source', () => {
-    expect(americanRobin.repertoire.documented).toBeNull();
+  it('states the published repertoire range rather than a bare number', () => {
+    // The record used to say "unknown". Johnson 2006 gives 6–25 whistle element
+    // types per male, so the count is now sourced — but it is a range, and the
+    // hisselly set on top of it is unquantified. `documented` takes the top of
+    // the whistle range so "1 of ~25" understates us rather than overstates us.
+    expect(americanRobin.repertoire.documented).toBe(25);
+    expect(americanRobin.repertoire.documented).toBeGreaterThanOrEqual(americanRobin.repertoire.shipped);
+    expect(americanRobin.repertoire.note).toMatch(/6.25 whistle element types/);
+    expect(americanRobin.sources.map((source) => source.id)).toContain('johnson-2006');
     expect(americanRobin.repertoire.shipped).toBe(americanRobin.songs.length + americanRobin.calls.length);
   });
 
