@@ -1,0 +1,144 @@
+# AGENTS.md — Birdie
+
+Read this before changing anything. It encodes the decisions that are already
+settled so they do not get re-litigated every session.
+
+## What this is
+
+Birdie: a cozy, offline-first, **client-side** birdsong game. You hear a bird
+sing, you answer with a piece (on-screen card now, printed QR later, NFC parked),
+and the bird moves into a virtual backyard where it sings at a cadence taken from
+real data, gated by time of day, season and habitat stratum.
+
+No backend, no accounts, no sync, no network on the play path. Progress lives in
+`localStorage` as one versioned JSON blob.
+
+The authoritative design document is `docs/birdie-transition-plan.md` (read §4–§7
+before any significant work; it contains the architecture, decisions D1–D10 and
+the risk table). `web/README.md` describes the code that exists. `README.md` is the
+public-facing summary.
+
+Repo: `WorldsAreYours/birdies`, cloned at `/home/hermes/projects/birdies`.
+Active branch: `feat/birdie-web-app` (branched from `main`). `main` was rewritten
+on 2026-11-22; the legacy Python detector is preserved read-only at branch
+`archive/legacy-detector` and tag `legacy-detector-v0.1`.
+
+## Non-negotiable product rules
+
+1. **The clock is simulated (D8).** Nothing on the play path reads the device
+   clock. `Date.now()`, `new Date()` and `Math.random()` are banned in `src/` core
+   modules and a test enforces it. Time is injected as `SimulatedClock`; saved
+   state restores the same simulated morning. The UI must always show the simulated
+   hour and season — a fact asserted without its condition is a lie a birder
+   resents.
+2. **No fact without a source.** A claim marked `verified: true` must carry a
+   citation. Where data is missing, use `method: 'simplified'` with `citationId:
+   null` and say so; a record containing one is not `verified`, and the UI renders
+   it as provisional. Never invent a songs-per-minute figure, a song-type name or a
+   habitat claim to make a record look complete. A provisional record that admits
+   its gaps beats a confident guess.
+3. **The species records are the product; code plays them.** Anything hard-coded
+   about a bird's behaviour is a bug in the model. Adding a sixth bird must be a
+   data edit, not a code change. Cadence, variants, seasonality, strata and
+   provenance all live in `web/src/species/records/*`.
+4. **Pure core, thin edges.** `env/`, `sim/`, `game/`, `backyard/`, `journal/` and
+   the serialization half of `storage/` are pure functions over plain data. Only
+   `audio/engine.ts` and the React shell touch the browser.
+5. **Offline is structural.** Everything ships same-origin: no remote audio, no
+   Google Fonts, no CDN scripts, no runtime model download, no API call on the play
+   path. Assets are precached by `vite-plugin-pwa`.
+6. **No accounts, no backend, no sync, no server persistence.** Cross-device
+   transfer, if ever wanted, is an export/import string.
+7. **BirdNET is out of scope.** Detection, if built, is a five-species game
+   mechanic behind `interface SongDetector { listen(): Promise<SpeciesId | null> }`
+   — never an open-set identifier, never a passive monitor.
+8. **Cozy.** No punitive timers, no streak guilt, no loss states. Silence is a
+   place, not a bug, and must never be filled with invented birdsong.
+
+## Commands (run from `web/`)
+
+```bash
+export PATH="/home/hermes/.hermes/node/bin:$PATH"   # Node 22; system node is 18 and too old for Vite 8
+cd web
+npm install
+npm run dev        # http://localhost:5173
+npm run check      # typecheck -> lint -> test -> build; must be green before any commit
+```
+
+Individually: `npm run typecheck` (`tsc --noEmit`), `npm run lint` (`oxlint src`),
+`npm run test` (`vitest run`), `npm run build` (`vite build`).
+
+## Layout
+
+```
+web/                         the app (Phase 1 in progress)
+  src/env/                   simulated clock, season/daylight, time-of-day period — pure, tested
+  src/species/
+    types.ts                 SpeciesRecord, Citation, SongVariant, CadenceClaim, License
+    records/<species>.ts     one file per bird; the unit of authenticity
+    catalog.ts               typed index; validator; add new records here
+  src/sim/                   rate.ts, variants.ts, simulate.ts, scheduler.ts, random.ts — pure, tested
+  src/app/                   React shell (currently the Phase 1 clock UI)
+  src/audio/  src/pieces/  src/game/  src/backyard/  src/journal/  src/storage/  src/ui/   — not written yet
+  public/audio/<speciesId>/  built from originals by scripts/prepare-audio.sh (pinned SHA-256 + clipRange)
+  scripts/prepare-audio.sh   reproducible audio build; fails rather than ship different audio than the numbers describe
+  dist/                      build output — never edit, gitignored
+docs/
+  birdie-transition-plan.md  authoritative plan + decision log
+  curation/american-robin-audio.md      provenance, licences, measured cadence
+  curation/american-robin-audition.md   outstanding ear work
+tools/curation/              Python helpers for fetching/picking Commons audio
+```
+
+## Code conventions
+
+- TypeScript 5.x, `strict`, ESM. Import sibling modules with the `.js` suffix
+  (`../env/types.js`) — this is a bundler-ESM repo and the suffix is required.
+- Prefer `readonly` fields and `interface`/plain data. No classes in the core.
+- Randomness is always `mulberry32(seed)` from `sim/random.ts`. Determinism is what
+  makes realism testable; never introduce ambient entropy.
+- Absent is not zero. A missing `CadenceTable` period means "we do not know";
+  `songsPerMinute: 0` means "known silent". The simulation and UI must treat these
+  differently. `RateResult.confidence` is `'sourced' | 'simplified' | 'none'`.
+- No immediate repeat of the same `variantId` when an alternative exists
+  (`sim/variants.ts`); real birds repeat, but the same *recording* twice in a row is
+  an artifact.
+- Every unsourced/unconfirmed field goes in `SpeciesRecord.provisional[]`, and
+  `verified` is true only when that list is empty.
+- Comments explain *why*, especially where a number is a declared simplification.
+  Match the existing explanatory style.
+- No new dependency without a stated reason in the PR. The v1 dependency list is
+  deliberately small (see plan §4, "Stack recommendation"). Audio is raw Web Audio
+  API — no Howler/tone.js.
+- Audio licences: `public-domain`, `cc0`, `cc-by-*`, `cc-by-sa-*` only. **NC is
+  forbidden** — it would block a paid tier. Record recordist and licence per clip.
+
+## Tests
+
+Vitest, no DOM for the core. Assert on generated data, not on sound. Required
+properties for a species/sim change: zero events in an `absent` season; rate within
+bounds for a period; no immediate variant repeat; identical output for the same
+seed; absence of a cadence period yields silence, not a guess. Add tests with the
+change, not after. `npm run check` must pass.
+
+## Git workflow
+
+- Branch from `main`; open a PR; do not push directly to `main` and never
+  force-push it.
+- Commit subject: short imperative (`sim: add dusk rate bounds`, `species: source
+  robin stratum`). At most ~2 body lines. Rationale, measurements and caveats go in
+  the PR description or the docs, not the commit body.
+- Do not merge `phase-2` or rewrite history. Do not delete `archive/legacy-detector`
+  or its tag.
+- Before committing: `npm run check`. If audio sources or cadence numbers changed,
+  also rerun `bash scripts/prepare-audio.sh` and confirm the pinned hashes still
+  build.
+
+## Current state and next step
+
+Phase 1 (one bird, faithfully) is in progress. Done and tested: `env/`, `species/`
+schema + one provisional American Robin record, `sim/` (rate, variants, simulate,
+scheduler). Not written: `audio/engine.ts`, pieces, game rounds, backyard, journal
+screens, PWA precache. The next meaningful slice is the audio engine + look-ahead
+scheduler so the yard actually sings at the documented cadence. The robin record
+stays `verified: false` until the shipped clips have been auditioned by ear.
