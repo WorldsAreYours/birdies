@@ -16,11 +16,17 @@ Phase 1 of [the transition plan](../docs/birdie-transition-plan.md) is in progre
 | Area | State |
 |---|---|
 | `src/env/` — simulated clock, season, daylight, time-of-day period | **done, tested** |
-| `src/species/` — species records, one curated bird | not written |
-| `src/sim/` — cadence, variants, event simulation, scheduler | not written |
+| `src/species/` — record schema, validator, the American Robin | **one provisional record, tested** |
+| `src/sim/` — cadence, variants, event simulation, scheduler | not written — next |
 | `src/audio/` — Web Audio engine and look-ahead scheduling | not written |
 | `src/pieces/`, `src/game/`, `src/backyard/`, `src/journal/` | not written |
 | PWA precache (`vite-plugin-pwa`) | not added yet — needs the audio assets first |
+
+`public/audio/` builds from the originals via `bash scripts/prepare-audio.sh`,
+which pins each source's SHA-256 and trim points so every shipped second is
+reproducible. The cadence figures in the robin record were counted from the file
+that script rebuilds — if a source changes upstream the script fails rather than
+silently shipping different audio than the numbers describe.
 
 ## Two rules this codebase holds
 

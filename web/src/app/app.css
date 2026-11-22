@@ -216,6 +216,53 @@ body {
   color: var(--ink-soft);
 }
 
+.bird__name {
+  margin: 0;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.bird__sci {
+  margin: 0.15rem 0 1rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.badge {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--bark);
+  color: var(--bark);
+}
+
+.bird__fact {
+  margin: 0 0 0.85rem;
+  font-size: 0.95rem;
+}
+
+.bird__method {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-top: 0.2rem;
+}
+
+.bird__caveat {
+  margin: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
 .fineprint {
   margin: 1rem 0 0;
   font-size: 0.78rem;

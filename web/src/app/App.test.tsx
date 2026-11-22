@@ -34,6 +34,14 @@ describe('App shell', () => {
 
   it('does not claim unbuilt features are finished', () => {
     expect(html).toContain('What is real so far');
-    expect(html).toMatch(/in progress/);
+    expect(html).toContain('The chorus');
+  });
+
+  it('shows the bird with its measured figure and its provisional flag', () => {
+    expect(html).toContain('American Robin');
+    expect(html).toContain('Turdus migratorius');
+    expect(html).toContain('67.7 phrases a minute');
+    expect(html).toContain('provisional');
+    expect(html).not.toContain('verified by ear');
   });
 });

@@ -9,6 +9,7 @@ import {
   type SimulatedClock,
 } from '../env/clock.js';
 import type { Period } from '../env/types.js';
+import { getRecord } from '../species/catalog.js';
 
 /**
  * Phase 1 shell. It is deliberately small: it renders the one thing that is
@@ -41,6 +42,8 @@ export function App() {
 
   const env = toEnvironment(clock, 'suburban-yard');
   const habitat = 'suburban yard';
+  const bird = getRecord('american-robin');
+  const dawn = bird.cadence.dawn;
 
   return (
     <main className="birdie">
@@ -108,13 +111,43 @@ export function App() {
         </div>
       </section>
 
+      <section className="card" aria-labelledby="bird-heading">
+        <h2 className="card__heading" id="bird-heading">
+          The first bird
+        </h2>
+
+        <p className="bird__name">
+          {bird.commonName}
+          {!bird.verified && <span className="badge">provisional</span>}
+        </p>
+        <p className="bird__sci">{bird.scientificName}</p>
+
+        <p className="bird__fact">
+          Dawn song, counted from the recording in this app:{' '}
+          <strong>{dawn ? `${dawn.songsPerMinute.toFixed(1)} phrases a minute` : 'no figure yet'}</strong>
+          <span className="bird__method">
+            {dawn?.method === 'measured' ? 'measured, not guessed — see the note in the record' : ''}
+          </span>
+        </p>
+
+        <p className="bird__fact">{bird.journal.child}</p>
+
+        <p className="bird__caveat">
+          {bird.provisional.length} fields are still unsourced or unconfirmed, including whether this
+          recording holds one robin or several. They are listed in the record rather than quietly
+          presented as fact.
+        </p>
+      </section>
+
       <section className="card card--quiet">
         <h2 className="card__heading">What is real so far</h2>
         <ul className="status">
           <li className="status__done">The simulated clock: sunrise, sunset, season, time of day.</li>
-          <li className="status__todo">One American Robin record, sourced — in progress.</li>
-          <li className="status__todo">The chorus: cadence, song variants, placement.</li>
-          <li className="status__todo">Pieces, rounds, journal, the yard itself.</li>
+          <li className="status__done">
+            One American Robin record — one measured figure, its gaps declared.
+          </li>
+          <li className="status__todo">The chorus: rate through the day, variants, placement.</li>
+          <li className="status__todo">Pieces, rounds, journal screens, the yard itself.</li>
         </ul>
         <p className="fineprint">
           Nothing here reads your device clock. The yard is always the hour you set it to.
