@@ -26,16 +26,17 @@ below are recorded.
 ## Pass 1 — five minutes, seven files
 
 If you only do one pass, do this one. It decides what the robin ships with.
+Rows are in file order, which is also how the folder sorts.
 
 | File | Listen for | Answer |
 |---|---|---|
-| `A09-xc128490.mp3` (excerpt from 1:50 of 7:21) | "before dawn", one male in a maple. Is it one bird? Is it continuous carol or bouts? | 1 or >1 bird? | 
-| `A10-xc129105.mp3` (from 0:38) | recorded as "mostly hissely phrases", top of a 10 m spruce. Do the phrases sound buzzy/wide-band rather than clear whistles? | hisselly? y/n |
-| `A08-xc75499.mp3` (whole, 0:29) | "whispery song" after the recordist approached. Is the quiet, complex delivery clearly different from A09? | distinct enough to ship as its own variant? |
-| `A13-xc132864.mp3` (from 0:52) | "just before sundown", 15 m up a spruce. Is this song, calls, or both? | song / call / both |
-| `A20-xc570791.mp3` (whole, 0:43) | adult male, Newfoundland — a different region. Does it read as the same species' carol? | ship as a second dawn male? |
 | `A06-xc112597.mp3` (whole, 0:10) | labelled "flight call" | does it match what you'd call a flight call? |
+| `A08-xc75499.mp3` (whole, 0:29) | "whispery song" after the recordist approached. Is the quiet, complex delivery clearly different from A09? | distinct enough to ship as its own variant? |
+| `A09-xc128490.mp3` (excerpt from 1:50 of 7:21) | "before dawn", one male in a maple. Is it one bird? Is it continuous carol or bouts? | 1 or >1 bird? |
+| `A10-xc129105.mp3` (from 0:38) | recorded as "mostly hissely phrases", top of a 10 m spruce. Do the phrases sound buzzy/wide-band rather than clear whistles? | hisselly? y/n |
+| `A13-xc132864.mp3` (from 0:52) | "just before sundown", 15 m up a spruce. Is this song, calls, or both? | song / call / both |
 | `A19-xc569292.mp3` (whole, 0:59) | "multiple robins calling to each other", on a wire | which call type(s)? |
+| `A20-xc570791.mp3` (whole, 0:43) | adult male, Newfoundland — a different region. Does it read as the same species' carol? | ship as a second dawn male? |
 
 ## Pass 2 — the rest of the calls
 
