@@ -1,4 +1,5 @@
 import type { Period, Season } from '../env/types.js';
+import policy from './licence-policy.json';
 
 /**
  * The species record is the unit of authenticity.
@@ -26,14 +27,21 @@ export type SpeciesId =
  */
 export type Stratum = 'canopy' | 'midstory' | 'shrub' | 'ground' | 'feeder' | 'bath';
 
-/** Audio licences we will ship under. NC is absent on purpose: it would block a paid tier. */
-export type License =
-  | 'public-domain'
-  | 'cc0'
-  | 'cc-by-2.5'
-  | 'cc-by-4.0'
-  | 'cc-by-sa-3.0'
-  | 'cc-by-sa-4.0';
+/**
+ * Audio licences we will ship under.
+ *
+ * Derived from `licence-policy.json`, which is the single source of truth: it is
+ * read by the browser bundle, by the build's credits check, and by the curation
+ * tools that refuse a download. NC and ND are absent on purpose — the first would
+ * block a paid tier, the second would block the trimming the pipeline depends on —
+ * so adding a licence means editing the policy, not this line.
+ */
+export type License = keyof typeof policy.licences;
+
+/** Runtime form of `License`, for exhaustive checks in tests and the UI. */
+export const LICENSES = Object.keys(policy.licences) as readonly License[];
+
+export { policy as licencePolicy };
 
 /**
  * Structural units, defined in `docs/vocalization-units.md`.

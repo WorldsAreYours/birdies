@@ -39,6 +39,54 @@ Two consequences worth stating rather than discovering later:
   and the uploader is `Mdf`. Attributable as "Mdf (Wikimedia Commons)"; not usable
   if we need a named recordist.
 
+### How the rule is enforced
+
+`web/src/species/licence-policy.json` is the only list of licences Birdie may ship,
+and the `License` type derives from it, so a licence cannot be added in one place
+only. Three gates read that one file:
+
+- `tools/curation/licence.py` decides **before a download**: `fetch_audio.py` refuses
+  a refused licence and records the refusal under `rejected` in the manifest, rather
+  than leaving the file silently absent. `--check-manifest` audits a manifest that
+  predates the gate; `--stamp-manifest` writes the canonical licence id into each
+  entry.
+- `web/scripts/prepare-audio.sh` refuses a source whose declared licence is not
+  permitted, before `curl` runs.
+- `web/src/species/licences.test.ts` fails on a clip whose licence is not permitted or
+  whose credit is incomplete, and on audio in `public/audio/` that no record
+  declares; `prebuild` fails if `public/audio/CREDITS.txt` no longer matches the
+  records.
+
+NC and ND fail closed, and so does an unrecognised string: unknown means
+all-rights-reserved until someone proves otherwise.
+
+### Macaulay Library: 14 assets, 4 usable
+
+The Macaulay shortlist was assembled before the gate existed, so it was audited with
+`tools/curation/macaulay_assets.py` (2026-11-22; manifest at
+`~/projects/birdie-curation/american-robin/macaulay/manifest.json`). The payload
+carries `licenseId` alone — `LICENSE<n>` — and the asset page shows no licence
+version, no deed URL.
+
+| `licenseId` | assets | verdict |
+|---|---|---|
+| LICENSE10 (CC0) | 4 — ML163452761, ML550453001, ML56579161, ML57543841 | permitted |
+| LICENSE2 | 3 — ML94261, ML168300, ML206448 | no published mapping → all rights reserved |
+| LICENSE4 | 2 — ML100124941, ML321642131 | no published mapping → all rights reserved |
+| LICENSE5 (CC BY) | 4 — ML618224491, ML619791726, ML631573070, ML635770519 | refused: no published version, so a credit cannot name the licence |
+| LICENSE8 (CC BY-NC) | 1 — ML230039991 | refused: non-commercial |
+
+Three consequences worth stating rather than discovering later:
+
+- The three top-rated robin recordings (ML94261, ML168300, ML206448) are
+  all-rights-reserved. They were used to check species and density and can never
+  ship; anything measured from them is corroboration, not a shippable source.
+- Four CC0 assets are the only Macaulay audio usable as-is.
+- A Macaulay CC BY clip is not "clean" by default. The licence class is the whole of
+  what the archive publishes, so the version would have to be recorded by hand
+  before the clip could carry an attribution — which is why the gate refuses it
+  instead of guessing.
+
 ## 2. What the recordings contain
 
 This is the thing the provisional record said it could not establish without

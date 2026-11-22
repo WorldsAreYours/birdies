@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "prebuild": "node scripts/make-credits.mjs --check",
+    "credits": "node scripts/make-credits.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",

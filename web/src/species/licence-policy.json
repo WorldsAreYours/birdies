@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "why": "Birdie may grow a paid tier, and the pipeline trims and normalises every clip it ships. NC (non-commercial) would block the first, ND (no-derivatives) would block the second, so both are refused when a file is found and again when the bundle is built. They are not merely discouraged. An unrecognised licence fails closed: unknown means all-rights-reserved until someone proves otherwise.",
+  "licences": {
+    "public-domain": {
+      "family": "public-domain",
+      "deed": null
+    },
+    "cc0": {
+      "family": "cc0",
+      "deed": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    "cc-by-2.5": {
+      "family": "cc-by",
+      "deed": "https://creativecommons.org/licenses/by/2.5/"
+    },
+    "cc-by-3.0": {
+      "family": "cc-by",
+      "deed": "https://creativecommons.org/licenses/by/3.0/"
+    },
+    "cc-by-4.0": {
+      "family": "cc-by",
+      "deed": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "cc-by-sa-3.0": {
+      "family": "cc-by-sa",
+      "deed": "https://creativecommons.org/licenses/by-sa/3.0/"
+    },
+    "cc-by-sa-4.0": {
+      "family": "cc-by-sa",
+      "deed": "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  },
+  "families": {
+    "public-domain": {
+      "requiresAttribution": false,
+      "shareAlike": false
+    },
+    "cc0": {
+      "requiresAttribution": false,
+      "shareAlike": false
+    },
+    "cc-by": {
+      "requiresAttribution": true,
+      "shareAlike": false
+    },
+    "cc-by-sa": {
+      "requiresAttribution": true,
+      "shareAlike": true
+    }
+  },
+  "forbiddenMarkers": [
+    "\\bnc\\b",
+    "non[\\s-]?commercial",
+    "\\bnd\\b",
+    "no[\\s-]?deriv"
+  ],
+  "requiredAttribution": ["recordist", "license", "licenseUrl", "sourceUrl"],
+  "changeStatement": "downmixed to mono, resampled to 32 kHz and loudness-normalised by web/scripts/prepare-audio.sh"
+}

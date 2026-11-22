@@ -1,4 +1,5 @@
 import type { Period } from '../env/types.js';
+import { isLicence, licenceFacts } from './licences.js';
 import type { ClipUnit, SpeciesRecord, VocalizationUnit } from './types.js';
 import { americanRobin } from './records/american-robin.js';
 
@@ -80,11 +81,36 @@ export function validateRecord(record: SpeciesRecord): string[] {
 
   const allAudio = [...record.songs, ...record.calls];
   for (const variant of allAudio) {
+    // The type says NC cannot be written down, but a cast or a fetched JSON blob
+    // gets past the type. This is the check that makes the licence policy a gate
+    // rather than a comment, and it fails closed: an unknown string is refused.
+    if (!isLicence(variant.license)) {
+      problems.push(
+        `${record.id}: audio ${variant.id} declares licence ${String(variant.license)}, which licence-policy.json does not permit`,
+      );
+    } else if (licenceFacts(variant.license).requiresAttribution) {
+      if (variant.recordist.trim().length === 0) {
+        problems.push(`${record.id}: audio ${variant.id} is ${variant.license} but credits no recordist`);
+      }
+      if (!/^https?:\/\//.test(variant.sourceUrl)) {
+        problems.push(`${record.id}: audio ${variant.id} has no source URL, so its credit cannot be checked`);
+      }
+    }
     if (!CLIP_UNITS.includes(variant.clipUnit)) {
       problems.push(`${record.id}: audio ${variant.id} has unknown clipUnit ${String(variant.clipUnit)}`);
     }
     if (!sourceIds.has(variant.citationId)) {
       problems.push(`${record.id}: audio ${variant.id} cites unknown source ${variant.citationId}`);
+    } else {
+      // The credit's "Source:" line and the citation must name the same recording.
+      // When they disagree the credit points somewhere the clip did not come from,
+      // which is the seam an unlicensed file slips through.
+      const citation = record.sources.find((source) => source.id === variant.citationId);
+      if (citation && citation.url !== variant.sourceUrl) {
+        problems.push(
+          `${record.id}: audio ${variant.id} cites ${variant.citationId} but its sourceUrl is ${variant.sourceUrl}`,
+        );
+      }
     }
     if (!variant.clip.startsWith(`audio/${record.id}/`)) {
       problems.push(`${record.id}: audio ${variant.id} clip is not under audio/${record.id}/`);

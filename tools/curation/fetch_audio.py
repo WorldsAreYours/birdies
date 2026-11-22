@@ -6,6 +6,11 @@ and the result is written to a manifest so a clip can always be traced back to a
 auditable original. Nothing here writes into the app; it stages material for
 audition.
 
+The licence is settled **before** the download, by `licence.py` and the app's own
+`licence-policy.json`: an NC or ND recording is refused and never lands on disk, and
+an unrecognised licence fails closed. Refusals are written into the manifest under
+`rejected` so a file that was found and declined is visible rather than absent.
+
     python3 fetch_audio.py --term "Turdus migratorius" \
         --include 'Turdus migratorius|American Robin|Turdus-migratorius' \
         --exclude 'Grey Jay|Grosbeak|Tanager|Mystery|LL-Q1860' \
@@ -26,6 +31,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from commons_audio import query, strip_html  # noqa: E402
+from licence import classify  # noqa: E402
 
 # Wikimedia rate-limits bulk fetches and wants a descriptive agent with a contact.
 UA = "BirdieCuration/0.1 (offline game asset provenance research; alex@example.invalid)"
@@ -90,6 +96,7 @@ def main():
     os.makedirs(args.dest, exist_ok=True)
 
     entries = []
+    rejected = []
     for p in sorted(pages, key=lambda p: p.get("title", "")):
         title = p.get("title", "")
         if not inc.search(title) or (exc and exc.search(title)):
@@ -97,6 +104,22 @@ def main():
         ii = (p.get("imageinfo") or [{}])[0]
         em = ii.get("extmetadata", {})
         url = ii.get("url", "").split("?")[0]
+        licence_name = strip_html((em.get("LicenseShortName") or {}).get("value", ""))
+        licence_url = (em.get("LicenseUrl") or {}).get("value", "")
+        verdict = classify(licence_name, licence_url)
+        if not verdict.allowed:
+            # Refuse before fetching: a forbidden file that never touches the disk
+            # cannot be trimmed, measured, auditioned, or shipped by mistake.
+            rejected.append(
+                {
+                    "title": title,
+                    "license": licence_name or "?",
+                    "licenseUrl": licence_url,
+                    "reason": verdict.reason,
+                }
+            )
+            print(f"DENY     {title}\n         {verdict.reason}")
+            continue
         want = ii.get("sha1")
         local = os.path.join(args.dest, title.removeprefix("File:").replace(" ", "_"))
         if not os.path.exists(local):
@@ -111,8 +134,9 @@ def main():
             {
                 "title": title,
                 "local": local,
-                "license": (em.get("LicenseShortName") or {}).get("value", "?"),
-                "licenseUrl": (em.get("LicenseUrl") or {}).get("value", ""),
+                "license": licence_name or "?",
+                "licenseUrl": licence_url,
+                "appLicense": verdict.licence,
                 "recordist": strip_html((em.get("Artist") or {}).get("value", "?")),
                 "description": desc,
                 # Xeno-canto mirrors carry the recordist's own Type: field.
@@ -128,9 +152,21 @@ def main():
         print(f"{state:8} {entries[-1]['durationSeconds'] or 0:7.2f}s  {entries[-1]['license']:<16} {title}")
 
     with open(args.manifest, "w") as f:
-        json.dump({"term": args.term, "files": entries}, f, indent=1)
+        json.dump(
+            {
+                "term": args.term,
+                "policy": "web/src/species/licence-policy.json",
+                "files": entries,
+                "rejected": rejected,
+            },
+            f,
+            indent=1,
+        )
     bad = [e for e in entries if not e["sha1Verified"]]
-    print(f"\n{len(entries)} files, {len(entries) - len(bad)} verified, manifest -> {args.manifest}")
+    print(
+        f"\n{len(entries)} files, {len(entries) - len(bad)} verified, "
+        f"{len(rejected)} refused on licence, manifest -> {args.manifest}"
+    )
     return 1 if bad else 0
 
 
