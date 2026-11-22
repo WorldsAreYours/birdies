@@ -104,6 +104,43 @@ Still open:
   necessarily as the first one.
 - **The three candidate clips** — approve, or give a start time.
 
+## Machine check — BirdNET, 2026-11-22
+
+The ear question ("is the pulsing before 42 s in A04 a robin?") was put to a
+classifier as a second opinion, because band energy could not separate the two.
+
+Tool: the official Cornell library `birdnet` 1.5.1 (`birdnet-team/birdnet`),
+acoustic model **v3.0**, ONNX FP32 backend, 3 s windows, min confidence 0.05,
+location/date prior 35.5 N, -78.5 W, 15 April (the source note says North
+Carolina; the date is a guess, and only prunes the species shortlist — American
+Robin is in it either way). Install was `pip install birdnet` in a clean venv; no
+TensorFlow, no numpy pin. The third-party `birdnetlib` was tried first and works
+too, but needs `numpy<2`, `librosa` and `resampy` to read an MP3, and only drives
+the older V2.4 TFLite model — use the official package.
+
+| Recording | Windows | What it says |
+|---|---|---|
+| `A04` (the shipped clip's source) | 16 | Hermit Thrush 0.87–0.93 in 11 of 16 windows, i.e. 0–31 s. American Robin 0.81 in exactly one window, at 42 s. |
+| `pillar-carol-01.mp3` (what ships) | 4 | Hermit Thrush 0.93 in 3 of 4 windows; no robin in the clip at all. |
+| `A09-xc128490` | 20 | American Robin 0.73–0.92 in 20 of 20 windows. |
+| `A20-xc570791` | 15 | American Robin 0.70–0.89 in 14 of 15 windows. |
+| `A20` candidate cut (6.0 s, 12 s) | 4 | American Robin 0.84 in 4 of 4 windows. |
+
+So the ear and the model agree: the "continuous carol" that the 67.7/min figure
+was counted from is a Hermit Thrush, and the shipped clip is a Hermit Thrush.
+
+What this does **not** establish: BirdNET reports species presence per 3 s
+window, not individuals, and it cannot decide song vs call. Its confidence is
+evidence, not ground truth — but 0.87–0.93 across eleven consecutive windows,
+against 0.81 in a single window that the human ear independently placed at 42 s,
+is not a marginal call. Both readings would have to be wrong in the same
+direction.
+
+Consequences recorded in the species record rather than here: the dawn figure is
+withdrawn in substance, and the shipped clip is marked a placeholder that must
+not ship as robin song. Replacing the audio is a product decision, not a
+curation one, so it waits for an explicit go-ahead.
+
 ## What the answers changed
 
 - **Dawn stays at 67.7/min from A04.** A09's 71.5/min was corroboration, and the
