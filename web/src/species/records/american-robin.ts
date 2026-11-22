@@ -42,10 +42,11 @@ export const americanRobin: SpeciesRecord = {
     },
   ],
 
-  // Deliberately empty. Eight call recordings (contact, flight, flock, dusk,
-  // chase) were located and downloaded in the curation session, but naming a
-  // call type is ear work and guessing is the failure mode this record exists
-  // to prevent. See docs/curation/american-robin-audition.md.
+  // Deliberately empty, and the 2026-11-22 audition did not fill it. Nine call
+  // recordings were located; two were heard. A06 carries a call but sits in a
+  // wash of white noise, and A19 has a blue jay over a prominent robin. Neither
+  // yields a name, and naming a call type from a guess is the failure mode this
+  // record exists to prevent. See docs/curation/american-robin-audition.md.
   calls: [],
 
   repertoire: {
@@ -61,7 +62,7 @@ export const americanRobin: SpeciesRecord = {
       method: 'measured',
       citationId: 'audio-mcgrane-robin',
       note:
-        'Counted from the shipped source recording: 43 phrases over 38.1 s of continuous caroling (the file opens with ~8 s of silence; there are no gaps longer than 1.2 s thereafter). Method: 25 ms RMS envelope over 22.05 kHz mono, threshold at 35% of the file\'s own dynamic range, segments merged across gaps under 120 ms, shortest accepted phrase 60 ms. The shipped clip is a 12 s excerpt at average density (14 phrases, 70/min). Corroborated by an independent dawn recording (XC128490, 7 min 21 s of continuous song from one bird in a maple tree): 525 phrases over 440.7 s = 71.5/min; and by Johnson 2006, whose own field recordings give "100 elements in under 100 sec" for a male in the pre-dawn chorus (>=60/min, though an element is not the same unit as an envelope burst). Limits: this source may contain more than one individual — its description says "American Robins", plural — which would inflate the rate; the dawn attribution rests on this being a spring dawn chorus, which the source does not state; and the count has not been verified by ear.',
+        'Counted from the shipped source recording: 43 phrases over 38.1 s of continuous caroling (the file opens with ~8 s of silence; there are no gaps longer than 1.2 s thereafter). Method: 25 ms RMS envelope over 22.05 kHz mono, threshold at 35% of the file\'s own dynamic range, segments merged across gaps under 120 ms, shortest accepted phrase 60 ms. The shipped clip is a 12 s excerpt at average density (14 phrases, 70/min). Corroborated by an independent dawn recording (XC128490, 7 min 21 s of continuous song from a maple tree): 525 phrases over 440.7 s = 71.5/min — auditioned by ear, that file has one prominent bird with other robins audible in the background, so its rate is a chorus figure and an upper bound for a single male; and by Johnson 2006, whose own field recordings give "100 elements in under 100 sec" for a male in the pre-dawn chorus (>=60/min, though an element is not the same unit as an envelope burst). Limits: this source may contain more than one individual — its description says "American Robins", plural — which would inflate the rate; the dawn attribution rests on this being a spring dawn chorus, which the source does not state; and the count has not been verified by ear.',
     },
     morning: {
       songsPerMinute: 34,
@@ -82,7 +83,7 @@ export const americanRobin: SpeciesRecord = {
       method: 'measured',
       citationId: 'xc132864',
       note:
-        'Counted from XC132864 — the recordist\'s note reads "Singing from 15m up at top of spruce tree in campground just before sundown": 144 bursts over 200.8 s of active span = 43.0/min. The recordist labels the file "call, song", so this is an upper bound on song alone; it is one bird on one evening, enough to replace a placeholder and not enough to be a population figure. It sits where the literature puts evening song: Miller 1958 describes a second, lesser peak before roosting. Sound has not been verified by ear.',
+        'Counted from XC132864 — the recordist\'s note reads "Singing from 15m up at top of spruce tree in campground just before sundown": 144 bursts over 200.8 s of active span = 43.0/min. The recordist labels the file "call, song", so this is an upper bound on song alone; it is one bird on one evening, enough to replace a placeholder and not enough to be a population figure. It sits where the literature puts evening song: Miller 1958 describes a second, lesser peak before roosting. Auditioned by ear: one clean, prominent robin and no other species, but whether the file is song, a call, or both is still undetermined — which is what keeps 43/min an upper bound.',
     },
     night: {
       songsPerMinute: 0,
@@ -185,8 +186,8 @@ export const americanRobin: SpeciesRecord = {
     'cadence.midday — magnitude is a declared simplification (its shape is sourced to Slagsvold 1996)',
     'cadence.dusk — measured from one bird on one evening, from a file the recordist labels "call, song", so song alone is below 43/min',
     'repertoire.documented — 6–25 is a published range, not a census; the hisselly repertoire is unquantified',
-    'songs — the one shipped clip\'s song type is unclassified until audition',
-    'calls — empty; eight candidate call recordings await audition',
+    'songs — the one shipped clip\'s song type is unclassified, and the two auditioned candidates for named variants were rejected: A08 has a cardinal and a red-winged blackbird in it, A10 has a blackbird',
+    'calls — empty; A06 carries a call buried in white noise and A19 a robin under a blue jay, and no call type has been named',
     'strata.preferred — secondary source plus recordist notes only; Birds of North America not read',
     'fieldMarks — from general reading, not tied to a single citation',
     'journal.birder — assembled from the sources above, not reviewed by a birder',
