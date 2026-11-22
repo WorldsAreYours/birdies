@@ -373,6 +373,10 @@ until a browser smoke test is worth the dependency.
 
 ## 5. Phased plan
 
+The scope items below say what each phase must contain. The work itself is tracked as GitHub
+issues under a milestone per deliverable (see `AGENTS.md`, "Tracker"), and this section carries
+no status: where it and the tracker disagree about what is done, the tracker is right.
+
 ### Phase 0 — Environment & branch (½ day)
 - Install Node 22 LTS (nvm) — required before any Vite work.
 - Create `feat/birdie-web-app` from `main` (not from `phase-2`; see D4).

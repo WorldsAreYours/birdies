@@ -135,6 +135,28 @@ change, not after. `npm run check` must pass.
   also rerun `bash scripts/prepare-audio.sh` and confirm the pinned hashes still
   build.
 
+## Tracker
+
+- The GitHub tracker is the queue and the only place status lives. `docs/birdie-transition-plan.md`
+  owns architecture and scope; issues cite it by section, and it never cites issues.
+- Two shapes, and a template for each in `.github/ISSUE_TEMPLATE/`. A **story** is a
+  player-visible increment with acceptance criteria; a **defect** is something shipped that is
+  wrong, with what/where/evidence/closes-when. A task that is neither belongs inside the story
+  it serves, not as its own issue. The templates apply when filing from the web UI; an issue
+  filed with `gh` has to be written to the same shape by hand.
+- Done means the acceptance criteria pass and `npm run check` is green; defects use their
+  "closes when" checklist. Commits and PRs name the issue (`closes #12`) so it closes on merge,
+  not on someone remembering.
+- Milestones name the deliverable, not the phase number. The description says what the
+  milestone gates; the order lives in `Blocked by #n` lines on the issues, because milestones
+  do not sequence.
+- Labels: `area:*` says where the work lives and mirrors the `src/` layout; `defect`,
+  `false-claim`, `compliance`, `process`, `scale` say what kind of wrong; `status:*` is current
+  state; `needs-ear` means it waits on Alex. No story points, no burndown, no Projects board —
+  at one human and one agent, a board is a second copy of open/closed with its own drift.
+- Restating an issue's number, title or status in a doc is the drift this repo keeps paying
+  for. Point at the tracker; never mirror it.
+
 ## Current state and next step
 
 Phase 1 (one bird, faithfully) is in progress. Done and tested: `env/`, `species/`

@@ -17,7 +17,7 @@ Related: `docs/curation/american-robin-audio.md` (provenance, measurements),
 **Status lives in the tracker, not here.** The audio-pipeline findings are filed as
 GitHub issues under the milestone
 [`Audio pipeline audit`](https://github.com/WorldsAreYours/birdies/milestone/1) —
-seven issues as of 2026-11-22, with the evidence and the file:line for each. The
+seven findings filed as one issue each, with the evidence and the file:line. The
 sections below stay as the narrative: what was measured, why it matters, and the
 order I would take it in. Do not restate issue status in this file; it drifts.
 
