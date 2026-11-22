@@ -14,6 +14,13 @@ Related: `docs/curation/american-robin-audio.md` (provenance, measurements),
 `docs/curation/american-robin-audition.md` (ear work and its results),
 `docs/birdie-transition-plan.md` (architecture, decisions D1–D10).
 
+**Status lives in the tracker, not here.** The audio-pipeline findings are filed as
+GitHub issues under the milestone
+[`Audio pipeline audit`](https://github.com/WorldsAreYours/birdies/milestone/1) —
+seven issues as of 2026-11-22, with the evidence and the file:line for each. The
+sections below stay as the narrative: what was measured, why it matters, and the
+order I would take it in. Do not restate issue status in this file; it drifts.
+
 ---
 
 ## 1. Analysis the machine could do and does not yet
