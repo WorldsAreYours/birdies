@@ -17,7 +17,7 @@ Phase 1 of [the transition plan](../docs/birdie-transition-plan.md) is in progre
 |---|---|
 | `src/env/` — simulated clock, season, daylight, time-of-day period | **done, tested** |
 | `src/species/` — record schema, validator, the American Robin | **one provisional record, tested** |
-| `src/sim/` — cadence, variants, event simulation, scheduler | not written — next |
+| `src/sim/` — cadence, variants, event simulation, scheduler | **done, tested** |
 | `src/audio/` — Web Audio engine and look-ahead scheduling | not written |
 | `src/pieces/`, `src/game/`, `src/backyard/`, `src/journal/` | not written |
 | PWA precache (`vite-plugin-pwa`) | not added yet — needs the audio assets first |

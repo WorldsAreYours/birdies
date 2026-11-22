@@ -10,6 +10,7 @@ import {
 } from '../env/clock.js';
 import type { Period } from '../env/types.js';
 import { getRecord } from '../species/catalog.js';
+import { songsPerMinute } from '../sim/rate.js';
 
 /**
  * Phase 1 shell. It is deliberately small: it renders the one thing that is
@@ -44,6 +45,15 @@ export function App() {
   const habitat = 'suburban yard';
   const bird = getRecord('american-robin');
   const dawn = bird.cadence.dawn;
+  const rate = songsPerMinute(bird, env, 'canopy');
+  const rateLabel =
+    rate.perMinute === 0 ? 'not at all' : `about ${Math.round(rate.perMinute)} phrases a minute`;
+  const rateBasis =
+    rate.confidence === 'sourced'
+      ? 'from a sourced figure'
+      : rate.confidence === 'simplified'
+        ? 'from a placeholder figure, not data'
+        : 'no figure for this time of day';
 
   return (
     <main className="birdie">
@@ -131,6 +141,11 @@ export function App() {
         </p>
 
         <p className="bird__fact">{bird.journal.child}</p>
+        <p className="bird__fact">
+          At {formatTime(clock)}, this bird in the canopy would sing <strong>{rateLabel}</strong>
+          <span className="bird__method">{rateBasis}</span>
+        </p>
+
 
         <p className="bird__caveat">
           {bird.provisional.length} fields are still unsourced or unconfirmed, including whether this
