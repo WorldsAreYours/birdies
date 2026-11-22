@@ -114,8 +114,7 @@ when the merge gap is changed, because the merge gap *is* the unit definition:
 | 700 ms | 11, 16.0/min | 79, 10.8/min | 1, 6.9/min |
 | 1000 ms — pauses between phrases | 10, 14.5/min | 40, 5.4/min | 1, 6.9/min |
 
-A20 is 43.78 s of one adult male, band-passed 150 Hz–5 kHz, threshold 0.35, 25 ms frames.
-A09 is 441.6 s, a chorus with one prominent bird. The shipped clip is
+A20 is 43.78 s: an adult male for the first ~10 s, then mixed with Yellow-rumped Warbler and crows, band-passed 150 Hz–5 kHz, threshold 0.35, 25 ms frames. A09 is 441.6 s, a chorus with one prominent bird. The shipped clip is
 `web/public/audio/american-robin/pillar-carol-01.mp3` (10.04 s), measured as-is.
 
 There is no published rule that says a gap of 400 ms makes a song. Johnson says groups
@@ -162,9 +161,9 @@ the Vocal Activity Rate index is defined as "the number of songs per unit time f
 species" (Pérez-Granados et al. 2019), and studies of sampling effort show the estimate
 depends on how long and when you listen (Pérez-Granados et al. 2019, *Ecological
 Indicators*). The game needs a believable cadence, not a laboratory constant, so a
-range is both more honest and more useful: "57–58 elements/min over 41 s" is a better
-record than "57.0", and "57–73 across two recordings" is a better population claim than
-either.
+range is both more honest and more useful: "70.5–73.7 elements/min over 440 s" is a better
+record than "71.2", and "73 on a 10 s single-male sample, 71 on a chorus" is a better claim than
+either point alone.
 
 ---
 
@@ -232,12 +231,14 @@ and rate against ambient noise and found neither related to noise. The abstract 
 report the mean rate; the full text is paywalled. It is a good citation for "rate is a
 stable trait", not for a magnitude.
 
-**What this means:** there is one published element-rate anchor (Johnson, ≥60/min), one
-measured chorus rate (A09, 71/min) and one measured single-male file that is clean only
-for its first 10 s (A20, 57/min over the whole file, 73/min in the clean opening). The
-honest single-male figure is a range in the high 50s to low 70s, not a point. Morning and
-midday have a documented *shape* but no published magnitude; those remain declared
-simplifications, which is what the record already says.
+**What this means:** there is one published element-rate anchor (Johnson, ≥60/min), one measured
+chorus rate (A09, 71/min) and one measured single-male span (A20, 73/min over the clean 10 s opening).
+The 57/min over the whole A20 file is not a single-male figure: the recording turns mixed after ~10 s,
+so that count includes other species. The only honest single-male point estimate is 73 elements/min
+from a 10 s sample, corroborated by Johnson's ≥60/min; A09 is a chorus upper bound. A single male's
+average over a longer clean recording does not exist in this corpus. Morning and midday have a
+documented *shape* but no published magnitude; those remain declared simplifications, which is what
+the record already says.
 
 ---
 
@@ -245,8 +246,9 @@ simplifications, which is what the record already says.
 
 1. **Make the unit explicit in the data model.** Add `unit: 'element' | 'song' | 'bout'`
    to `CadenceClaim` (or rename `songsPerMinute` to `unitsPerMinute`), and write the
-   record as "57 elements/min over 41.0 s, 150 Hz–5 kHz band-pass, threshold 0.35,
-   120 ms merge". If the product needs *songs*, define a song as a group of 3–8 elements
+   record as "73 elements/min over the 10 s robin-only opening (57 over the full mixed
+   file), 150 Hz–5 kHz band-pass, threshold 0.35, 120 ms merge". If the product needs
+   *songs*, define a song as a group of 3–8 elements
    (Johnson) and either measure group boundaries by hand or schedule at the element
    level with element-length clips. Do not put a group rate in a field called
    `songsPerMinute` without saying how the group was defined.
@@ -259,10 +261,10 @@ simplifications, which is what the record already says.
    recordings; report precision and recall at the chosen parameters, plus the count
    range over a threshold and merge-gap sweep. Version the parameters. After that,
    "measured" has a defensible meaning.
-4. **Co-design clip length and cadence unit.** A 10 s clip contains about 8–10 elements
-   at 57/min. If an event is an element, the clip must be an element (roughly 0.2–1 s);
-   if the clip is a 10 s bout, the event rate must be a bout rate (single digits per
-   minute). Pick one and make the scheduler and the record agree.
+4. **Co-design clip length and cadence unit.** The shipped 10 s clip contains 7 elements
+   (50.1/min); at 57/min ten seconds is about 9.5. If an event is an element, the clip must be
+   an element (roughly 0.2–1 s); if the clip is a 10 s bout, the event rate must be a bout rate
+   (single digits per minute). Pick one and make the scheduler and the record agree.
 5. **Keep BirdNET, change what you report.** Window fraction and margin, not max
    confidence; run it on the artefact that ships. Add Perch v2 only if an identification
    is contested, and budget TensorFlow plus 379 MB.
