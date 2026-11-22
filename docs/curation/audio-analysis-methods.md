@@ -244,8 +244,9 @@ the record already says.
 
 ## 6. Recommendations, in order
 
-1. **Make the unit explicit in the data model.** Add `unit: 'element' | 'song' | 'bout'`
-   to `CadenceClaim` (or rename `songsPerMinute` to `unitsPerMinute`), and write the
+1. **Make the unit explicit in the data model.** The normative definitions and field names
+   are in `docs/vocalization-units.md`: `perMinute` plus `unit: 'element' | 'song' | 'bout'`,
+   and `clipUnit` on every variant. For the robin, write the
    record as "73 elements/min over the 10 s robin-only opening (57 over the full mixed
    file), 150 Hz–5 kHz band-pass, threshold 0.35, 120 ms merge". If the product needs
    *songs*, define a song as a group of 3–8 elements

@@ -40,7 +40,9 @@ on 2026-11-22; the legacy Python detector is preserved read-only at branch
 3. **The species records are the product; code plays them.** Anything hard-coded
    about a bird's behaviour is a bug in the model. Adding a sixth bird must be a
    data edit, not a code change. Cadence, variants, seasonality, strata and
-   provenance all live in `web/src/species/records/*`.
+   provenance all live in `web/src/species/records/*`. Every cadence figure names
+   its unit — `element`, `song` or `bout` — per `docs/vocalization-units.md`; an
+   unqualified "songs per minute" is a bug.
 4. **Pure core, thin edges.** `env/`, `sim/`, `game/`, `backyard/`, `journal/` and
    the serialization half of `storage/` are pure functions over plain data. Only
    `audio/engine.ts` and the React shell touch the browser.
