@@ -93,7 +93,7 @@ Two independent dawn measurements now exist, and one published anchor:
 
 | Recording | Context | Span | Bursts/min |
 |---|---|---|---|
-| A04 McGrane (PD, 46 s) | "American Robins", North Carolina, context unstated | 38.1 s | **67.7** |
+| A04 McGrane (PD, 46 s) | **withdrawn 2026-11-22** — the first 33 s is Hermit Thrush (ear + BirdNET v3 0.87–0.93); the 67.7/min counted here is a thrush's | 38.1 s | ~~67.7~~ |
 | A09 XC128490 (CC BY-SA, 441.6 s) | "before dawn", one bird in a maple tree | 440.7 s | **71.5** |
 | A13 XC132864 | "just before sundown", 15 m up a spruce | 200.8 s | **43.0** |
 | A12 XC131093 | calls, fence, "around dawn" | 125.8 s | 50.5 (calls) |
@@ -203,7 +203,8 @@ for most of it, and keep the PD McGrane clip as the attribution-light fallback:
 
 | Role | Recording | Why |
 |---|---|---|
-| dawn carol | A09 (CC BY-SA 3.0) | auditioned: one prominent bird with a chorus behind it, 7 min of material, several clean windows |
+| dawn carol | **A20, first 10 s** (CC BY-SA 4.0) | shipped 2026-11-22: auditioned as "very robin focused" for the opening 10 s; BirdNET 0.85 in every window; 50.1/min rendered vs 51.2/min file average. Dawn is anchored here |
+| dawn corroboration | A09 (CC BY-SA 3.0) | auditioned: one prominent bird with a chorus behind it, 7 min of material; 71.5/min is a chorus upper bound |
 | hisselly song | A10 (CC BY-SA 3.0) | **blocked** — auditioned and a blackbird is in the file |
 | whisper song | A15 (CC BY-SA) | A08 **rejected** (cardinal + red-winged blackbird); A15 still unheard |
 | second dawn male | A20 (CC BY-SA 4.0) | **approved 2026-11-22** — robin only, different region |

@@ -96,6 +96,11 @@ Still open:
      so no 12 s excerpt cut from A04 can be mostly robin — the shipped clip has to
      come from another recording whatever the answer above is.
 
+  **Settled.** BirdNET confirms the ear (section below), and on the strength of it
+  the shipped clip is now the first 10 s of `A20` — the part the listener called
+  "very robin focused" — with the mixed tail left out. Dawn is re-anchored on the
+  measured single male at 51.2/min. This bullet stays as the record of why.
+
   Candidate replacement: `A20` (Doug Hynes, Newfoundland, robin and nothing else,
   approved by ear earlier today). A 12 s cut from 6.0 s of A20 measures 10 phrases
   = 51.1/min against the parent's 51.2, so it sits at average density. It is in the
