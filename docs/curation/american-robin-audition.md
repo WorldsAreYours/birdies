@@ -16,6 +16,11 @@ Normalised to matched loudness, mono, 32 kHz — so differences you hear are the
 birds, not the levels. Any player will do; `mpv A09*` or copy the folder to a
 phone.
 
+If you have no shell on the host, the same pack is mirrored on the temporary
+branch `tmp/robin-audition`, under `tmp/robin-audition/` (README, CREDITS and all
+25 files). GitHub's "Code → Download ZIP" on that branch is the fastest way in.
+That branch is disposable: delete it once the answers below are recorded.
+
 ## Pass 1 — five minutes, seven files
 
 If you only do one pass, do this one. It decides what the robin ships with.
