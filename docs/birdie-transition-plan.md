@@ -446,7 +446,8 @@ flock behaviour, accounts, sync, social. `tokenId` stays in the data model so no
 it is simply not being built.
 
 **What got cut in this revision.** The pared plan drops: physical NFC tokens (was Phase 3, now parked),
-the ambient mode (cut entirely), and the "gift" economy (pending D7 — bird-as-gift assumed). What it
+the ambient mode (cut entirely), and the separate "gift" item economy (D7: bird-as-gift now, item gifts
+in a later phase). What it
 adds instead: multiple song variants per bird, sourced cadence data, seasonal presence, habitat strata,
 and a facts linter. Net effect is fewer features and much more truth per feature.
 
@@ -469,6 +470,11 @@ many Xeno-canto recordings are CC-BY-**NC**, which conflicts with tokens/QR and 
 I'd use public-domain or CC0/CC-BY recordings with attribution, or generate clean clips, and store
 provenance per species in the catalogue. Flagging now because it is much cheaper to fix before
 assets are embedded in physical tokens.
+
+Status (2026-11-22): public-domain material located for all five species on Wikimedia Commons, but not
+enough of it (robin 3, jay 1, chickadee 1, cardinal 1, dove 0), so CC BY-SA will carry the rest, with a
+credits page. Audition of the extra robin recordings is **deferred to a dedicated session** (Alex); the
+robin record stays `verified: false` until someone has listened.
 
 **D4 — RESOLVED (Alex): `phase-2` is archived, not merged.** Alex chose to rewrite `main` rather than
 carry the Python lineage into the new product. `phase-2` is preserved read-only at
@@ -494,10 +500,11 @@ which can be read two ways, and Phase 1 cannot ship without choosing:
   attracts or houses the bird. Two currencies, more depth, more content to author, and the chorus
   becomes a property of the yard rather than of the collection.
 
-I have built the plan on **(i)** because it needs no invented content and keeps the slice honest. If
-you mean **(ii)**, Phase 1 changes shape (gift inventory, yard items, attraction rules) and Phase 2
-grows considerably. Genuinely needs your call — this is the one place where guessing wrong costs a
-week rather than a day.
+**RESOLVED (Alex, 2026-11-22): (i) first, (ii) later.** A correct answer earns the bird, which the
+player then places. Option (ii) — separate gift items that attract birds — is planned for a later
+phase, not abandoned. Consequence for now: the Phase 1 schema models no inventory and no yard items,
+so the species record stays purely about the bird, and the chorus follows from what has been
+collected. When (ii) arrives it adds a second currency rather than replacing this one.
 
 **D8 — RESOLVED (Alex): the clock is simulated, never real.** The app runs on its own clock that the
 player controls; there is no `Date.now()` on the play path and no dependence on the device's real time
