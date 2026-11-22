@@ -36,17 +36,28 @@ fetch() { # url dest expected_sha256
 }
 
 # ---------------------------------------------------------------------------
-# 1. The carol. Source: G. McGrane, "American Robin", 46.16 s, public domain.
-#    Cadence in records/american-robin.ts is counted from THIS file:
-#    43 phrases over 38.1 s of continuous song (file opens with ~8 s of silence).
-#    Shipped clip: 23.5 s + 12 s — a window at average phrase density (70/min),
-#    chosen so the clip does not sound busier than the record claims.
+# 1. The carol. Source: Doug Hynes, "American Robin" XC570791, 43.78 s,
+#    CC BY-SA 4.0, Goulds, Newfoundland and Labrador — adult male, song.
+#
+#    Replaces G. McGrane's public-domain "American Robin", withdrawn 2026-11-22:
+#    its first 33 s is Hermit Thrush (auditioned by ear; BirdNET v3 returns
+#    Hermit Thrush at 0.87-0.93 across eleven consecutive windows, with American
+#    Robin at 0.81 only at 42 s of 46 s). The 67.7 phrases/min counted from that
+#    file, and every clip cut from it, was a thrush.
+#    Withdrawn source, kept for the record: American_Robin.ogg,
+#    sha256 e3cf54141471fdc91745dd1979abc113157ba60a6e52880a21093c70fe6f0c4d.
+#
+#    Shipped clip: 0.0 s + 10 s. The opening stretch is one clean robin; the
+#    recording turns mixed after ~10 s (Yellow-rumped Warbler, crows), so the
+#    clip stops there. Rendered through this pipeline the window measures 50.1
+#    phrases/min over an 8.4 s active span against the file's 51.2/min average,
+#    so it sits just below average density rather than at the busiest window.
 # ---------------------------------------------------------------------------
-SRC1="$WORK/American_Robin.ogg"
-fetch "https://upload.wikimedia.org/wikipedia/commons/4/4e/American_Robin.ogg" \
-      "$SRC1" "e3cf54141471fdc91745dd1979abc113157ba60a6e52880a21093c70fe6f0c4d"
+SRC1="$WORK/Turdus_migratorius_-_American_Robin_XC570791.mp3"
+fetch "https://upload.wikimedia.org/wikipedia/commons/1/16/Turdus_migratorius_-_American_Robin_XC570791.mp3" \
+      "$SRC1" "ce85004ba336e224a51e348754e854bab5c3341ccb049e9751ab9a61f1b2abff"
 
-ffmpeg -v error -y -ss 23.5 -t 12 -i "$SRC1" \
+ffmpeg -v error -y -ss 0 -t 10 -i "$SRC1" \
   -ac 1 -ar 32000 -codec:a libmp3lame -b:a 96k \
   "$OUT/pillar-carol-01.mp3"
 echo "built $OUT/pillar-carol-01.mp3"
