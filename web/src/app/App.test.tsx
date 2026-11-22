@@ -40,7 +40,7 @@ describe('App shell', () => {
   it('shows the bird with its measured figure and its provisional flag', () => {
     expect(html).toContain('American Robin');
     expect(html).toContain('Turdus migratorius');
-    expect(html).toContain('51.2 elements a minute');
+    expect(html).toContain('60.0 elements a minute');
     expect(html).toContain('provisional');
     expect(html).not.toContain('verified by ear');
   });

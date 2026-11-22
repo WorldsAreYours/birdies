@@ -42,9 +42,9 @@ describe('american robin record', () => {
     expect(americanRobin.songs[0]?.clipUnit).toBe('excerpt');
   });
 
-  it('anchors cadence on a measured dawn figure and records what it replaced', () => {
+  it('anchors cadence on the published dawn floor and records what it replaced', () => {
     const dawn = americanRobin.cadence.dawn;
-    expect(dawn?.method).toBe('counted');
+    expect(dawn?.method).toBe('published');
     expect(dawn?.unit).toBe('element');
     expect(dawn?.perMinute).toBeGreaterThan(0);
     // The original 67.7/min came from a recording that turned out to be Hermit
@@ -122,7 +122,7 @@ describe('validator rules', () => {
   it('rejects a counted claim with no citation', () => {
     const record = clone();
     // @ts-expect-error deliberately breaking the invariant under test
-    record.cadence.dawn.citationId = null;
+    record.cadence.dusk.citationId = null;
     expect(validateRecord(record).join(' ')).toMatch(/counted but has no citation/);
   });
 
@@ -135,7 +135,7 @@ describe('validator rules', () => {
 
   it('rejects a machine-counted song rate', () => {
     const record = clone();
-    const claim = record.cadence.dawn as { unit: string };
+    const claim = record.cadence.dusk as { unit: string };
     claim.unit = 'song';
     expect(validateRecord(record).join(' ')).toMatch(/song rate without an annotation/);
   });

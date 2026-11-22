@@ -78,10 +78,13 @@ this repo still does by hand what it should do from data.
 
 ## 3. Open on the robin record (this is what `verified: false` means)
 
-- **Dawn attribution is presumed, not sourced.** 51.2/min comes from XC570791, whose
-  recordist labels it "adult, male, song" — not "dawn". A recording that states dawn, or a
-  study that quantifies it for this species at this latitude, closes it. XC128490 does state
-  "before dawn" but is a chorus (71.5/min, an upper bound).
+- **Dawn is sourced from Johnson, but only as a floor.** 60 elements/min comes from
+  Johnson (2006): 100 elements in under 100 s, from 42 males recorded in the pre-dawn
+  chorus. It is a lower bound, not a measured single-male mean. The best measured
+  single-male span is 73.2/min over the clean 10 s opening of XC570791, which is the
+  densest of four 10 s chunks; the whole file is mixed after 10 s and the 7-minute
+  recording is a chorus. A study that quantifies a mean for this species and latitude
+  would replace the floor.
 - **Morning and midday are declared simplifications.** The shape is sourced (Miller 1958,
   Slagsvold 1996); the magnitudes are not. A quantified study closes both.
 - **Dusk is an upper bound.** 43/min counted off a file labelled "call, song", and the
@@ -102,7 +105,7 @@ this repo still does by hand what it should do from data.
 
 ## 4. Product and design questions this raised
 
-- **One 10 s clip at 51.2 elements/min is a scheduling problem.** The simulation asks for
+- **One 10 s clip at 60 elements/min is a scheduling problem.** The simulation asks for
   about one song every 1.2 s; the corpus has one 10 s recording with 7 elements in it. A yard
   that repeats the same file is the artifact the "never the same variant twice in a row"
   rule exists to prevent, and that rule cannot fix a single-variant problem. Needs either

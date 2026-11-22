@@ -60,20 +60,20 @@ export const americanRobin: SpeciesRecord = {
 
   cadence: {
     dawn: {
-      perMinute: 51.2,
+      perMinute: 60,
       unit: 'element',
-      method: 'counted',
-      citationId: 'xc570791',
+      method: 'published',
+      citationId: 'johnson-2006',
       note:
-        'Counted from XC570791 (43.78 s; adult male for the first ~10 s, then mixed with Yellow-rumped Warbler and crows; Goulds, Newfoundland): 35 elements over 41.0 s = 51.2/min untreated. This is an element rate over a mixed span, and low-frequency rumble pulled it down; after a 150 Hz high-pass the same file gives 39 elements over 41.0 s = 57.0/min, and the clean 10 s opening gives 73.2/min. The figure is under review — see docs/curation/audio-analysis-methods.md §5. Limits: the recordist labels this "adult, male, song" and not "dawn", so the dawn attribution is presumed from the game\'s model rather than stated by the source; the count has not been verified by ear beyond confirming a clean single robin in the opening; and one male on one morning replaces a placeholder without becoming a population figure. What it replaces and what corroborates it: the previous 67.7/min was counted from the McGrane recording, whose first 33 s this record\'s own audition and BirdNET both place as Hermit Thrush — that figure and every clip cut from it are withdrawn. XC128490 does state "singing before dawn" and measures about 71 elements/min, but as a chorus, which makes it an upper bound rather than a single male\'s rate.',
+        'Johnson (2006, p. 344) states that during the pre-dawn chorus an individual typically sings 100 elements in under 100 s, i.e. at least 60 elements/min. That is a floor, not a mean, and it is the only published single-male anchor. The measurements we have are all compromised in different ways: the clean 10 s opening of XC570791 measures 73.2 elements/min but is the densest of four 10 s chunks (73.2, 54.9, 49.4, 65.9); the whole XC570791 file measures 57.0/min after a 150 Hz high-pass but turns mixed with Yellow-rumped Warbler and crows after 10 s; XC128490 measures about 71/min but is a chorus, so an upper bound. The previous 51.2/min was an untreated count over the mixed span; low-frequency rumble pulled it down and the figure is withdrawn. The earlier 67.7/min came from the McGrane recording, whose first 33 s are Hermit Thrush by ear and BirdNET; that figure and every clip cut from it are withdrawn. The count has not been verified by ear beyond confirming a clean single robin in the 10 s opening. Dawn attribution: Johnson recorded pre-dawn song from 42 males in western Massachusetts; this record uses his rate rather than presuming a dawn label on a single Newfoundland recording.',
     },
     morning: {
-      perMinute: 34,
+      perMinute: 30,
       unit: 'element',
       method: 'simplified',
       citationId: null,
       note:
-        'Placeholder for the magnitude, not for the shape: Miller 1958 describes robin song as "intermittently throughout the day" outside the dawn and evening peaks. Set at half the measured dawn rate. The figure is a declared choice and is not presented as data.',
+        'Placeholder for the magnitude, not for the shape: Miller 1958 describes robin song as "intermittently throughout the day" outside the dawn and evening peaks. Set at half the published dawn floor (60 → 30). The figure is a declared choice and is not presented as data.',
     },
     midday: {
       perMinute: 10,

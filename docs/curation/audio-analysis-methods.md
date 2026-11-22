@@ -232,14 +232,12 @@ and rate against ambient noise and found neither related to noise. The abstract 
 report the mean rate; the full text is paywalled. It is a good citation for "rate is a
 stable trait", not for a magnitude.
 
-**What this means:** there is one published element-rate anchor (Johnson, ≥60/min), one measured
-chorus rate (A09, 71/min) and one measured single-male span (A20, 73/min over the clean 10 s opening).
-The 57/min over the whole A20 file is not a single-male figure: the recording turns mixed after ~10 s,
-so that count includes other species. The only honest single-male point estimate is 73 elements/min
-from a 10 s sample, corroborated by Johnson's ≥60/min; A09 is a chorus upper bound. A single male's
-average over a longer clean recording does not exist in this corpus. Morning and midday have a
-documented *shape* but no published magnitude; those remain declared simplifications, which is what
-the record already says.
+**What this means:** the only published single-male anchor is Johnson's floor — at least
+60 elements/min. Every measured point is compromised in a different direction: 73.2 is the
+densest ten-second window, 57.0 is a mixed-species whole file, and 71 is a chorus. The
+record therefore uses the published floor and keeps the measurements as corroboration.
+Morning and midday have a documented *shape* but no published magnitude; those remain
+declared simplifications, which is what the record already says.
 
 ---
 

@@ -181,13 +181,18 @@ Rules, enforced by `validateRecord` and by the scheduler:
 
 | figure | value | unit | span | status |
 |---|---|---|---|---|
-| clean opening | 73.2/min | element | 10 s | best single-male sample |
+| published floor | 60/min | element | — | Johnson 2006; the record's dawn figure |
+| clean opening | 73.2/min | element | 10 s | densest of four 10 s chunks; corroboration |
 | whole file | 57.0/min | element | 41.0 s | mixed species after 10 s; not a single-male rate |
 | song rate | — | song | — | not measured; needs annotation |
 | shipped clip | 7 elements | excerpt | 10.04 s | `clipUnit: 'excerpt'` |
 
-The old 51.2/min is an element count over the mixed span, pulled down by low-frequency
-rumble. It is not a song rate and not a clean single-male rate.
+The record uses Johnson's floor rather than 73.2 because every measured point is
+compromised in a different direction: 73.2 is the densest ten-second window (the other
+chunks are 54.9, 49.4 and 65.9), 57.0 is a mixed-species whole file, and 71 is a chorus.
+The floor is conservative and sourced; the measurements are the corroboration, not the
+anchor. The old 51.2/min was an untreated count over the mixed span, pulled down by
+low-frequency rumble; it is withdrawn.
 
 ### A09 — XC128490 (chorus with one prominent bird)
 

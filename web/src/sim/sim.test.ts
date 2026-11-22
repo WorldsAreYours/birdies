@@ -38,12 +38,10 @@ function absentInWinter(): SpeciesRecord {
 }
 
 describe('rate: seasons and periods', () => {
-  it('plays the counted dawn element figure at full strength', () => {
+  it('plays the published dawn element figure at full strength', () => {
     const rate = vocalizationRate(americanRobin, SPRING_DAWN, 'canopy');
-    // 67.7 until 2026-11-22, when the source recording turned out to be Hermit
-    // Thrush and dawn was re-anchored on the clean single male in XC570791.
-    expect(rate.perMinute).toBeCloseTo(51.2, 5);
-    expect(rate.confidence).toBe('counted');
+    expect(rate.perMinute).toBeCloseTo(60, 5);
+    expect(rate.confidence).toBe('sourced');
     expect(rate.unit).toBe('element');
   });
 
@@ -80,8 +78,8 @@ describe('rate: seasons and periods', () => {
   it('halves the rate for a bird that is merely present', () => {
     const fall = { season: 'fall' as const, period: 'dawn' as const };
     const rate = vocalizationRate(americanRobin, fall, 'canopy');
-    expect(rate.perMinute).toBeCloseTo(51.2 * SEASON_FACTORS.present, 5);
-    expect(rate.confidence).toBe('counted');
+    expect(rate.perMinute).toBeCloseTo(60 * SEASON_FACTORS.present, 5);
+    expect(rate.confidence).toBe('sourced');
   });
 });
 
@@ -102,7 +100,7 @@ describe('rate: placement (D10)', () => {
   });
 
   it('reports expected event counts consistently with the rate', () => {
-    expect(expectedEvents(americanRobin, SPRING_DAWN, 'canopy', 60)).toBeCloseTo(51.2, 4);
+    expect(expectedEvents(americanRobin, SPRING_DAWN, 'canopy', 60)).toBeCloseTo(60, 4);
     expect(expectedEvents(americanRobin, SPRING_NIGHT, 'canopy', 60)).toBe(0);
   });
 });
@@ -149,7 +147,7 @@ describe('variants', () => {
 describe('simulate', () => {
   it('produces events at roughly the documented rate', () => {
     const events = simulate(SPRING_DAWN, [robinPlaced('canopy')], { seed: 1, horizonSeconds: 60 });
-    // Poisson with mean 51.2: a ±3σ band is roughly 28–75. Wide on purpose —
+    // Poisson with mean 60: a ±3σ band is roughly 37–83. Wide on purpose —
     // the test is that the model is Poisson at the stated rate, not that it is exact.
     expect(events.length).toBeGreaterThan(40);
     expect(events.length).toBeLessThan(97);
