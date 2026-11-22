@@ -18,14 +18,14 @@ phone.
 
 If you have no shell on the host, the same audio is mirrored on the temporary
 branch `tmp/robin-audition` — open that branch, then "Code → Download ZIP". The
-ten files that matter are in `tmp/robin-audition/review/`, with the questions in
-`review/README.txt`; the full set stays in `audition/` and `candidates/` for
-pass 2 and provenance. That branch is disposable: delete it once the answers
+files that still need an ear are in `tmp/robin-audition/review/`, with the
+questions in `review/README.txt`; the full set stays in `audition/` and
+`candidates/` for pass 2 and provenance. That branch is disposable: delete it once the answers
 below are recorded.
 
 ## Pass 1 — five minutes, seven files
 
-If you only do one pass, do this one. It decides what the robin ships with.
+Answered 2026-11-22; kept as the record of what each file was asked to settle.
 Rows are in file order, which is also how the folder sorts.
 
 | File | Listen for | Answer |
@@ -68,6 +68,42 @@ at a source-space average window) came out 75–80/min and was thrown away.
 Approve, or give me a start time and I will re-cut and re-measure — the point of
 `pick_clip.py` is that the number survives the re-cut.
 
+## Answers — 2026-11-22, by ear
+
+| File | Heard | Consequence |
+|---|---|---|
+| `A06` | a call, surrounded by a lot of white noise | a call is present; the "flight call" label is not confirmed. Unusable as game audio. No name recorded. |
+| `A08` | robin, cardinal and red-winged blackbird | rejected as a whisper-song variant — not a solo robin. |
+| `A09` | one prominent robin, other robins audible behind it | one bird for the shape of the delivery, not for the count: 71.5/min is a chorus rate and an upper bound for a single male. |
+| `A10` | blackbird and robin | hissellly attribution unsafe — the buzz may be the blackbird. Variant blocked, and so is its candidate clip. |
+| `A13` | clean and prominent, just one robin | single bird confirmed. Whether it is song, calls, or both is still undetermined. |
+| `A19` | prominent robin, plus a blue jay | calls are there, mixed with another species. Still no call name. |
+| `A20` | just a robin | approved as the second dawn voice: different region, nothing else in the file. |
+
+Still open:
+
+- **A13** — song, calls, or both? The only Pass 1 question the ear did not settle.
+- **A04** — one bird or several? This is the recording the shipped clip is cut from
+  and it was not in the first pack; it is now in the review folder as
+  `A04-american-robin.mp3` and is the question that decides whether "verified by
+  ear" can ever be said of what ships.
+- **The three candidate clips** — approve, or give a start time.
+
+## What the answers changed
+
+- **Dawn stays at 67.7/min from A04.** A09's 71.5/min was corroboration, and the
+  audition demoted it from "one bird" to "one prominent bird in a chorus", so it
+  cannot replace the primary figure.
+- **No hissellly variant and no whisper variant.** Both source recordings carry
+  other species, so `repertoire.shipped` stays at 1.
+- **A20 is the one new shippable voice** — a second dawn male with a regional
+  accent, which is what D3 (multi-regional or not) was waiting on.
+- **`calls[]` stays empty.** Two recordings carry calls; neither carries a name,
+  and a name is what the array needs.
+- **`verified` stays false**, and now for a sharper reason: the recording the
+  shipped clip comes from (A04) has still not been auditioned, so "the audio has
+  not been verified by ear" remains literally true.
+
 ## What I do with your answers
 
 - Song/whisper/hisselly confirmed → those become named `songs` variants with
@@ -87,13 +123,15 @@ gets recorded as such rather than averaged into a guess.
 ## Findings (fill in, or tell me and I will)
 
 ```
-A09 one bird?          :
-A10 hisselly?          :
-A08 ship as variant?   :
-A13 song/call/both     :
-A20 second male?       :
-A06 flight call?       :
-A19 call type(s)       :
-candidate clips        :
-call taxonomy          :
+A09 one bird?          : one prominent, others audible behind it — 71.5/min is a
+                         chorus rate, not a single male's
+A10 hisselly?          : no — a blackbird is in the file, so the buzz is not
+                         attributable to the robin
+A08 ship as variant?   : no — cardinal and red-winged blackbird present
+A13 song/call/both     : still open (clean, one robin)
+A20 second male?       : yes — robin only, different region
+A06 flight call?       : a call, yes; white noise throughout, label unconfirmed
+A19 call type(s)       : none named — robin under a blue jay
+candidate clips        : open — dawn, dusk, hissellly
+call taxonomy          : nothing named; calls[] stays empty
 ```

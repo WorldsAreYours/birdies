@@ -180,13 +180,16 @@ does not.
 
 ## 7. What is still unverified
 
-1. **What each file sounds like.** Type labels are the recordists', not ours. No
-   human has confirmed that A09 is one bird, that A10 is really hisselly, or that
-   A04 is a single individual — and A04's description says "Robins", plural,
-   which is exactly the multi-individual caveat already in the record.
-2. **Call names.** No source read gives a call taxonomy (ground-predator alarm,
-   nest threat, flight call) with the names a birder uses. The audition should
-   name them, not this memo.
+1. **What each file sounds like.** Partly answered by the 2026-11-22 audition.
+   A09 is one prominent bird with other robins audible behind it; A10 carries a
+   blackbird as well as the robin, so its buzz is not attributable to the robin;
+   A08 carries a cardinal and a red-winged blackbird. Still open: A04, the source
+   of the shipped clip, which no one has heard — and whose description says
+   "Robins", plural, exactly the multi-individual caveat already in the record.
+2. **Call names.** Nothing yet. A06 has a call under a wash of white noise and
+   A19 a robin under a blue jay; neither produced a name, and no source read
+   gives a taxonomy (ground-predator alarm, nest threat, flight call) with the
+   names a birder uses. `calls[]` stays empty.
 3. **Morning and midday rates.** Shape sourced, magnitude not.
 4. **BNA.** The authoritative account has not been read.
 5. **Whether the measured dawn rate belongs to dawn.** A09's own recordist says
@@ -200,13 +203,13 @@ for most of it, and keep the PD McGrane clip as the attribution-light fallback:
 
 | Role | Recording | Why |
 |---|---|---|
-| dawn carol | A09 (CC BY-SA 3.0) | stated "before dawn", one bird, 7 min of material, several clean 12 s windows |
-| hisselly song | A10 (CC BY-SA 3.0) | the second element category, named by the recordist |
-| whisper song | A08 or A15 (CC BY-SA) | quiet delivery; A15 pairs calls + whisper |
-| second dawn male | A20 (CC BY-SA 4.0) | different region and latitude |
-| call: contact/flight | A06 (CC BY-SA 3.0) | explicitly a flight call |
-| call: flock/agitation | A19 or A14 (CC BY-SA 4.0) | group context |
-| PD fallback | A04 (PD) | already shipped; licence-cleanest song |
+| dawn carol | A09 (CC BY-SA 3.0) | auditioned: one prominent bird with a chorus behind it, 7 min of material, several clean windows |
+| hisselly song | A10 (CC BY-SA 3.0) | **blocked** — auditioned and a blackbird is in the file |
+| whisper song | A15 (CC BY-SA) | A08 **rejected** (cardinal + red-winged blackbird); A15 still unheard |
+| second dawn male | A20 (CC BY-SA 4.0) | **approved 2026-11-22** — robin only, different region |
+| call: contact/flight | A06 (CC BY-SA 3.0) | **not shippable** — a call, but white noise throughout; unnamed |
+| call: flock/agitation | A19 or A14 (CC BY-SA 4.0) | A19 has a blue jay over the robin; A14 still unheard |
+| PD fallback | A04 (PD) | already shipped; still unauditioned |
 
 Do not ship A01/A02/A03 — 1.5–9 s with no stated context is not enough to justify
 a label. Do not use A11 for cadence — 200 birds.
