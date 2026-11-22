@@ -82,10 +82,26 @@ Approve, or give me a start time and I will re-cut and re-measure — the point 
 
 Still open:
 
-- **A04** — one bird or several? This is the recording the shipped clip is cut from
-  and it was not in the first pack; it is now in the review folder as
-  `A04-american-robin.mp3` and is the question that decides whether "verified by
-  ear" can ever be said of what ships.
+- **A04** — heard on 2026-11-22: the robin only becomes audible around 42 s of the
+  46 s file, and what it does there is the loudest call in the recording. Before
+  that, less prominent bird sounds that the listener did not attribute to the
+  robin. Two things follow, and the second is not a question but a defect:
+
+  1. The 67.7/min dawn figure was counted over 0–38 s of this file. If the earlier
+     pulses are another species, that figure is a measurement of the wrong animal
+     and has to be withdrawn; if they are robins at a distance, it survives as a
+     chorus figure. **This is the open question.**
+  2. The shipped 12 s excerpt sits at 23.5–35.5 s of A04, which is entirely inside
+     the region before the robin arrives. There are only ~4 s of robin in the file,
+     so no 12 s excerpt cut from A04 can be mostly robin — the shipped clip has to
+     come from another recording whatever the answer above is.
+
+  Candidate replacement: `A20` (Doug Hynes, Newfoundland, robin and nothing else,
+  approved by ear earlier today). A 12 s cut from 6.0 s of A20 measures 10 phrases
+  = 51.1/min against the parent's 51.2, so it sits at average density. It is in the
+  review folder as `A20-candidate-dawn-12s.mp3` and needs an ear before it ships,
+  because "robin only, different region" was approved as a second voice, not
+  necessarily as the first one.
 - **The three candidate clips** — approve, or give a start time.
 
 ## What the answers changed
