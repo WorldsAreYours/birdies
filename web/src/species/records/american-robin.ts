@@ -83,7 +83,7 @@ export const americanRobin: SpeciesRecord = {
       method: 'measured',
       citationId: 'xc132864',
       note:
-        'Counted from XC132864 — the recordist\'s note reads "Singing from 15m up at top of spruce tree in campground just before sundown": 144 bursts over 200.8 s of active span = 43.0/min. The recordist labels the file "call, song", so this is an upper bound on song alone; it is one bird on one evening, enough to replace a placeholder and not enough to be a population figure. It sits where the literature puts evening song: Miller 1958 describes a second, lesser peak before roosting. Auditioned by ear: one clean, prominent robin and no other species, but whether the file is song, a call, or both is still undetermined — which is what keeps 43/min an upper bound.',
+        'Counted from XC132864 — the recordist\'s note reads "Singing from 15m up at top of spruce tree in campground just before sundown": 144 bursts over 200.8 s of active span = 43.0/min. The recordist labels the file "call, song", so this is an upper bound on song alone; it is one bird on one evening, enough to replace a placeholder and not enough to be a population figure. It sits where the literature puts evening song: Miller 1958 describes a second, lesser peak before roosting. Auditioned by ear: one clean, prominent robin and no other species; the listener could not tell song from call on this file, so the mix the recordist\'s own label implies is unresolved, and 43/min stays an upper bound on song.',
     },
     night: {
       songsPerMinute: 0,
@@ -184,7 +184,7 @@ export const americanRobin: SpeciesRecord = {
     'cadence.dawn — counted mechanically, not verified by ear; source description says "American Robins", so more than one individual cannot be ruled out; dawn attribution presumed from the recording, not stated by it',
     'cadence.morning — magnitude is a declared simplification (its shape is sourced to Miller 1958)',
     'cadence.midday — magnitude is a declared simplification (its shape is sourced to Slagsvold 1996)',
-    'cadence.dusk — measured from one bird on one evening, from a file the recordist labels "call, song", so song alone is below 43/min',
+    'cadence.dusk — measured from one bird on one evening, from a file the recordist labels "call, song"; the 2026-11-22 audition confirmed one bird but could not separate song from call, so song alone is below 43/min',
     'repertoire.documented — 6–25 is a published range, not a census; the hisselly repertoire is unquantified',
     'songs — the one shipped clip\'s song type is unclassified, and the two auditioned candidates for named variants were rejected: A08 has a cardinal and a red-winged blackbird in it, A10 has a blackbird',
     'calls — empty; A06 carries a call buried in white noise and A19 a robin under a blue jay, and no call type has been named',
