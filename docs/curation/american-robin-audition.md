@@ -76,13 +76,12 @@ Approve, or give me a start time and I will re-cut and re-measure — the point 
 | `A08` | robin, cardinal and red-winged blackbird | rejected as a whisper-song variant — not a solo robin. |
 | `A09` | one prominent robin, other robins audible behind it | one bird for the shape of the delivery, not for the count: 71.5/min is a chorus rate and an upper bound for a single male. |
 | `A10` | blackbird and robin | hissellly attribution unsafe — the buzz may be the blackbird. Variant blocked, and so is its candidate clip. |
-| `A13` | clean and prominent, just one robin | single bird confirmed. Whether it is song, calls, or both is still undetermined. |
+| `A13` | clean and prominent, just one robin | single bird confirmed. Song vs call: **can't say** — not separable by ear on this file, so 43/min stays an upper bound on song rather than a song rate. |
 | `A19` | prominent robin, plus a blue jay | calls are there, mixed with another species. Still no call name. |
 | `A20` | just a robin | approved as the second dawn voice: different region, nothing else in the file. |
 
 Still open:
 
-- **A13** — song, calls, or both? The only Pass 1 question the ear did not settle.
 - **A04** — one bird or several? This is the recording the shipped clip is cut from
   and it was not in the first pack; it is now in the review folder as
   `A04-american-robin.mp3` and is the question that decides whether "verified by
@@ -98,6 +97,10 @@ Still open:
   other species, so `repertoire.shipped` stays at 1.
 - **A20 is the one new shippable voice** — a second dawn male with a regional
   accent, which is what D3 (multi-regional or not) was waiting on.
+- **Dusk stays at 43/min, as an upper bound.** A13 was auditioned and the listener
+  could not tell song from call, so the file is recorded as "can't say" rather
+  than promoted to a song rate. That is the answer the sheet exists to make
+  acceptable.
 - **`calls[]` stays empty.** Two recordings carry calls; neither carries a name,
   and a name is what the array needs.
 - **`verified` stays false**, and now for a sharper reason: the recording the
@@ -128,7 +131,8 @@ A09 one bird?          : one prominent, others audible behind it — 71.5/min is
 A10 hisselly?          : no — a blackbird is in the file, so the buzz is not
                          attributable to the robin
 A08 ship as variant?   : no — cardinal and red-winged blackbird present
-A13 song/call/both     : still open (clean, one robin)
+A13 song/call/both     : can't say — clean, one robin; song and call not
+                         separable by ear on this file
 A20 second male?       : yes — robin only, different region
 A06 flight call?       : a call, yes; white noise throughout, label unconfirmed
 A19 call type(s)       : none named — robin under a blue jay
