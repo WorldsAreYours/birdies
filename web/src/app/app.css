@@ -1,0 +1,234 @@
+/* Birdie shell styles.
+   Cozy, low-contrast, mobile-first. Plain CSS with custom properties because the
+   art direction needs hand-tuning rather than a framework. All assets are
+   local: no remote fonts, ever — an offline game cannot depend on a network call. */
+
+:root {
+  --ink: #1c2620;
+  --ink-soft: #4d5c53;
+  --paper: #f7f3ea;
+  --paper-raised: #fffdf7;
+  --leaf: #4a6b52;
+  --bark: #8a6b4f;
+  --rule: #ddd5c4;
+
+  --radius: 16px;
+  --space: 1rem;
+  --measure: 34rem;
+
+  color-scheme: light dark;
+  font-family: ui-serif, Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+  line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #eae5d8;
+    --ink-soft: #a8b2a9;
+    --paper: #141a16;
+    --paper-raised: #1b231d;
+    --leaf: #93b39a;
+    --bark: #b59474;
+    --rule: #2c352d;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  /* Respect the notch on phones without a dependency. */
+  padding: 0 max(var(--space), env(safe-area-inset-right)) env(safe-area-inset-bottom)
+    max(var(--space), env(safe-area-inset-left));
+}
+
+.birdie {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: calc(2 * var(--space)) 0 4rem;
+  display: grid;
+  gap: var(--space);
+}
+
+.birdie__head {
+  padding: 0 0.25rem 0.5rem;
+}
+
+.birdie__title {
+  margin: 0;
+  font-size: clamp(2.2rem, 11vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.birdie__subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.card {
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.card--quiet {
+  background: transparent;
+  border-style: dashed;
+}
+
+.card__heading {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.clock__time {
+  margin: 0;
+  font-size: clamp(2.6rem, 15vw, 3.6rem);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.75rem;
+}
+
+.clock__date {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.clock__period {
+  margin: 0.85rem 0 0;
+  font-size: 1.1rem;
+  color: var(--leaf);
+  display: grid;
+  gap: 0.2rem;
+}
+
+.clock__daylight {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.dial {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.dial__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.dial input[type='range'] {
+  width: 100%;
+  accent-color: var(--leaf);
+}
+
+.dial__hint {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.chip {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--leaf);
+}
+
+.chip:active {
+  transform: translateY(1px);
+}
+
+.chip--ghost {
+  background: transparent;
+  color: var(--ink-soft);
+}
+
+.status {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+}
+
+.status li {
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+.status__done::before,
+.status__todo::before {
+  position: absolute;
+  left: 0;
+}
+
+.status__done::before {
+  content: '✓';
+  color: var(--leaf);
+}
+
+.status__todo::before {
+  content: '·';
+  color: var(--ink-soft);
+}
+
+.status__todo {
+  color: var(--ink-soft);
+}
+
+.fineprint {
+  margin: 1rem 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--leaf);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip:active {
+    transform: none;
+  }
+}
