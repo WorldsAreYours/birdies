@@ -85,6 +85,7 @@ web/                         the app (Phase 1 in progress)
   dist/                      build output — never edit, gitignored
 docs/
   birdie-transition-plan.md  authoritative plan + decision log
+  open-questions.md          areas for expansion, and what keeps a record unverified
   curation/american-robin-audio.md      provenance, licences, measured cadence
   curation/american-robin-audition.md   outstanding ear work
 tools/curation/              Python helpers for fetching/picking Commons audio
