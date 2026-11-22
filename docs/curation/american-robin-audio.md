@@ -4,6 +4,10 @@ Status: **research complete; audition outstanding.** Nothing here has been
 listened to yet, so everything derived from audio below is machine-measured and
 the shipped record stays `verified: false`.
 
+> Terminology: this note predates the unit standard. Where it says "phrases" or
+> "bursts", the 120 ms counter is counting *elements* as defined in
+> `docs/vocalization-units.md`; "song" is reserved for a group of 3–8 elements.
+
 Session date: 2026-11-22. Species: American Robin, *Turdus migratorius*.
 Scope: can we get enough licence-clean robin audio for real song variety, what do
 the recordings actually contain, and what cadence figures can be defended.

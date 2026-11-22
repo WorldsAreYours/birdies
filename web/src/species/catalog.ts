@@ -1,5 +1,5 @@
 import type { Period } from '../env/types.js';
-import type { SpeciesRecord } from './types.js';
+import type { ClipUnit, SpeciesRecord, VocalizationUnit } from './types.js';
 import { americanRobin } from './records/american-robin.js';
 
 /**
@@ -14,6 +14,8 @@ import { americanRobin } from './records/american-robin.js';
  */
 
 const PERIODS: readonly Period[] = ['dawn', 'morning', 'midday', 'dusk', 'night'];
+const UNITS: readonly VocalizationUnit[] = ['element', 'song', 'bout'];
+const CLIP_UNITS: readonly ClipUnit[] = [...UNITS, 'excerpt'];
 
 export function validateRecord(record: SpeciesRecord): string[] {
   const problems: string[] = [];
@@ -40,16 +42,35 @@ export function validateRecord(record: SpeciesRecord): string[] {
   for (const period of PERIODS) {
     const claim = record.cadence[period];
     if (!claim) continue;
-    if (!Number.isFinite(claim.songsPerMinute) || claim.songsPerMinute < 0) {
+    if (!Number.isFinite(claim.perMinute) || claim.perMinute < 0) {
       problems.push(`${record.id}: cadence.${period} is not a non-negative finite number`);
+    }
+    if (!UNITS.includes(claim.unit)) {
+      problems.push(`${record.id}: cadence.${period} has unknown unit ${String(claim.unit)}`);
+    }
+    // Song is a functional label first. As a counting unit it exists only when a
+    // human or a paper defined the boundary; the envelope cannot find one.
+    if (claim.unit === 'song' && claim.method !== 'annotated' && claim.method !== 'published') {
+      problems.push(
+        `${record.id}: cadence.${period} claims a song rate without an annotation or published definition`,
+      );
+    }
+    if (claim.method === 'annotated' && !claim.annotation) {
+      problems.push(`${record.id}: cadence.${period} is annotated but has no annotation block`);
+    }
+    if (claim.method === 'measured' && !claim.detector) {
+      problems.push(`${record.id}: cadence.${period} is measured but has no detector block`);
+    }
+    if (claim.method === 'derived' && !claim.derivation) {
+      problems.push(`${record.id}: cadence.${period} is derived but has no derivation text`);
     }
     if (claim.method === 'simplified') {
       if (claim.citationId !== null) {
         problems.push(`${record.id}: cadence.${period} is simplified but claims a citation`);
       }
-    } else if (claim.citationId === null) {
+    } else if (claim.citationId === null && claim.method !== 'annotated' && claim.method !== 'derived') {
       problems.push(`${record.id}: cadence.${period} is ${claim.method} but has no citation`);
-    } else if (!sourceIds.has(claim.citationId)) {
+    } else if (claim.citationId !== null && !sourceIds.has(claim.citationId)) {
       problems.push(`${record.id}: cadence.${period} cites unknown source ${claim.citationId}`);
     }
     if (claim.note.trim().length < 20) {
@@ -59,6 +80,9 @@ export function validateRecord(record: SpeciesRecord): string[] {
 
   const allAudio = [...record.songs, ...record.calls];
   for (const variant of allAudio) {
+    if (!CLIP_UNITS.includes(variant.clipUnit)) {
+      problems.push(`${record.id}: audio ${variant.id} has unknown clipUnit ${String(variant.clipUnit)}`);
+    }
     if (!sourceIds.has(variant.citationId)) {
       problems.push(`${record.id}: audio ${variant.id} cites unknown source ${variant.citationId}`);
     }
@@ -76,6 +100,23 @@ export function validateRecord(record: SpeciesRecord): string[] {
     }
   }
 
+  // A clip may only serve an event of its own unit, and it must finish before the
+  // next one starts. `excerpt` clips are deliberately exempt: they contain several
+  // units and cannot stand in for one (see docs/vocalization-units.md §4).
+  for (const period of PERIODS) {
+    const claim = record.cadence[period];
+    if (!claim) continue;
+    for (const variant of allAudio) {
+      if (variant.clipUnit !== claim.unit) continue;
+      const overlap = variant.durationSeconds * (claim.perMinute / 60);
+      if (overlap > 1.05) {
+        problems.push(
+          `${record.id}: cadence.${period} at ${claim.perMinute}/min would overlap ${variant.id} (${variant.durationSeconds}s clip, ${overlap.toFixed(2)} copies in flight)`,
+        );
+      }
+    }
+  }
+
   if (record.repertoire.shipped !== record.songs.length + record.calls.length) {
     problems.push(`${record.id}: repertoire.shipped does not match the number of audio variants`);
   }
@@ -86,6 +127,13 @@ export function validateRecord(record: SpeciesRecord): string[] {
     const simplified = PERIODS.filter((p) => record.cadence[p]?.method === 'simplified');
     if (simplified.length > 0) {
       problems.push(`${record.id}: verified is true but cadence.${simplified.join(',')} is simplified`);
+    }
+    const unmatched = PERIODS.filter((p) => {
+      const claim = record.cadence[p];
+      return claim !== undefined && !allAudio.some((variant) => variant.clipUnit === claim.unit);
+    });
+    if (unmatched.length > 0) {
+      problems.push(`${record.id}: verified is true but cadence.${unmatched.join(',')} has no matching clip unit`);
     }
   }
 

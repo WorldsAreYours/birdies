@@ -38,10 +38,15 @@ describe('american robin record', () => {
     }
   });
 
+  it('marks the shipped robin clip as a multi-unit excerpt', () => {
+    expect(americanRobin.songs[0]?.clipUnit).toBe('excerpt');
+  });
+
   it('anchors cadence on a measured dawn figure and records what it replaced', () => {
     const dawn = americanRobin.cadence.dawn;
-    expect(dawn?.method).toBe('measured');
-    expect(dawn?.songsPerMinute).toBeGreaterThan(0);
+    expect(dawn?.method).toBe('counted');
+    expect(dawn?.unit).toBe('element');
+    expect(dawn?.perMinute).toBeGreaterThan(0);
     // The original 67.7/min came from a recording that turned out to be Hermit
     // Thrush for its first 33 s. The withdrawal has to stay in the note, or the
     // next reader re-derives the same wrong number from the same file.
@@ -52,7 +57,7 @@ describe('american robin record', () => {
   it('treats unknown periods as absent rather than inventing all five', () => {
     const present = Object.keys(americanRobin.cadence).sort();
     expect(present).toEqual(['dawn', 'dusk', 'midday', 'morning', 'night']);
-    expect(americanRobin.cadence.night?.songsPerMinute).toBe(0);
+    expect(americanRobin.cadence.night?.perMinute).toBe(0);
     expect(americanRobin.cadence.night?.method).toBe('published');
   });
 
@@ -114,11 +119,25 @@ describe('validator rules', () => {
     expect(validateRecord(record).join(' ')).toMatch(/simplified but claims a citation/);
   });
 
-  it('rejects a measured claim with no citation', () => {
+  it('rejects a counted claim with no citation', () => {
     const record = clone();
     // @ts-expect-error deliberately breaking the invariant under test
     record.cadence.dawn.citationId = null;
-    expect(validateRecord(record).join(' ')).toMatch(/measured but has no citation/);
+    expect(validateRecord(record).join(' ')).toMatch(/counted but has no citation/);
+  });
+
+  it('rejects a measured claim with no detector block', () => {
+    const record = clone();
+    const claim = record.cadence.dawn as { method: string };
+    claim.method = 'measured';
+    expect(validateRecord(record).join(' ')).toMatch(/measured but has no detector block/);
+  });
+
+  it('rejects a machine-counted song rate', () => {
+    const record = clone();
+    const claim = record.cadence.dawn as { unit: string };
+    claim.unit = 'song';
+    expect(validateRecord(record).join(' ')).toMatch(/song rate without an annotation/);
   });
 
   it('rejects a citation to a source that does not exist', () => {
@@ -132,6 +151,23 @@ describe('validator rules', () => {
     const record = clone();
     (record.songs[0] as { durationSeconds: number }).durationSeconds = 30;
     expect(validateRecord(record).join(' ')).toMatch(/disagrees with its clip range/);
+  });
+
+  it('rejects an annotated claim without an annotation block', () => {
+    const record = clone();
+    const claim = record.cadence.dawn as { method: string; citationId: string | null };
+    claim.method = 'annotated';
+    claim.citationId = null;
+    expect(validateRecord(record).join(' ')).toMatch(/annotated but has no annotation block/);
+  });
+
+  it('rejects a clip that would overlap itself at the stated rate', () => {
+    const record = clone();
+    const variant = structuredClone(americanRobin.songs[0]!);
+    (variant as { clipUnit: string }).clipUnit = 'element';
+    (variant as { durationSeconds: number }).durationSeconds = 10.04;
+    (record.songs as unknown as Array<typeof variant>).push(variant);
+    expect(validateRecord(record).join(' ')).toMatch(/would overlap/);
   });
 
   it('rejects a clip filed under another species', () => {

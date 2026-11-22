@@ -6,7 +6,7 @@ import type { Environment, Period, Season } from '../env/types.js';
 import { americanRobin } from '../species/catalog.js';
 import type { SpeciesRecord } from '../species/types.js';
 import { mulberry32 } from './random.js';
-import { SEASON_FACTORS, STRATUM_FACTORS, expectedEvents, songsPerMinute, stratumFactor } from './rate.js';
+import { SEASON_FACTORS, STRATUM_FACTORS, expectedEvents, vocalizationRate, stratumFactor } from './rate.js';
 import { pickVariant } from './variants.js';
 import { simulate } from './simulate.js';
 import { nextHorizon, windowEvents } from './scheduler.js';
@@ -38,22 +38,23 @@ function absentInWinter(): SpeciesRecord {
 }
 
 describe('rate: seasons and periods', () => {
-  it('plays the measured dawn figure at full strength', () => {
-    const rate = songsPerMinute(americanRobin, SPRING_DAWN, 'canopy');
+  it('plays the counted dawn element figure at full strength', () => {
+    const rate = vocalizationRate(americanRobin, SPRING_DAWN, 'canopy');
     // 67.7 until 2026-11-22, when the source recording turned out to be Hermit
     // Thrush and dawn was re-anchored on the clean single male in XC570791.
     expect(rate.perMinute).toBeCloseTo(51.2, 5);
-    expect(rate.confidence).toBe('sourced');
+    expect(rate.confidence).toBe('counted');
+    expect(rate.unit).toBe('element');
   });
 
   it('marks a declared simplification as simplified rather than sourced', () => {
-    const rate = songsPerMinute(americanRobin, SPRING_MIDDAY, 'canopy');
+    const rate = vocalizationRate(americanRobin, SPRING_MIDDAY, 'canopy');
     expect(rate.perMinute).toBeCloseTo(10, 5);
     expect(rate.confidence).toBe('simplified');
   });
 
   it('treats a published zero as known silence, not unknown', () => {
-    const rate = songsPerMinute(americanRobin, SPRING_NIGHT, 'canopy');
+    const rate = vocalizationRate(americanRobin, SPRING_NIGHT, 'canopy');
     expect(rate.perMinute).toBe(0);
     expect(rate.confidence).toBe('sourced');
   });
@@ -61,7 +62,7 @@ describe('rate: seasons and periods', () => {
   it('returns zero when the season says absent', () => {
     const winter = envAt(30, 12);
     expect(winter.season).toBe('winter');
-    const rate = songsPerMinute(absentInWinter(), { season: 'winter', period: 'midday' }, 'canopy');
+    const rate = vocalizationRate(absentInWinter(), { season: 'winter', period: 'midday' }, 'canopy');
     expect(rate.perMinute).toBe(0);
     expect(rate.confidence).toBe('none');
   });
@@ -71,16 +72,16 @@ describe('rate: seasons and periods', () => {
       cadence: Partial<Record<Period, unknown>>;
     };
     delete record.cadence.midday;
-    const rate = songsPerMinute(record as unknown as SpeciesRecord, SPRING_MIDDAY, 'canopy');
+    const rate = vocalizationRate(record as unknown as SpeciesRecord, SPRING_MIDDAY, 'canopy');
     expect(rate.perMinute).toBe(0);
     expect(rate.confidence).toBe('none');
   });
 
   it('halves the rate for a bird that is merely present', () => {
     const fall = { season: 'fall' as const, period: 'dawn' as const };
-    const rate = songsPerMinute(americanRobin, fall, 'canopy');
+    const rate = vocalizationRate(americanRobin, fall, 'canopy');
     expect(rate.perMinute).toBeCloseTo(51.2 * SEASON_FACTORS.present, 5);
-    expect(rate.confidence).toBe('sourced');
+    expect(rate.confidence).toBe('counted');
   });
 });
 
@@ -92,9 +93,9 @@ describe('rate: placement (D10)', () => {
   });
 
   it('sings less the worse the placement', () => {
-    const canopy = songsPerMinute(americanRobin, SPRING_DAWN, 'canopy').perMinute;
-    const midstory = songsPerMinute(americanRobin, SPRING_DAWN, 'midstory').perMinute;
-    const bath = songsPerMinute(americanRobin, SPRING_DAWN, 'bath').perMinute;
+    const canopy = vocalizationRate(americanRobin, SPRING_DAWN, 'canopy').perMinute;
+    const midstory = vocalizationRate(americanRobin, SPRING_DAWN, 'midstory').perMinute;
+    const bath = vocalizationRate(americanRobin, SPRING_DAWN, 'bath').perMinute;
     expect(canopy).toBeGreaterThan(midstory);
     expect(midstory).toBeGreaterThan(bath);
     expect(bath).toBeGreaterThan(0);

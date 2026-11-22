@@ -3,11 +3,13 @@ import type { SpeciesRecord, Stratum } from '../species/types.js';
 import type { RateResult } from './types.js';
 
 /**
- * songsPerMinute(record, env, stratum) — the central function of the simulation.
+ * vocalizationRate(record, env, stratum) — the central function of the simulation.
  *
  * Base rate for the period × seasonal presence × how well the placement suits the
  * bird. Nothing here is authored per bird in code: the numbers come from the
- * record, so adding a species never means touching this file.
+ * record, so adding a species never means touching this file. The unit of the
+ * claim travels with the rate; the scheduler and the audio engine must not mix
+ * an element event with a song clip.
  */
 
 /**
@@ -38,28 +40,30 @@ export function stratumFactor(record: SpeciesRecord, stratum: Stratum): number {
   return STRATUM_FACTORS.foreign;
 }
 
-export function songsPerMinute(
+export function vocalizationRate(
   record: SpeciesRecord,
   env: Pick<Environment, 'season' | 'period'>,
   stratum: Stratum,
 ): RateResult {
   const presence = record.seasonality[env.season];
-  if (presence === 'absent') return { perMinute: 0, confidence: 'none' };
+  if (presence === 'absent') return { perMinute: 0, confidence: 'none', unit: null };
 
   const claim = record.cadence[env.period];
   // No figure for this period: we do not know, so we do not play. Silence with
   // `none` is visibly different in the UI from silence we are sure about.
-  if (!claim) return { perMinute: 0, confidence: 'none' };
+  if (!claim) return { perMinute: 0, confidence: 'none', unit: null };
 
-  const perMinute = claim.songsPerMinute * SEASON_FACTORS[presence] * stratumFactor(record, stratum);
+  const perMinute = claim.perMinute * SEASON_FACTORS[presence] * stratumFactor(record, stratum);
 
   return {
     perMinute,
-    confidence: claim.method === 'simplified' ? 'simplified' : 'sourced',
+    confidence:
+      claim.method === 'simplified' ? 'simplified' : claim.method === 'counted' ? 'counted' : 'sourced',
+    unit: claim.unit,
   };
 }
 
 /** Expected number of vocalisations over a horizon. Used by tests and by the UI. */
 export function expectedEvents(record: SpeciesRecord, env: Pick<Environment, 'season' | 'period'>, stratum: Stratum, horizonSeconds: number): number {
-  return (songsPerMinute(record, env, stratum).perMinute / 60) * horizonSeconds;
+  return (vocalizationRate(record, env, stratum).perMinute / 60) * horizonSeconds;
 }

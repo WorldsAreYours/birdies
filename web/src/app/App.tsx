@@ -10,7 +10,8 @@ import {
 } from '../env/clock.js';
 import type { Period } from '../env/types.js';
 import { getRecord } from '../species/catalog.js';
-import { songsPerMinute } from '../sim/rate.js';
+import type { VocalizationUnit } from '../species/types.js';
+import { vocalizationRate } from '../sim/rate.js';
 
 /**
  * Phase 1 shell. It is deliberately small: it renders the one thing that is
@@ -24,6 +25,12 @@ const PERIOD_LABEL: Record<Period, string> = {
   midday: 'Midday',
   dusk: 'Dusk',
   night: 'Night',
+};
+
+const UNIT_PLURAL: Record<VocalizationUnit, string> = {
+  element: 'elements',
+  song: 'songs',
+  bout: 'bouts',
 };
 
 const JUMPS: ReadonlyArray<readonly [string, number]> = [
@@ -45,15 +52,18 @@ export function App() {
   const habitat = 'suburban yard';
   const bird = getRecord('american-robin');
   const dawn = bird.cadence.dawn;
-  const rate = songsPerMinute(bird, env, 'canopy');
+  const rate = vocalizationRate(bird, env, 'canopy');
+  const unitLabel = rate.unit ? UNIT_PLURAL[rate.unit] : 'events';
   const rateLabel =
-    rate.perMinute === 0 ? 'not at all' : `about ${Math.round(rate.perMinute)} phrases a minute`;
+    rate.perMinute === 0 ? 'not at all' : `about ${Math.round(rate.perMinute)} ${unitLabel} a minute`;
   const rateBasis =
     rate.confidence === 'sourced'
       ? 'from a sourced figure'
-      : rate.confidence === 'simplified'
-        ? 'from a placeholder figure, not data'
-        : 'no figure for this time of day';
+      : rate.confidence === 'counted'
+        ? 'from a counted figure, not yet validated'
+        : rate.confidence === 'simplified'
+          ? 'from a placeholder figure, not data'
+          : 'no figure for this time of day';
 
   return (
     <main className="birdie">
@@ -133,10 +143,16 @@ export function App() {
         <p className="bird__sci">{bird.scientificName}</p>
 
         <p className="bird__fact">
-          Dawn song, counted from the recording in this app:{' '}
-          <strong>{dawn ? `${dawn.songsPerMinute.toFixed(1)} phrases a minute` : 'no figure yet'}</strong>
+          Dawn, counted from the recording in this app:{' '}
+          <strong>
+            {dawn ? `${dawn.perMinute.toFixed(1)} ${UNIT_PLURAL[dawn.unit]} a minute` : 'no figure yet'}
+          </strong>
           <span className="bird__method">
-            {dawn?.method === 'measured' ? 'measured, not guessed — see the note in the record' : ''}
+            {dawn?.method === 'measured'
+              ? 'measured, not guessed — see the note in the record'
+              : dawn?.method === 'counted'
+                ? 'counted, not yet validated — see the note in the record'
+                : ''}
           </span>
         </p>
 

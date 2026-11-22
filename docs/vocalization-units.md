@@ -35,6 +35,12 @@ the labels those tools do use.
 
 ## 2. The four structural units
 
+Two axes are independent here: **type** (Song, Call, Dawn song, Flight call …) is a
+functional label a recordist gives; **unit** (element, song, bout) is what a number counts.
+The machine never decides the type. It reads the label when one exists and says "unknown"
+when it does not. A song *rate* is allowed only when a human or a paper defined the song
+boundary; it is never inferred from the energy envelope.
+
 These are defined for the American Robin from Johnson (2006, p. 342), and the same shape
 generalises to other songbirds with species-specific parameters. The numbers in brackets
 are the robin defaults; every species record must state its own.
@@ -116,7 +122,7 @@ export type VocalizationType =
 export interface CadenceClaim {
   readonly perMinute: number;
   readonly unit: VocalizationUnit;
-  readonly method: 'measured' | 'published' | 'annotated' | 'derived' | 'simplified';
+  readonly method: 'measured' | 'counted' | 'published' | 'annotated' | 'derived' | 'simplified';
   readonly citationId: string | null;
   readonly note: string;
   /** Required when method is 'measured'. */
@@ -156,9 +162,12 @@ Rules, enforced by `validateRecord` and by the scheduler:
    `durationSeconds × perMinute / 60 ≤ 1` (the clip finishes before the next event
    starts). If a bird genuinely overlaps itself, that is a separate, explicit choice.
 4. **A song claim needs a definition.** `unit: 'song'` requires a `citationId` or an
-   `annotation` with the boundary definition. An envelope count cannot support it.
-5. **An element claim needs a detector.** `unit: 'element'` and `method: 'measured'`
-   require the `detector` block and a validation reference.
+   `annotation` with the boundary definition, and its method must be `annotated` or
+   `published`. It can never be `counted` or `derived` from an element rate: the
+   envelope cannot find a song boundary, and a guessed one would be inaccurate.
+5. **A measured element claim needs a detector.** `unit: 'element'` and
+   `method: 'measured'` require the `detector` block and a validation reference. A
+   script count that has not been validated is `method: 'counted'`, not `measured`.
 6. **No silent conversion.** `method: 'derived'` requires `derivation` text showing the
    arithmetic and the measured quantity it started from.
 7. **Verified means complete.** A `verified: true` record needs a count, span, unit and
@@ -214,19 +223,21 @@ says so instead of promoting an element count into the gap.
 
 ---
 
-## 7. What this changes in the repo
+## 7. What this changed in the repo
 
-- `CadenceClaim.songsPerMinute` becomes `perMinute` plus `unit`. Every figure in
-  `web/src/species/records/american-robin.ts` gets `unit: 'element'` until a song claim
-  is annotated.
-- `SongVariant` gets `clipUnit`; the shipped 10 s clip is `'excerpt'`.
-- `sim/rate.ts` returns the unit with the rate; `sim/simulate.ts` stamps it on each event;
-  the audio engine refuses an event whose clip unit does not match.
-- `validateRecord` enforces the seven rules above.
+- `CadenceClaim.songsPerMinute` is now `perMinute` plus `unit`; every figure in
+  `web/src/species/records/american-robin.ts` carries `unit: 'element'`, and the
+  two script counts are `method: 'counted'` rather than `measured`.
+- `SongVariant` has `clipUnit`; the shipped 10 s clip is `'excerpt'`.
+- `sim/rate.ts` returns the unit with the rate; `sim/simulate.ts` stamps it on each
+  event; the validator rejects a clip that would overlap itself at the stated rate.
+- `validateRecord` enforces the unit, annotation, detector and no-overlap rules.
 - The UI label is derived from the unit: "elements a minute", not "phrases a minute".
 
-The number under review is still #4's decision. This standard only makes the record say
-what the number is a number *of*.
+Still open: the audio engine does not exist yet, so no code refuses a clip whose
+`clipUnit` differs from its event unit; the validator and the type system carry the
+rule until it does. The figure itself is #4's decision. This standard only makes the
+record say what the number is a number *of*.
 
 ---
 

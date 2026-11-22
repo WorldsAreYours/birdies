@@ -32,6 +32,7 @@ export const americanRobin: SpeciesRecord = {
       id: 'pillar-carol-01',
       clip: 'audio/american-robin/pillar-carol-01.mp3',
       durationSeconds: 10.04,
+      clipUnit: 'excerpt',
       songTypeName: 'Song (unclassified)',
       description:
         'The first 10 s of Doug Hynes\'s XC570791: an adult male singing, one clean robin with no other species in the excerpt, by ear and by BirdNET (American Robin 0.85 in all three of its windows). The clip stops at 10 s because the recording turns mixed after that — Yellow-rumped Warbler and crows. Not labelled as a named song type: naming one is still ear work we have not done.',
@@ -59,35 +60,40 @@ export const americanRobin: SpeciesRecord = {
 
   cadence: {
     dawn: {
-      songsPerMinute: 51.2,
-      method: 'measured',
+      perMinute: 51.2,
+      unit: 'element',
+      method: 'counted',
       citationId: 'xc570791',
       note:
-        'Counted from the shipped source (XC570791, 43.78 s, adult male, Goulds, Newfoundland): 35 phrases over 41.0 s = 51.2/min. The shipped 10 s clip renders at 50.1/min over an 8.4 s active span through the shipping pipeline, 2% below the file average, so the audio does not sound busier than the figure claims. Limits: the recordist labels this "adult, male, song" and not "dawn", so the dawn attribution is presumed from the game\'s model rather than stated by the source; the count has not been verified by ear beyond confirming a clean single robin; and one male on one morning replaces a placeholder without becoming a population figure. What it replaces and what corroborates it: the previous 67.7/min was counted from the McGrane recording, whose first 33 s this record\'s own audition and BirdNET both place as Hermit Thrush — that figure and every clip cut from it are withdrawn. XC128490 does state "singing before dawn" and measures 71.5/min, but as a chorus, which makes it an upper bound rather than a single male\'s rate.',
+        'Counted from XC570791 (43.78 s; adult male for the first ~10 s, then mixed with Yellow-rumped Warbler and crows; Goulds, Newfoundland): 35 elements over 41.0 s = 51.2/min untreated. This is an element rate over a mixed span, and low-frequency rumble pulled it down; after a 150 Hz high-pass the same file gives 39 elements over 41.0 s = 57.0/min, and the clean 10 s opening gives 73.2/min. The figure is under review — see docs/curation/audio-analysis-methods.md §5. Limits: the recordist labels this "adult, male, song" and not "dawn", so the dawn attribution is presumed from the game\'s model rather than stated by the source; the count has not been verified by ear beyond confirming a clean single robin in the opening; and one male on one morning replaces a placeholder without becoming a population figure. What it replaces and what corroborates it: the previous 67.7/min was counted from the McGrane recording, whose first 33 s this record\'s own audition and BirdNET both place as Hermit Thrush — that figure and every clip cut from it are withdrawn. XC128490 does state "singing before dawn" and measures about 71 elements/min, but as a chorus, which makes it an upper bound rather than a single male\'s rate.',
     },
     morning: {
-      songsPerMinute: 34,
+      perMinute: 34,
+      unit: 'element',
       method: 'simplified',
       citationId: null,
       note:
         'Placeholder for the magnitude, not for the shape: Miller 1958 describes robin song as "intermittently throughout the day" outside the dawn and evening peaks. Set at half the measured dawn rate. The figure is a declared choice and is not presented as data.',
     },
     midday: {
-      songsPerMinute: 10,
+      perMinute: 10,
+      unit: 'element',
       method: 'simplified',
       citationId: null,
       note:
         'Placeholder for the magnitude, not for the shape: Slagsvold 1996 found mated males peaked at dawn and "sang little around noon". A low daytime rate is therefore documented; the figure itself is a declared choice.',
     },
     dusk: {
-      songsPerMinute: 43,
-      method: 'measured',
+      perMinute: 43,
+      unit: 'element',
+      method: 'counted',
       citationId: 'xc132864',
       note:
-        'Counted from XC132864 — the recordist\'s note reads "Singing from 15m up at top of spruce tree in campground just before sundown": 144 bursts over 200.8 s of active span = 43.0/min. The recordist labels the file "call, song", so this is an upper bound on song alone; it is one bird on one evening, enough to replace a placeholder and not enough to be a population figure. It sits where the literature puts evening song: Miller 1958 describes a second, lesser peak before roosting. Auditioned by ear: one clean, prominent robin and no other species; the listener could not tell song from call on this file, so the mix the recordist\'s own label implies is unresolved, and 43/min stays an upper bound on song.',
+        'Counted from XC132864 — the recordist\'s note reads "Singing from 15m up at top of spruce tree in campground just before sundown": 144 elements over 200.8 s of active span = 43.0/min. The recordist labels the file "call, song", so this element rate includes calls and is an upper bound on song elements; it is one bird on one evening, enough to replace a placeholder and not enough to be a population figure. It sits where the literature puts evening song: Miller 1958 describes a second, lesser peak before roosting. Auditioned by ear: one clean, prominent robin and no other species; the listener could not tell song from call on this file, so the mix the recordist\'s own label implies is unresolved.',
     },
     night: {
-      songsPerMinute: 0,
+      perMinute: 0,
+      unit: 'element',
       method: 'published',
       citationId: 'wiki-american-robin',
       note:

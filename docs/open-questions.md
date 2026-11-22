@@ -43,7 +43,8 @@ human batch. One (song vs call) has no honest machine answer, and saying so is w
 carries "can't say" rather than a guess.
 
 One thing is deliberately not in this table because it is not a missing capability: the
-record calls its figure `songsPerMinute`, but the 120 ms counter measures *elements* — the
+record used to call its figure `songsPerMinute`; it now carries `perMinute` plus a `unit`,
+and the 120 ms counter measures *elements* — the
 150–350 ms units Johnson (2006) defines, not the 3–8-element groups or the bouts. That is a
 naming and scheduling decision, not a model to install. `docs/curation/audio-analysis-methods.md`
 §3.2 has the measurements and the consequence.
@@ -101,8 +102,8 @@ this repo still does by hand what it should do from data.
 
 ## 4. Product and design questions this raised
 
-- **One 10 s clip at 51.2 phrases/min is a scheduling problem.** The simulation asks for
-  about one song every 1.2 s; the corpus has one 10 s recording with 7 phrases in it. A yard
+- **One 10 s clip at 51.2 elements/min is a scheduling problem.** The simulation asks for
+  about one song every 1.2 s; the corpus has one 10 s recording with 7 elements in it. A yard
   that repeats the same file is the artifact the "never the same variant twice in a row"
   rule exists to prevent, and that rule cannot fix a single-variant problem. Needs either
   more variants per bird or a scheduler that leaves silence.

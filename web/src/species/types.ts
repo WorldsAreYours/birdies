@@ -35,6 +35,29 @@ export type License =
   | 'cc-by-sa-3.0'
   | 'cc-by-sa-4.0';
 
+/**
+ * Structural units, defined in `docs/vocalization-units.md`.
+ *
+ * An element is one short unit of song (150–350 ms in the robin); a song is a
+ * stereotyped sequence of elements (typically 3–8 in the robin); a bout is a
+ * continuous singing period. The unit is part of the number, not a label added
+ * later.
+ */
+export type VocalizationUnit = 'element' | 'song' | 'bout';
+
+/** What a clip contains. `excerpt` is a multi-unit cut and cannot be scheduled as one unit. */
+export type ClipUnit = VocalizationUnit | 'excerpt';
+
+/** Functional type, aligned with the Macaulay Library's sound tags. */
+export type VocalizationType =
+  | 'song'
+  | 'dawn-song'
+  | 'flight-song'
+  | 'duet'
+  | 'call'
+  | 'flight-call'
+  | 'mechanical';
+
 export interface Citation {
   /** Stable key, referenced by claims as `citationId`. */
   readonly id: string;
@@ -55,6 +78,8 @@ export interface SongVariant {
   /** Path under `public/audio/<speciesId>/`. Every clip is precached for offline play. */
   readonly clip: string;
   readonly durationSeconds: number;
+  /** What the clip contains: one element, one song, one bout, or a multi-unit excerpt. */
+  readonly clipUnit: ClipUnit;
   /** The name a birder would use: "cheer-up", "whinny", "fee-bee". */
   readonly songTypeName: string;
   readonly description: string;
@@ -69,9 +94,14 @@ export interface SongVariant {
 /**
  * A cadence figure and how we came by it.
  *
- * - `measured`   counted in a recording we ship; the note must say what was
- *                counted, over what window, and by what method.
+ * - `measured`   counted in a recording we ship, with a validated detector; the
+ *                note must say what was counted, over what window, and by what
+ *                method.
+ * - `counted`    counted by a script whose error rate has not been measured yet.
+ *                Honest, but not `measured`; validation moves it up.
  * - `published`  a literature figure.
+ * - `annotated`  a human counted the unit boundaries on the recording.
+ * - `derived`    arithmetic from another measured figure; `derivation` shows it.
  * - `simplified` a declared engineering choice standing in for missing data. It
  *                must have no citation, because inventing a source is worse than
  *                admitting the simplification. A record containing one is never
@@ -80,11 +110,30 @@ export interface SongVariant {
  * There is no `'guessed'`, because that describes the other two.
  */
 export interface CadenceClaim {
-  readonly songsPerMinute: number;
-  readonly method: 'measured' | 'published' | 'simplified';
+  readonly perMinute: number;
+  /** What `perMinute` counts. See `docs/vocalization-units.md`. */
+  readonly unit: VocalizationUnit;
+  readonly method: 'measured' | 'counted' | 'published' | 'annotated' | 'derived' | 'simplified';
   /** Source for the figure. `null` is legal only when `method` is `simplified`. */
   readonly citationId: string | null;
   readonly note: string;
+  /** Required once the element detector is validated; see issue #16. */
+  readonly detector?: {
+    readonly bandHz: readonly [number, number];
+    readonly frameMs: number;
+    readonly thresholdFraction: number;
+    readonly mergeGapMs: number;
+    readonly minDurationMs: number;
+    readonly validation: string;
+  };
+  /** Required when `method` is `annotated`. */
+  readonly annotation?: {
+    readonly file: string;
+    readonly annotator: string;
+    readonly definition: string;
+  };
+  /** Required when `method` is `derived`. */
+  readonly derivation?: string;
 }
 
 /**

@@ -259,7 +259,7 @@ type SpeciesRecord = {
   scientificName: string
   songs: SongVariant[]       // id, clip, duration, songTypeName, recordist, license
   calls: SongVariant[]       // calls are not songs; birders care, children don't yet
-  cadence: Record<Period, { songsPerMinute: number; source: Citation }>
+  cadence: Record<Period, { perMinute: number; unit: 'element' | 'song' | 'bout'; source: Citation }>
   seasonality: Record<Season, 'breeding' | 'present' | 'absent'>
   strata: { preferred: Stratum; tolerated: Stratum[] }
   sources: Citation[]        // per claim, not per bird
@@ -274,7 +274,7 @@ asserted with the same confidence as a sourced one.
 **Cadence is a function, not a constant:**
 
 ```ts
-songsPerMinute(record, env, stratumMatch) -> number
+vocalizationRate(record, env, stratumMatch) -> RateResult
 ```
 
 Base rate per period (dawn / morning / midday / dusk / night) × seasonal presence (zero when absent) ×

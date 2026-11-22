@@ -102,8 +102,9 @@ produces an **element rate**. That is a good unit, and it is the unit Johnson us
 he writes: *"During the robin's pre-dawn chorus, an individual will typically sing 100
 elements in under 100 sec"* (2006, p. 344) — i.e. at least ~60 elements/min.
 
-The record calls the figure `songsPerMinute`, and the simulation schedules one event per
-figure. Both are wrong names for an element rate. The count changes by a factor of three
+The record's `songsPerMinute` field was the problem: it described an element count, and the
+simulation scheduled one event per figure. The field name and the scheduler both treated it
+as a song rate; neither was. The count changes by a factor of three
 when the merge gap is changed, because the merge gap *is* the unit definition:
 
 | merge gap (what counts as one unit) | A20, 150 Hz–5 kHz | A09, 150 Hz–5 kHz | shipped 10 s clip |
@@ -252,7 +253,7 @@ the record already says.
    *songs*, define a song as a group of 3–8 elements
    (Johnson) and either measure group boundaries by hand or schedule at the element
    level with element-length clips. Do not put a group rate in a field called
-   `songsPerMinute` without saying how the group was defined.
+   `perMinute` without a matching unit, or a unit that says something else.
 2. **Band-limit the measurement chain and the shipping chain together.** 150 Hz
    high-pass minimum; 1–5 kHz (or 1–7 kHz for hisselly) for the counter. Measure the
    parent and the render through the same function, and record the treatment with every

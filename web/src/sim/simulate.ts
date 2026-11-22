@@ -1,7 +1,7 @@
 import type { Environment } from '../env/types.js';
 import type { SongVariant } from '../species/types.js';
 import { mulberry32 } from './random.js';
-import { songsPerMinute } from './rate.js';
+import { vocalizationRate } from './rate.js';
 import type { PlacedBird, SimulationOptions, VocalizationEvent } from './types.js';
 import { pickVariant } from './variants.js';
 
@@ -30,8 +30,8 @@ export function simulate(
   let sequence = 0;
 
   for (const bird of birds) {
-    const { perMinute } = songsPerMinute(bird.record, env, bird.stratum);
-    if (perMinute <= 0) continue;
+    const { perMinute, unit } = vocalizationRate(bird.record, env, bird.stratum);
+    if (perMinute <= 0 || unit === null) continue;
 
     const lambda = perMinute / 60; // events per second
     let lastVariantId: string | null = null;
@@ -50,6 +50,7 @@ export function simulate(
           variantId: variant.id,
           songTypeName: variant.songTypeName,
           clip: variant.clip,
+          unit,
           stratum: bird.stratum,
           sequence: sequence++,
         });
