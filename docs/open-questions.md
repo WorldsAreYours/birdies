@@ -12,6 +12,7 @@ turning it true.
 
 Related: `docs/curation/american-robin-audio.md` (provenance, measurements),
 `docs/curation/american-robin-audition.md` (ear work and its results),
+`docs/curation/audio-analysis-methods.md` (what the field does, and the unit problem),
 `docs/birdie-transition-plan.md` (architecture, decisions D1–D10).
 
 **Status lives in the tracker, not here.** The audio-pipeline findings are filed as
@@ -30,16 +31,22 @@ Measured on this host, 2026-11-22. Ordered by value per unit of work.
 | Axis | State | What it would settle | Cost |
 |---|---|---|---|
 | Signal-quality gate | **measured, in the skill, not in this repo** | whether a file is usable at all: SNR, noise floor, clipping, where the noise lives (hiss vs rumble) | free — ffmpeg + PCM. Should become `tools/curation/signal_qa.py` |
-| Syllable clustering | not built | turns "name the calls in this recording" into "name these 5 clusters"; the finite-ask version of the call taxonomy | ~half a day, librosa + k-means, no labels needed |
-| Second species opinion (Perch v2) | not installed | a contested identification, by a model with different training data | TensorFlow (~600 MB); ships in the same `birdnet` package |
+| Syllable clustering | not built | turns "name the calls in this recording" into "name these 5 clusters"; the finite-ask version of the call taxonomy. Published validation is lab and single-species, so treat it as triage, not an oracle | ~half a day, librosa + k-means, no labels needed |
+| Second species opinion (Perch v2) | code path present; weights and TensorFlow not installed | a contested identification, by a model with different training data. Supported by the installed `birdnet` 1.5.1, but it pulls TensorFlow ≥2.20 and a 379 MB model | TensorFlow plus 379 MB |
 | Geo species-presence model | not used | which species are plausible in a yard and season — feeds the five-bird catalogue and seasonal presence | cheap, same package, V3.0 |
 | Non-bird content tagging (YAMNet / PANNs) | blocked | speech, music, dogs, rain, engines in a recording | YAMNet's model host 403s from here and Kaggle wants credentials; PANNs pulls ~300 MB from Zenodo |
-| Individual count | not possible with current assets | "one bird or several?" — the question that demoted A09's rate | needs source separation (MixIT-style, TensorFlow) or stereo cues; every source we have is mono |
-| Song vs call | no model exists | the single most common question in the audition | the recordist's own `Type:` label is the best available signal; beyond that it is structure (unit duration, repetition, bandwidth) and it stays human |
+| Individual count | not possible with current assets | "one bird or several?" — the question that demoted A09's rate | needs source separation (MixIT-style, TensorFlow) or stereo cues; every source we have is mono, and no validated mono method exists |
+| Song vs call | no model exists | the single most common question in the audition; confirmed in a 2026 literature pass | the recordist's own `Type:` label is the best available signal; beyond that it is structure (unit duration, repetition, bandwidth) and it stays human |
 
 What this means in practice: three of the seven axes are cheap and would remove work from the
 human batch. One (song vs call) has no honest machine answer, and saying so is why the record
 carries "can't say" rather than a guess.
+
+One thing is deliberately not in this table because it is not a missing capability: the
+record calls its figure `songsPerMinute`, but the 120 ms counter measures *elements* — the
+150–350 ms units Johnson (2006) defines, not the 3–8-element groups or the bouts. That is a
+naming and scheduling decision, not a model to install. `docs/curation/audio-analysis-methods.md`
+§3.2 has the measurements and the consequence.
 
 ---
 
