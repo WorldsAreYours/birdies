@@ -46,15 +46,19 @@ not write a name I cannot source.
 ## Pass 3 — approve the clips
 
 Predicate: a shipped clip should sit at *average* density for its period, or the
-audio will sound busier than the cadence figure claims.
+audio will sound busier than the cadence figure claims. These three were chosen by
+rendering many windows through the shipping pipeline and keeping the one whose
+rendered audio measured closest to the parent recording — the first attempt (cut
+at a source-space average window) came out 75–80/min and was thrown away.
 
-| Candidate | Cut | Measured |
-|---|---|---|
-| `XC128490-from0.0s-12s.mp3` | 0.0–12.0 s | 14 bursts/12 s = 70/min (dawn) |
-| `XC132864-from35.5s-12s.mp3` | 35.5–47.5 s | 8 bursts/12 s = 40/min (dusk) |
-| `XC129105-from3.0s-12s.mp3` | 3.0–15.0 s | 13 bursts/12 s = 65/min (hisselly) |
+| Candidate | Cut from | Rendered measurement | Parent recording |
+|---|---|---|---|
+| `robin-dawn-xc128490-from344.0s-12s.mp3` | 344.0 s of A09 | 14 bursts = 71.6/min | 71.5/min |
+| `robin-dusk-xc132864-from164.0s-12s.mp3` | 164.0 s of A13 | 8 bursts = 41.6/min | 43.0/min |
+| `robin-hisselly-xc129105-from36.0s-12s.mp3` | 36.0 s of A10 | 12 bursts = 65.0/min | 64.5/min |
 
-Approve, or give me a better start time and I will re-cut and re-measure.
+Approve, or give me a start time and I will re-cut and re-measure — the point of
+`pick_clip.py` is that the number survives the re-cut.
 
 ## What I do with your answers
 

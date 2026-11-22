@@ -211,13 +211,16 @@ for most of it, and keep the PD McGrane clip as the attribution-light fallback:
 Do not ship A01/A02/A03 — 1.5–9 s with no stated context is not enough to justify
 a label. Do not use A11 for cadence — 200 birds.
 
-Candidate 12 s clips already cut at measured average-density windows (so the
-audio cannot disagree with the stated rate):
+Candidate 12 s clips, cut so that the *rendered* audio measures at its parent
+recording's average density (an earlier cut chosen by source-space window counts
+measured 75–80/min once rendered — the "do not ship the densest window" trap — so
+windows are now chosen by rendering each candidate through the shipping pipeline
+and measuring the result):
 
 ```
-candidates/XC128490-from0.0s-12s.mp3      dawn, 14 bursts in 12 s
-candidates/XC132864-from35.5s-12s.mp3     dusk, 8 bursts in 12 s
-candidates/XC129105-from3.0s-12s.mp3      hisselly, 13 bursts in 12 s
+candidates/robin-dawn-xc128490-from344.0s-12s.mp3      14 bursts = 71.6/min  (parent 71.5)
+candidates/robin-dusk-xc132864-from164.0s-12s.mp3       8 bursts = 41.6/min  (parent 43.0)
+candidates/robin-hisselly-xc129105-from36.0s-12s.mp3   12 bursts = 65.0/min  (parent 64.5)
 ```
 
 Listen to `docs/curation/american-robin-audition.md` before any of this is
@@ -238,11 +241,16 @@ python3 tools/curation/fetch_audio.py --term "Turdus migratorius" \
   --dest ~/projects/birdie-curation/american-robin/source \
   --manifest ~/projects/birdie-curation/american-robin/manifest.json
 
-# normalised listening copies + candidate clip windows
+# normalised listening copies (60 s max per distinct recording)
 python3 tools/curation/make_audition_pack.py \
   --manifest ~/projects/birdie-curation/american-robin/manifest.json \
-  --dest ~/projects/birdie-curation/american-robin \
-  --candidates XC128490:0 XC132864:35.5 XC129105:3.0
+  --dest ~/projects/birdie-curation/american-robin
+
+# candidate 12 s clips whose rendered audio measures at the stated rate
+python3 tools/curation/pick_clip.py \
+  ~/projects/birdie-curation/american-robin/source/Turdus_migratorius_-_American_Robin_XC128490.ogg \
+  --target-rate 71.5 \
+  --out ~/projects/birdie-curation/american-robin/candidates/robin-dawn-xc128490-from344.0s-12s.mp3
 ```
 
 Audio and manifests stay outside the repo (`~/projects/birdie-curation/`): the
