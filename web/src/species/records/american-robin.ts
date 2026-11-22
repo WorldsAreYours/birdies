@@ -3,11 +3,12 @@ import type { SpeciesRecord } from '../types.js';
 /**
  * American Robin — Turdus migratorius.
  *
- * STATUS: PROVISIONAL (`verified: false`). Two figures are measured, the
- * repertoire now has a published range, and the singing stratum has a source —
- * but the shipped audio still has not been listened to by anyone, and the call
- * vocabulary is unwritten. Every unsourced or unconfirmed field is listed in
- * `provisional` and renders as provisional in the UI.
+ * STATUS: PROVISIONAL (`verified: false`). The shipped clip has now been
+ * auditioned — one clean robin, and BirdNET agrees — and the dawn figure is
+ * re-anchored on it after the previous source turned out to be a Hermit Thrush.
+ * The morning and midday rates are still declared simplifications, the song type
+ * is unclassified, and the call vocabulary is unwritten. Every unsourced or
+ * unconfirmed field is listed in `provisional` and renders as provisional.
  *
  * What is *not* in dispute:
  * - It is among the earliest birds to sing at dawn, and the song is a repeated
@@ -30,15 +31,15 @@ export const americanRobin: SpeciesRecord = {
     {
       id: 'pillar-carol-01',
       clip: 'audio/american-robin/pillar-carol-01.mp3',
-      durationSeconds: 12.06,
-      songTypeName: 'Continuous carol (unclassified)',
+      durationSeconds: 10.04,
+      songTypeName: 'Song (unclassified)',
       description:
-        'PLACEHOLDER, NOT ROBIN SONG. The 12 s excerpt is dominated by Hermit Thrush: auditioned by ear on 2026-11-22, and BirdNET v3 agrees at 0.93 across three of its four windows with no robin detection in the clip. The source recording (46 s) contains a robin only in its final seconds, after the excerpt ends. Kept in place so the app has audio while a replacement is cut; it must not ship as robin song.',
-      recordist: 'G. McGrane',
-      license: 'public-domain',
-      sourceUrl: 'https://commons.wikimedia.org/wiki/File:American_Robin.ogg',
-      citationId: 'audio-mcgrane-robin',
-      clipRange: { fromSeconds: 23.5, toSeconds: 35.5 },
+        'The first 10 s of Doug Hynes\'s XC570791: an adult male singing, one clean robin with no other species in the excerpt, by ear and by BirdNET (American Robin 0.85 in all three of its windows). The clip stops at 10 s because the recording turns mixed after that — Yellow-rumped Warbler and crows. Not labelled as a named song type: naming one is still ear work we have not done.',
+      recordist: 'Doug Hynes',
+      license: 'cc-by-sa-4.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC570791.mp3',
+      citationId: 'xc570791',
+      clipRange: { fromSeconds: 0, toSeconds: 10 },
     },
   ],
 
@@ -58,11 +59,11 @@ export const americanRobin: SpeciesRecord = {
 
   cadence: {
     dawn: {
-      songsPerMinute: 67.7,
+      songsPerMinute: 51.2,
       method: 'measured',
-      citationId: 'audio-mcgrane-robin',
+      citationId: 'xc570791',
       note:
-        'Counted from the shipped source recording: 43 phrases over 38.1 s of continuous caroling (the file opens with ~8 s of silence; there are no gaps longer than 1.2 s thereafter). Method: 25 ms RMS envelope over 22.05 kHz mono, threshold at 35% of the file\'s own dynamic range, segments merged across gaps under 120 ms, shortest accepted phrase 60 ms. The shipped clip is a 12 s excerpt at average density (14 phrases, 70/min). Corroborated by an independent dawn recording (XC128490, 7 min 21 s of continuous song from a maple tree): 525 phrases over 440.7 s = 71.5/min — auditioned by ear, that file has one prominent bird with other robins audible in the background, so its rate is a chorus figure and an upper bound for a single male; and by Johnson 2006, whose own field recordings give "100 elements in under 100 sec" for a male in the pre-dawn chorus (>=60/min, though an element is not the same unit as an envelope burst). This figure is now withdrawn in substance: the 2026-11-22 audition heard the robin in this source only from ~42 s, and BirdNET v3 identifies the preceding 33 s as Hermit Thrush (0.87–0.93, eleven of sixteen windows), so the 43 phrases counted over 0–38 s are a thrush\'s, not a robin\'s. It is kept only until a replacement dawn figure is chosen and is not to be trusted as a robin rate. The source may also contain more than one individual — its description says "American Robins", plural — which would inflate the rate; the dawn attribution rests on this being a spring dawn chorus, which the source does not state; and the count has not been verified by ear.',
+        'Counted from the shipped source (XC570791, 43.78 s, adult male, Goulds, Newfoundland): 35 phrases over 41.0 s = 51.2/min. The shipped 10 s clip renders at 50.1/min over an 8.4 s active span through the shipping pipeline, 2% below the file average, so the audio does not sound busier than the figure claims. Limits: the recordist labels this "adult, male, song" and not "dawn", so the dawn attribution is presumed from the game\'s model rather than stated by the source; the count has not been verified by ear beyond confirming a clean single robin; and one male on one morning replaces a placeholder without becoming a population figure. What it replaces and what corroborates it: the previous 67.7/min was counted from the McGrane recording, whose first 33 s this record\'s own audition and BirdNET both place as Hermit Thrush — that figure and every clip cut from it are withdrawn. XC128490 does state "singing before dawn" and measures 71.5/min, but as a chorus, which makes it an upper bound rather than a single male\'s rate.',
     },
     morning: {
       songsPerMinute: 34,
@@ -117,7 +118,7 @@ export const americanRobin: SpeciesRecord = {
     child:
       'The robin is the bird hopping on the grass. He tips his head to listen for worms, then pulls one out of the ground. He wakes up early — sometimes before the sun does — and sings and sings.',
     birder:
-      'Turdus migratorius. Among the earliest singers in the dawn chorus; the song is a rapid, continuous series of discrete repeated units rather than discrete bouts, built from whistle elements (clear, 1.5–4 kHz) and hisselly or whisper elements (wider-band, more complex). Males hold 6–25 whistle element types and combine them into groups of 3–8, singing whistle elements 5–10 times more often than hisselly ones; most elements are invented rather than imitated, so the song varies regionally. Dawn is the peak of song activity and evening a lesser second peak; song largely stops around noon. Song period runs from late February or early March to late July or early August. Usually sings from a high perch in a tree, forages primarily on the ground for soft-bodied invertebrates, locating prey by sight and sometimes by sound. Breeds across most of North America; northern populations largely withdraw in winter, though the species overwinters well into the northern United States, often in flocks feeding on fruit. This record is provisional: the morning and midday rates are declared simplifications, the dawn figure may include more than one individual, the call vocabulary is unwritten, and the shipped audio has not been verified by ear.',
+      'Turdus migratorius. Among the earliest singers in the dawn chorus; the song is a rapid, continuous series of discrete repeated units rather than discrete bouts, built from whistle elements (clear, 1.5–4 kHz) and hisselly or whisper elements (wider-band, more complex). Males hold 6–25 whistle element types and combine them into groups of 3–8, singing whistle elements 5–10 times more often than hisselly ones; most elements are invented rather than imitated, so the song varies regionally. Dawn is the peak of song activity and evening a lesser second peak; song largely stops around noon. Song period runs from late February or early March to late July or early August. Usually sings from a high perch in a tree, forages primarily on the ground for soft-bodied invertebrates, locating prey by sight and sometimes by sound. Breeds across most of North America; northern populations largely withdraw in winter, though the species overwinters well into the northern United States, often in flocks feeding on fruit. This record is provisional: the morning and midday rates are declared simplifications, the dawn figure is one male in one Newfoundland recording whose dawn attribution is presumed, the song type is unclassified, and the call vocabulary is unwritten.',
   },
 
   sources: [
@@ -155,7 +156,7 @@ export const americanRobin: SpeciesRecord = {
     },
     {
       id: 'audio-mcgrane-robin',
-      title: 'American Robin (audio recording, 46.2 s)',
+      title: 'American Robin (audio recording, 46.2 s) — WITHDRAWN as a robin source: audition and BirdNET place its first 33 s as Hermit Thrush',
       authors: 'G. McGrane',
       publisher: 'Wikimedia Commons',
       url: 'https://commons.wikimedia.org/wiki/File:American_Robin.ogg',
@@ -170,6 +171,14 @@ export const americanRobin: SpeciesRecord = {
       accessed: '2026-11-22',
     },
     {
+      id: 'xc570791',
+      title: 'American Robin (Turdus migratorius), XC570791 — 43.78 s, adult male song, Goulds, Newfoundland and Labrador',
+      authors: 'Doug Hynes',
+      publisher: 'Xeno-canto, mirrored on Wikimedia Commons',
+      url: 'https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC570791.mp3',
+      accessed: '2026-11-22',
+    },
+    {
       id: 'xc132864',
       title: 'American Robin (Turdus migratorius), XC132864 — 207.6 s, "singing from 15m up at top of spruce tree just before sundown"',
       authors: 'Jonathon Jongsma',
@@ -181,12 +190,12 @@ export const americanRobin: SpeciesRecord = {
 
   verified: false,
   provisional: [
-    'cadence.dawn — counted mechanically, not verified by ear; source description says "American Robins", so more than one individual cannot be ruled out; dawn attribution presumed from the recording, not stated by it',
+    'cadence.dawn — counted mechanically from one male in one recording and not verified by ear beyond the shipped clip; the recordist labels the file "adult, male, song", so the dawn attribution is presumed rather than stated',
     'cadence.morning — magnitude is a declared simplification (its shape is sourced to Miller 1958)',
     'cadence.midday — magnitude is a declared simplification (its shape is sourced to Slagsvold 1996)',
     'cadence.dusk — measured from one bird on one evening, from a file the recordist labels "call, song"; the 2026-11-22 audition confirmed one bird but could not separate song from call, so song alone is below 43/min',
     'repertoire.documented — 6–25 is a published range, not a census; the hisselly repertoire is unquantified',
-    'songs — the shipped clip contains no robin: it is Hermit Thrush (ear, confirmed by BirdNET v3 at 0.93), because it sits at 23.5–35.5 s of a source whose robin does not start until ~42 s. Awaiting replacement. Its song type is also unclassified, and the two auditioned candidates for named variants were rejected (A08 carries a cardinal and a red-winged blackbird, A10 a blackbird)',
+    'songs — one clip ships and its song type is unclassified; only the first 10 s of its source are usable because the recording turns mixed after that, and the auditioned candidates for named variants were rejected (A08 carries a cardinal and a red-winged blackbird, A10 a blackbird)',
     'calls — empty; A06 carries a call buried in white noise and A19 a robin under a blue jay, and no call type has been named',
     'strata.preferred — secondary source plus recordist notes only; Birds of North America not read',
     'fieldMarks — from general reading, not tied to a single citation',

@@ -40,7 +40,9 @@ function absentInWinter(): SpeciesRecord {
 describe('rate: seasons and periods', () => {
   it('plays the measured dawn figure at full strength', () => {
     const rate = songsPerMinute(americanRobin, SPRING_DAWN, 'canopy');
-    expect(rate.perMinute).toBeCloseTo(67.7, 5);
+    // 67.7 until 2026-11-22, when the source recording turned out to be Hermit
+    // Thrush and dawn was re-anchored on the clean single male in XC570791.
+    expect(rate.perMinute).toBeCloseTo(51.2, 5);
     expect(rate.confidence).toBe('sourced');
   });
 
@@ -77,7 +79,7 @@ describe('rate: seasons and periods', () => {
   it('halves the rate for a bird that is merely present', () => {
     const fall = { season: 'fall' as const, period: 'dawn' as const };
     const rate = songsPerMinute(americanRobin, fall, 'canopy');
-    expect(rate.perMinute).toBeCloseTo(67.7 * SEASON_FACTORS.present, 5);
+    expect(rate.perMinute).toBeCloseTo(51.2 * SEASON_FACTORS.present, 5);
     expect(rate.confidence).toBe('sourced');
   });
 });
@@ -99,7 +101,7 @@ describe('rate: placement (D10)', () => {
   });
 
   it('reports expected event counts consistently with the rate', () => {
-    expect(expectedEvents(americanRobin, SPRING_DAWN, 'canopy', 60)).toBeCloseTo(67.7, 4);
+    expect(expectedEvents(americanRobin, SPRING_DAWN, 'canopy', 60)).toBeCloseTo(51.2, 4);
     expect(expectedEvents(americanRobin, SPRING_NIGHT, 'canopy', 60)).toBe(0);
   });
 });
@@ -146,7 +148,7 @@ describe('variants', () => {
 describe('simulate', () => {
   it('produces events at roughly the documented rate', () => {
     const events = simulate(SPRING_DAWN, [robinPlaced('canopy')], { seed: 1, horizonSeconds: 60 });
-    // Poisson with mean 67.7: a ±3σ band is roughly 40–96. Wide on purpose —
+    // Poisson with mean 51.2: a ±3σ band is roughly 28–75. Wide on purpose —
     // the test is that the model is Poisson at the stated rate, not that it is exact.
     expect(events.length).toBeGreaterThan(40);
     expect(events.length).toBeLessThan(97);

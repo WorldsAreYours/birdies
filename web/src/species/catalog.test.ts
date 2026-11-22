@@ -38,11 +38,14 @@ describe('american robin record', () => {
     }
   });
 
-  it('anchors cadence on a measured dawn figure', () => {
+  it('anchors cadence on a measured dawn figure and records what it replaced', () => {
     const dawn = americanRobin.cadence.dawn;
     expect(dawn?.method).toBe('measured');
     expect(dawn?.songsPerMinute).toBeGreaterThan(0);
-    expect(dawn?.note).toMatch(/43 phrases/);
+    // The original 67.7/min came from a recording that turned out to be Hermit
+    // Thrush for its first 33 s. The withdrawal has to stay in the note, or the
+    // next reader re-derives the same wrong number from the same file.
+    expect(dawn?.note).toMatch(/Hermit Thrush/);
     expect(dawn?.note).toMatch(/not been verified by ear/);
   });
 
