@@ -16,10 +16,12 @@ Normalised to matched loudness, mono, 32 kHz — so differences you hear are the
 birds, not the levels. Any player will do; `mpv A09*` or copy the folder to a
 phone.
 
-If you have no shell on the host, the same pack is mirrored on the temporary
-branch `tmp/robin-audition`, under `tmp/robin-audition/` (README, CREDITS and all
-25 files). GitHub's "Code → Download ZIP" on that branch is the fastest way in.
-That branch is disposable: delete it once the answers below are recorded.
+If you have no shell on the host, the same audio is mirrored on the temporary
+branch `tmp/robin-audition` — open that branch, then "Code → Download ZIP". The
+ten files that matter are in `tmp/robin-audition/review/`, with the questions in
+`review/README.txt`; the full set stays in `audition/` and `candidates/` for
+pass 2 and provenance. That branch is disposable: delete it once the answers
+below are recorded.
 
 ## Pass 1 — five minutes, seven files
 
