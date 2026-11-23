@@ -182,8 +182,8 @@ corpus or in `public/audio/` is unaccounted for, or the table above is stale. `-
 prints the same information with the outstanding act spelled out per file.
 
 Ten files are `blocked`. Six Commons files carry no song/call label anywhere in their
-metadata (#21); four Macaulay CC BY assets have no published licence version and A21 has no
-recordist (#19). Nothing else in the corpus needs a human before use.
+metadata (#21), and A21 among them also has no recordist; four Macaulay CC BY assets have no
+published licence version (#19). Nothing else in the corpus needs a human before use.
 
 ## 2. What the recordings contain
 
