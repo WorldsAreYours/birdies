@@ -89,8 +89,9 @@ web/                         the app (Phase 1 in progress)
 docs/
   birdie-transition-plan.md  authoritative plan + decision log
   open-questions.md          areas for expansion, and what keeps a record unverified
-  curation/american-robin-audio.md      provenance, licences, measured cadence
+  curation/american-robin-audio.md      provenance, licences, labels, the pipeline order
   curation/audio-sources.json           per-file provenance ledger; ready / blocked / refused
+  curation/species-checks.json          BirdNET verdicts for shipped clips, bound to digests
   curation/american-robin-audition.md   outstanding ear work
 tools/curation/              Python helpers for fetching/picking Commons audio
 ```
@@ -128,7 +129,9 @@ tools/curation/              Python helpers for fetching/picking Commons audio
   recordist's song/call label per recording; a file with no published label is not usable for a
   song or call claim, and the ledger marks it `blocked`. A file becomes usable in this order:
   licence and provenance, label, signal QA, then BirdNET as the last species check; counting
-  is not a step in that chain. Provenance for **every**
+  is not a step in that chain. A shipped clip carries its BirdNET verdict in
+  `docs/curation/species-checks.json`, bound to the file's digest; `--check` fails without it.
+  Provenance for **every**
   audio file in the corpus (not just the shipped clips) is `docs/curation/audio-sources.json`,
   generated and audited by `tools/curation/sources.py`: `--check` fails on a changed digest,
   a `ready` file with a missing field (including the label), a derivative whose licence diverges from its source,

@@ -6,7 +6,8 @@ stays `verified: false` for the reasons in §7, not because the audio is unheard
 A file becomes usable in this order: **licence and provenance → the source's
 song/call label → signal QA → BirdNET as the last species check.** Counting is not a
 step. It was retired after it produced a thrush, a rumble count, and an element
-rate labelled as a song rate.
+rate labelled as a song rate. The shipped clip's verdict is in
+`docs/curation/species-checks.json`, bound to the file's SHA-256.
 
 > Terminology: this note predates the unit standard. Where it says "phrases" or
 > "bursts", the 120 ms counter is counting *elements* as defined in
@@ -340,43 +341,38 @@ does not.
 1. **What each file sounds like.** Partly answered by the 2026-11-22 audition.
    A09 is one prominent bird with other robins audible behind it; A10 carries a
    blackbird as well as the robin, so its buzz is not attributable to the robin;
-   A08 carries a cardinal and a red-winged blackbird. Still open: A04, the source
-   of the shipped clip, which no one has heard — and whose description says
-   "Robins", plural, exactly the multi-individual caveat already in the record.
+   A08 carries a cardinal and a red-winged blackbird. A04 is withdrawn: its first
+   33 s is Hermit Thrush, so it cannot back a robin claim.
 2. **Call names.** Nothing yet. A06 has a call under a wash of white noise and
    A19 a robin under a blue jay; neither produced a name, and no source read
    gives a taxonomy (ground-predator alarm, nest threat, flight call) with the
    names a birder uses. `calls[]` stays empty.
 3. **Morning and midday rates.** Shape sourced, magnitude not.
 4. **BNA.** The authoritative account has not been read.
-5. **Whether the measured dawn rate belongs to dawn.** A09's own recordist says
-   "before dawn", which is better evidence than A04's, but a recording's
-   timestamp is not a study design.
+5. **Dawn attribution.** The record uses Johnson's pre-dawn males rather than a
+   timestamp on one Newfoundland recording.
 
 ## 8. Recommendation
 
-Ship a robin with a defensible spread rather than one loop, accepting CC BY-SA
-for most of it, and keep the PD McGrane clip as the attribution-light fallback:
+Ship the A20 opening as the robin's voice. The PD McGrane fallback is gone: its
+first 33 s is Hermit Thrush.
 
 | Role | Recording | Why |
 |---|---|---|
-| dawn carol | **A20, first 10 s** (CC BY-SA 4.0) | shipped 2026-11-22: auditioned as "very robin focused" for the opening 10 s; BirdNET 0.85 in every window; 50.1/min rendered vs 51.2/min file average. Dawn is anchored here |
+| dawn carol | **A20, first 10 s** (CC BY-SA 4.0) | shipped 2026-11-22: auditioned as "very robin focused" for the opening 10 s; BirdNET 0.85 in every window; the recordist labels the file "adult, male, song". The record's dawn figure is Johnson's published floor, not a count from this clip |
 | dawn corroboration | A09 (CC BY-SA 3.0) | auditioned: one prominent bird with a chorus behind it, 7 min of material; 71.5/min is a chorus upper bound |
 | hisselly song | A10 (CC BY-SA 3.0) | **blocked** — auditioned and a blackbird is in the file |
 | whisper song | A15 (CC BY-SA) | A08 **rejected** (cardinal + red-winged blackbird); A15 still unheard |
 | second dawn male | A20 (CC BY-SA 4.0) | **approved 2026-11-22** — robin only, different region |
 | call: contact/flight | A06 (CC BY-SA 3.0) | **not shippable** — a call, but white noise throughout; unnamed |
 | call: flock/agitation | A19 or A14 (CC BY-SA 4.0) | A19 has a blue jay over the robin; A14 still unheard |
-| PD fallback | A04 (PD) | already shipped; still unauditioned |
+| PD fallback | A04 (PD) | **withdrawn** — first 33 s is Hermit Thrush; cannot ship |
 
 Do not ship A01/A02/A03 — 1.5–9 s with no stated context is not enough to justify
 a label. Do not use A11 for cadence — 200 birds.
 
-Candidate 12 s clips, cut so that the *rendered* audio measures at its parent
-recording's average density (an earlier cut chosen by source-space window counts
-measured 75–80/min once rendered — the "do not ship the densest window" trap — so
-windows are now chosen by rendering each candidate through the shipping pipeline
-and measuring the result):
+The 12 s candidates below were cut by measuring rendered density. Counting is
+retired, so they are kept as audition history, not as shipping candidates.
 
 ```
 candidates/robin-dawn-xc128490-from344.0s-12s.mp3      14 bursts = 71.6/min  (parent 71.5)

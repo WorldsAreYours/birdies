@@ -8,8 +8,8 @@
 #
 # Each block records: the source URL, the exact SHA-256 of the download we used,
 # the trim points, and why. If a hash does not match, the file changed upstream —
-# stop and re-measure rather than silently shipping different audio, because the
-# cadence figures in species/records/*.ts were counted from the file below.
+# stop and re-run the checks rather than silently shipping different audio, because
+# the record's provenance and the species verdict are tied to these exact bytes.
 
 set -euo pipefail
 
@@ -61,9 +61,11 @@ fetch() { # url dest expected_sha256 licence-name licence-url
 #
 #    Shipped clip: 0.0 s + 10 s. The opening stretch is one clean robin; the
 #    recording turns mixed after ~10 s (Yellow-rumped Warbler, crows), so the
-#    clip stops there. Rendered through this pipeline the window measures 50.1
-#    phrases/min over an 8.4 s active span against the file's 51.2/min average,
-#    so it sits just below average density rather than at the busiest window.
+#    clip stops there. The recordist labels the file "adult, male, song"; the
+#    record's dawn figure is Johnson's published floor, and no count from this
+#    window is used as a rate. BirdNET re-checked the clipped bytes on 2026-11-23:
+#    American Robin in 3 of 3 complete windows
+#    (docs/curation/species-checks.json).
 # ---------------------------------------------------------------------------
 SRC1="$WORK/Turdus_migratorius_-_American_Robin_XC570791.mp3"
 fetch "https://upload.wikimedia.org/wikipedia/commons/1/16/Turdus_migratorius_-_American_Robin_XC570791.mp3" \

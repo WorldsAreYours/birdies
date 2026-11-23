@@ -1,7 +1,7 @@
 {
  "version": 1,
  "generated": "2026-11-23",
- "why": "A recording is usable only if the file we hold can be traced to a source page that names the recordist, the licence, and what the archive labels the sound. The masters live outside git (~/projects/birdie-curation, ~75 MB); this ledger is the versioned part, so the provenance cannot be lost with the disk. It is not a licence grant: the grant is the deed at the source page, and `verification.needs` lists what has not been checked. A file with a permitted licence but an unverified field is `blocked`, not usable.",
+ "why": "A recording is usable only if the file we hold can be traced to a source page that names the recordist, the licence, and what the archive labels the sound. A clip that ships also carries a BirdNET species verdict bound to its digest. The masters live outside git (~/projects/birdie-curation, ~75 MB); this ledger is the versioned part, so the provenance cannot be lost with the disk. It is not a licence grant: the grant is the deed at the source page, and `verification.needs` lists what has not been checked. A file with a permitted licence but an unverified field is `blocked`, not usable.",
  "policy": "web/src/species/licence-policy.json",
  "corpusRoot": "/home/hermes/projects/birdie-curation/american-robin",
  "rebuild": "python3 tools/curation/sources.py --write",
@@ -1955,7 +1955,25 @@
     "fromSeconds": 0,
     "durationSeconds": 10.04
    },
-   "sha256": "926f81b5e1033c9013e25f97defcc2519dc71bb10d08446af1cdd9e58c35ab5e"
+   "sha256": "926f81b5e1033c9013e25f97defcc2519dc71bb10d08446af1cdd9e58c35ab5e",
+   "speciesCheck": {
+    "path": "web/public/audio/american-robin/pillar-carol-01.mp3",
+    "sha256": "926f81b5e1033c9013e25f97defcc2519dc71bb10d08446af1cdd9e58c35ab5e",
+    "expected": "American Robin",
+    "model": "BirdNET 3.0, ONNX fp32 (birdnet 1.5.1)",
+    "minConfidence": 0.1,
+    "windows": 4,
+    "completeWindows": 3,
+    "positiveCompleteWindows": 3,
+    "scores": [
+     0.815,
+     0.851,
+     0.773,
+     0.029
+    ],
+    "verdict": "pass",
+    "checkedOn": "2026-11-23"
+   }
   }
  ]
 }

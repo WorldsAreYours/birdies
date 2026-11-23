@@ -1,0 +1,25 @@
+{
+ "version": 1,
+ "checks": {
+  "pillar-carol-01": {
+   "path": "web/public/audio/american-robin/pillar-carol-01.mp3",
+   "sha256": "926f81b5e1033c9013e25f97defcc2519dc71bb10d08446af1cdd9e58c35ab5e",
+   "expected": "American Robin",
+   "model": "BirdNET 3.0, ONNX fp32 (birdnet 1.5.1)",
+   "minConfidence": 0.1,
+   "windows": 4,
+   "completeWindows": 3,
+   "positiveCompleteWindows": 3,
+   "scores": [
+    0.815,
+    0.851,
+    0.773,
+    0.029
+   ],
+   "verdict": "pass",
+   "checkedOn": "2026-11-23"
+  }
+ },
+ "why": "The last gate before a clip may be used in the game: the species the archive labels it as must be the species BirdNET hears in the bytes that ship. Each check is bound to the file's SHA-256, so a rebuilt clip cannot inherit an old verdict.",
+ "command": "~/.venvs/birdnet3/bin/python tools/curation/species_check.py <file> --expect '<species>'"
+}
