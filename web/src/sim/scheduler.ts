@@ -23,8 +23,8 @@ export function windowEvents(
  * The next horizon to simulate, given how far the clock has run.
  *
  * Keeps a rolling window of schedule ahead of the playhead so a long session does
- * not hold every event in memory, and so extending the horizon is deterministic
- * (same seed, same extension) rather than fresh randomness each tick.
+ * not hold every event in memory. Extending the horizon only appends events: each
+ * bird's schedule depends on the seed and its index alone (see `simulate`).
  */
 export function nextHorizon(elapsedSeconds: number, lookAheadSeconds: number): number {
   return Math.max(0, elapsedSeconds) + Math.max(0, lookAheadSeconds);

@@ -145,6 +145,25 @@ describe('variants', () => {
 });
 
 describe('simulate', () => {
+  it('keeps earlier events fixed when the horizon is extended', () => {
+    const birds = [robinPlaced('canopy'), robinPlaced('canopy')];
+    const short = simulate(SPRING_DAWN, birds, { seed: 7, horizonSeconds: 300 });
+    const long = simulate(SPRING_DAWN, birds, { seed: 7, horizonSeconds: 600 });
+    const before = long.filter((event) => event.atSeconds < 300);
+    expect(before.map((e) => e.atSeconds)).toEqual(short.map((e) => e.atSeconds));
+    expect(before).toEqual(short);
+  });
+
+  it('does not change the events of existing birds when another bird is added', () => {
+    const one = simulate(SPRING_DAWN, [robinPlaced('canopy')], { seed: 9, horizonSeconds: 300 });
+    const two = simulate(SPRING_DAWN, [robinPlaced('canopy'), robinPlaced('bath')], {
+      seed: 9,
+      horizonSeconds: 300,
+    });
+    const firstBird = two.filter((event) => event.stratum === 'canopy');
+    expect(firstBird.map((e) => e.atSeconds)).toEqual(one.map((e) => e.atSeconds));
+  });
+
   it('produces events at roughly the documented rate', () => {
     const events = simulate(SPRING_DAWN, [robinPlaced('canopy')], { seed: 1, horizonSeconds: 60 });
     // Poisson with mean 60: a ±3σ band is roughly 37–83. Wide on purpose —
