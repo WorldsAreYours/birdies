@@ -56,5 +56,5 @@
     "no[\\s-]?deriv"
   ],
   "requiredAttribution": ["recordist", "license", "licenseUrl", "sourceUrl"],
-  "changeStatement": "downmixed to mono, resampled to 32 kHz and loudness-normalised by web/scripts/prepare-audio.sh"
+  "changeStatement": "downmixed to mono, resampled to 32 kHz, high-pass filtered at 150 Hz and loudness-normalised to -18 LUFS by tools/curation/render.py"
 }

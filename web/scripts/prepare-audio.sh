@@ -72,10 +72,8 @@ fetch "https://upload.wikimedia.org/wikipedia/commons/1/16/Turdus_migratorius_-_
       "$SRC1" "ce85004ba336e224a51e348754e854bab5c3341ccb049e9751ab9a61f1b2abff" \
       "CC BY-SA 4.0" "https://creativecommons.org/licenses/by-sa/4.0/"
 
-ffmpeg -v error -y -ss 0 -t 10 -i "$SRC1" \
-  -ac 1 -ar 32000 -codec:a libmp3lame -b:a 96k \
-  "$OUT/pillar-carol-01.mp3"
-echo "built $OUT/pillar-carol-01.mp3"
+python3 ../tools/curation/render.py "$SRC1" \
+  --out "$OUT/pillar-carol-01.mp3" --start 0 --length 10 --report
 
 # ---------------------------------------------------------------------------
 # Pending audition — located but NOT shipped, because classifying them as song

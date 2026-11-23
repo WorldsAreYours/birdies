@@ -1955,10 +1955,10 @@
     "fromSeconds": 0,
     "durationSeconds": 10.04
    },
-   "sha256": "926f81b5e1033c9013e25f97defcc2519dc71bb10d08446af1cdd9e58c35ab5e",
+   "sha256": "c303512bf0a27eaa39f2e10d82ab9fa2fb71b9a8ffa3dc0343c9a94dad7ddecc",
    "speciesCheck": {
     "path": "web/public/audio/american-robin/pillar-carol-01.mp3",
-    "sha256": "926f81b5e1033c9013e25f97defcc2519dc71bb10d08446af1cdd9e58c35ab5e",
+    "sha256": "c303512bf0a27eaa39f2e10d82ab9fa2fb71b9a8ffa3dc0343c9a94dad7ddecc",
     "expected": "American Robin",
     "model": "BirdNET 3.0, ONNX fp32 (birdnet 1.5.1)",
     "minConfidence": 0.1,
@@ -1966,10 +1966,10 @@
     "completeWindows": 3,
     "positiveCompleteWindows": 3,
     "scores": [
-     0.815,
-     0.851,
-     0.773,
-     0.029
+     0.715,
+     0.849,
+     0.763,
+     0.023
     ],
     "verdict": "pass",
     "checkedOn": "2026-11-23"

@@ -28,7 +28,7 @@ below are recorded.
 Answered 2026-11-22; kept as the record of what each file was asked to settle.
 Rows are in file order, which is also how the folder sorts.
 
-| File | Listen for | Answer |
+| File | Listen for | Question asked |
 |---|---|---|
 | `A06-xc112597.mp3` (whole, 0:10) | labelled "flight call" | does it match what you'd call a flight call? |
 | `A08-xc75499.mp3` (whole, 0:29) | "whispery song" after the recordist approached. Is the quiet, complex delivery clearly different from A09? | distinct enough to ship as its own variant? |
@@ -124,7 +124,7 @@ the older V2.4 TFLite model — use the official package.
 | Recording | Windows | What it says |
 |---|---|---|
 | `A04` (withdrawn source) | 16 | Hermit Thrush 0.87–0.93 in 11 of 16 windows, i.e. 0–31 s. American Robin 0.81 in exactly one window, at 42 s. |
-| `pillar-carol-01.mp3` (what ships, rebuilt from A20) | 4 | 2026-11-23, threshold 0.1: American Robin 0.815 / 0.851 / 0.773 in 3 of 3 complete windows; the 1 s tail scores 0.029. The thrush result of 2026-11-22 belongs to the withdrawn A04 clip. |
+| `pillar-carol-01.mp3` (what ships, rebuilt from A20) | 4 | 2026-11-23, threshold 0.1: American Robin 0.715 / 0.849 / 0.763 in 3 of 3 complete windows; the 1 s tail scores 0.023. The thrush result of 2026-11-22 belongs to the withdrawn A04 clip. |
 | `A09-xc128490` | 20 | American Robin 0.73–0.92 in 20 of 20 windows. |
 | `A20-xc570791` | 15 | American Robin 0.70–0.89 in 14 of 15 windows. |
 | `A20` candidate cut (6.0 s, 12 s) | 4 | American Robin 0.84 in 4 of 4 windows. |
@@ -133,7 +133,7 @@ So the ear and the model agree: the "continuous carol" that the 67.7/min figure
 was counted from is a Hermit Thrush. That clip was replaced on 2026-11-22 with the
 first 10 s of A20, and the current bytes are checked again in
 `docs/curation/species-checks.json`: American Robin in every complete window
-(0.773–0.851), bound to the file's SHA-256.
+(0.715–0.849), bound to the file's SHA-256.
 
 What this does **not** establish: BirdNET reports species presence per 3 s
 window, not individuals, and it cannot decide song vs call. Its confidence is

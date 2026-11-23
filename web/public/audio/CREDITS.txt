@@ -12,7 +12,7 @@ audio/american-robin/pillar-carol-01.mp3
   Recorded by Doug Hynes.
   Licence: CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/
   Source: https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC570791.mp3
-  Changed for Birdie: cut from 0.0–10.0 s of the source, downmixed to mono, resampled to 32 kHz and loudness-normalised by web/scripts/prepare-audio.sh.
+  Changed for Birdie: cut from 0.0–10.0 s of the source, downmixed to mono, resampled to 32 kHz, high-pass filtered at 150 Hz and loudness-normalised to -18 LUFS by tools/curation/render.py.
 
 Share-alike
 -----------

@@ -359,7 +359,7 @@ first 33 s is Hermit Thrush.
 
 | Role | Recording | Why |
 |---|---|---|
-| dawn carol | **A20, first 10 s** (CC BY-SA 4.0) | shipped 2026-11-22: auditioned as "very robin focused" for the opening 10 s; BirdNET 0.85 in every window; the recordist labels the file "adult, male, song". The record's dawn figure is Johnson's published floor, not a count from this clip |
+| dawn carol | **A20, first 10 s** (CC BY-SA 4.0) | shipped 2026-11-22: auditioned as "very robin focused" for the opening 10 s; BirdNET 0.71–0.85 in every complete window; the recordist labels the file "adult, male, song". The record's dawn figure is Johnson's published floor, not a count from this clip |
 | dawn corroboration | A09 (CC BY-SA 3.0) | auditioned: one prominent bird with a chorus behind it, 7 min of material; 71.5/min is a chorus upper bound |
 | hisselly song | A10 (CC BY-SA 3.0) | **blocked** — auditioned and a blackbird is in the file |
 | whisper song | A15 (CC BY-SA) | A08 **rejected** (cardinal + red-winged blackbird); A15 still unheard |

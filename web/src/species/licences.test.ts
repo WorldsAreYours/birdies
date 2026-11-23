@@ -174,3 +174,34 @@ describe('the validator refuses what the policy forbids', () => {
     expect(validateRecord(record).join('\n')).toMatch(/credit\/citation|sourceUrl/);
   });
 });
+
+describe('record and provenance ledger agree', () => {
+  const repo = join(process.cwd(), '..');
+  const ledger = JSON.parse(
+    readFileSync(join(repo, 'docs', 'curation', 'audio-sources.json'), 'utf8'),
+  ) as {
+    entries: { id: string; recordingId: string }[];
+    derivatives: { id: string; kind: string; sourceId: string }[];
+  };
+
+  it('joins every shipped clip to the recording the record cites', () => {
+    // The ledger's shipped-clip source is defined in tools/curation/sources.py;
+    // the record's citation is defined here. Nothing else compares them, so a clip
+    // could be rebuilt from a different recording and both files would stay valid.
+    for (const record of catalogue) {
+      for (const variant of shipped(record)) {
+        const clipId = variant.clip.split('/').pop()?.replace(/\.[a-z0-9]+$/i, '');
+        const derivative = ledger.derivatives.find(
+          (entry) => entry.kind === 'shipped-clip' && entry.id === clipId,
+        );
+        expect(derivative, `no ledger entry for ${variant.clip}`).toBeDefined();
+        const source = ledger.entries.find((entry) => entry.id === derivative?.sourceId);
+        expect(source, `unknown ledger source ${derivative?.sourceId}`).toBeDefined();
+        expect(
+          source?.recordingId,
+          `${clipId} derives from a different recording than the record cites`,
+        ).toBe(variant.citationId);
+      }
+    }
+  });
+});
