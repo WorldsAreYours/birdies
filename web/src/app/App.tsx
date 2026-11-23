@@ -9,9 +9,11 @@ import {
   type SimulatedClock,
 } from '../env/clock.js';
 import type { Period } from '../env/types.js';
-import { getRecord } from '../species/catalog.js';
+import { catalogue, getRecord } from '../species/catalog.js';
+import { creditEntries } from '../species/credits.js';
 import type { VocalizationUnit } from '../species/types.js';
 import { vocalizationRate } from '../sim/rate.js';
+import { CreditsView } from './CreditsView.js';
 
 /**
  * Phase 1 shell. It is deliberately small: it renders the one thing that is
@@ -48,6 +50,7 @@ export function App() {
     minutes: 5 * 60 + 40,
   });
 
+  const [screen, setScreen] = useState<'yard' | 'credits'>('yard');
   const env = toEnvironment(clock, 'suburban-yard');
   const habitat = 'suburban yard';
   const bird = getRecord('american-robin');
@@ -64,6 +67,10 @@ export function App() {
         : rate.confidence === 'simplified'
           ? 'from a placeholder figure, not data'
           : 'no figure for this time of day';
+
+  if (screen === 'credits') {
+    return <CreditsView entries={creditEntries(catalogue)} onBack={() => setScreen('yard')} />;
+  }
 
   return (
     <main className="birdie">
@@ -184,6 +191,11 @@ export function App() {
           Nothing here reads your device clock. The yard is always the hour you set it to.
         </p>
       </section>
+      <footer className="birdie__foot">
+        <button type="button" className="chip chip--ghost" onClick={() => setScreen('credits')}>
+          Credits and licences
+        </button>
+      </footer>
     </main>
   );
 }

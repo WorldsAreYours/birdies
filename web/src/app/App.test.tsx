@@ -23,6 +23,10 @@ describe('App shell', () => {
     expect(html).toContain('Dawn chorus');
   });
 
+  it('offers the credits screen from the yard', () => {
+    expect(html).toContain('Credits and licences');
+  });
+
   it('states that no device clock is read', () => {
     expect(html).toContain('Nothing here reads your device clock');
   });

@@ -279,3 +279,26 @@ body {
     transform: none;
   }
 }
+
+.credits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.credits__item {
+  border-top: 1px solid var(--rule);
+  padding-top: 0.9rem;
+}
+
+.credits__item p {
+  margin: 0.2rem 0;
+  overflow-wrap: anywhere;
+}
+
+.birdie__foot {
+  display: flex;
+  justify-content: center;
+}

@@ -23,6 +23,38 @@ function creditBlock(variant: SongVariant): string[] {
   return lines;
 }
 
+/** One clip's credit, as structured data for the in-app credits screen. */
+export interface CreditEntry {
+  readonly speciesName: string;
+  readonly clip: string;
+  readonly recordist: string;
+  readonly licenceLabel: string;
+  readonly deed: string | null;
+  readonly sourceUrl: string;
+  /** Without the trailing full stop: "trimmed to 10.0 s from the start of the recording". */
+  readonly changed: string;
+  readonly shareAlike: boolean;
+}
+
+/** Every shipped clip's credit, built from the same fields as `creditsText`. */
+export function creditEntries(records: readonly SpeciesRecord[]): CreditEntry[] {
+  return records.flatMap((record) =>
+    [...record.songs, ...record.calls].map((variant: SongVariant) => {
+      const facts = licenceFacts(variant.license);
+      return {
+        speciesName: record.commonName,
+        clip: variant.clip,
+        recordist: variant.recordist,
+        licenceLabel: facts.label,
+        deed: facts.deed,
+        sourceUrl: variant.sourceUrl,
+        changed: changeStatement(variant.clipRange.fromSeconds, variant.clipRange.toSeconds),
+        shareAlike: facts.shareAlike,
+      };
+    }),
+  );
+}
+
 export function creditsText(records: readonly SpeciesRecord[]): string {
   const out: string[] = [
     'Birdie — audio credits',
