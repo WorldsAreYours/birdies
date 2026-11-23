@@ -12,8 +12,11 @@ No accounts, no backend, no network required after first load.
 
 ## Status
 
-**Design phase.** No application code yet. The product direction, architecture decisions, phased plan
-and open questions live in:
+**Phase 1 in progress.** The web app lives in [`web/`](web/README.md): the simulated clock, one provisional
+species record, the cadence and event model, and a credits screen. Audio playback, pieces, the backyard and
+the journal are not built yet. Open work is tracked in the GitHub issues.
+
+The product direction, architecture decisions, phased plan and open questions live in:
 
 - [`docs/birdie-transition-plan.md`](docs/birdie-transition-plan.md)
 

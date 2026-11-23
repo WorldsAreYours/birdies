@@ -16,11 +16,14 @@ Phase 1 of [the transition plan](../docs/birdie-transition-plan.md) is in progre
 | Area | State |
 |---|---|
 | `src/env/` — simulated clock, season, daylight, time-of-day period | **done, tested** |
-| `src/species/` — record schema, validator, the American Robin | **one provisional record, tested** |
-| `src/sim/` — cadence, variants, event simulation, scheduler | **done, tested** |
+| `src/species/` — record schema, validator, licence gate, generated credits, the American Robin | **one provisional record, tested** |
+| `src/sim/` — cadence, variants, event simulation (one seeded stream per bird), scheduler | **done, tested** |
+| `src/app/` — clock shell, credits and licences screen | **done, tested** (the button's click path is not covered by a test) |
 | `src/audio/` — Web Audio engine and look-ahead scheduling | not written |
-| `src/pieces/`, `src/game/`, `src/backyard/`, `src/journal/` | not written |
+| `src/pieces/`, `src/game/`, `src/backyard/`, `src/journal/`, `src/storage/` | not written |
 | PWA precache (`vite-plugin-pwa`) | not added yet — needs the audio assets first |
+
+Progress and todos are in the GitHub tracker, not in this file.
 
 `public/audio/` builds from the originals via `bash scripts/prepare-audio.sh`,
 which pins each source's SHA-256 and trim points so every shipped second is
