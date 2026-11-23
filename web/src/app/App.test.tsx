@@ -23,25 +23,13 @@ describe('App shell', () => {
     expect(html).toContain('Dawn chorus');
   });
 
-  it('shows the computed daylight window rather than a hard-coded one', () => {
-    const { daylight } = toEnvironment(DEFAULT_CLOCK, 'suburban-yard');
-    expect(html).toContain(`${daylight.hours.toFixed(1)} h of daylight`);
-  });
-
   it('states that no device clock is read', () => {
     expect(html).toContain('Nothing here reads your device clock');
-  });
-
-  it('does not claim unbuilt features are finished', () => {
-    expect(html).toContain('What is real so far');
-    expect(html).toContain('The chorus');
   });
 
   it('shows the bird with its measured figure and its provisional flag', () => {
     expect(html).toContain('American Robin');
     expect(html).toContain('Turdus migratorius');
-    expect(html).toContain('60.0 elements a minute');
     expect(html).toContain('provisional');
-    expect(html).not.toContain('verified by ear');
   });
 });

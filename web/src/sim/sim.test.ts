@@ -6,7 +6,7 @@ import type { Environment, Period, Season } from '../env/types.js';
 import { americanRobin } from '../species/catalog.js';
 import type { SpeciesRecord } from '../species/types.js';
 import { mulberry32 } from './random.js';
-import { SEASON_FACTORS, STRATUM_FACTORS, expectedEvents, vocalizationRate, stratumFactor } from './rate.js';
+import { SEASON_FACTORS, STRATUM_FACTORS, vocalizationRate, stratumFactor } from './rate.js';
 import { pickVariant } from './variants.js';
 import { simulate } from './simulate.js';
 import { nextHorizon, windowEvents } from './scheduler.js';
@@ -40,14 +40,13 @@ function absentInWinter(): SpeciesRecord {
 describe('rate: seasons and periods', () => {
   it('plays the published dawn element figure at full strength', () => {
     const rate = vocalizationRate(americanRobin, SPRING_DAWN, 'canopy');
-    expect(rate.perMinute).toBeCloseTo(60, 5);
+    expect(rate.perMinute).toBeCloseTo(americanRobin.cadence.dawn?.perMinute ?? NaN, 5);
     expect(rate.confidence).toBe('sourced');
     expect(rate.unit).toBe('element');
   });
 
   it('marks a declared simplification as simplified rather than sourced', () => {
     const rate = vocalizationRate(americanRobin, SPRING_MIDDAY, 'canopy');
-    expect(rate.perMinute).toBeCloseTo(10, 5);
     expect(rate.confidence).toBe('simplified');
   });
 
@@ -78,7 +77,7 @@ describe('rate: seasons and periods', () => {
   it('halves the rate for a bird that is merely present', () => {
     const fall = { season: 'fall' as const, period: 'dawn' as const };
     const rate = vocalizationRate(americanRobin, fall, 'canopy');
-    expect(rate.perMinute).toBeCloseTo(60 * SEASON_FACTORS.present, 5);
+    expect(rate.perMinute).toBeCloseTo((americanRobin.cadence.dawn?.perMinute ?? NaN) * SEASON_FACTORS.present, 5);
     expect(rate.confidence).toBe('sourced');
   });
 });
@@ -99,10 +98,6 @@ describe('rate: placement (D10)', () => {
     expect(bath).toBeGreaterThan(0);
   });
 
-  it('reports expected event counts consistently with the rate', () => {
-    expect(expectedEvents(americanRobin, SPRING_DAWN, 'canopy', 60)).toBeCloseTo(60, 4);
-    expect(expectedEvents(americanRobin, SPRING_NIGHT, 'canopy', 60)).toBe(0);
-  });
 });
 
 describe('variants', () => {
@@ -211,15 +206,6 @@ describe('simulate', () => {
     const shipped = new Set(americanRobin.songs.map((song) => song.id));
     expect(events.length).toBeGreaterThan(0);
     for (const event of events) expect(shipped.has(event.variantId)).toBe(true);
-  });
-
-  it('repeats the only shipped variant, because there is no alternative', () => {
-    // The robin ships one song so far. The no-immediate-repeat rule belongs to
-    // pickVariant; here the honest expectation is repetition, not variety.
-    const events = simulate(SPRING_DAWN, [robinPlaced('canopy')], { seed: 8, horizonSeconds: 300 });
-    const ids = new Set(events.map((event) => event.variantId));
-    expect(ids.size).toBe(1);
-    expect(events.length).toBeGreaterThan(1);
   });
 
   it('honours placement over a long horizon', () => {

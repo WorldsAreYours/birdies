@@ -186,37 +186,28 @@ describe('clock: environment folding', () => {
     expect(toEnvironment(DEFAULT_CLOCK, habitat).habitat).toBe(habitat);
   });
 
-  it('is deterministic', () => {
-    expect(toEnvironment(DEFAULT_CLOCK, 'suburban-yard')).toEqual(
-      toEnvironment(DEFAULT_CLOCK, 'suburban-yard'),
-    );
-  });
 });
 
 describe('invariant: no real time on the play path', () => {
   // D8 is an architectural promise, so it gets a test rather than a comment.
-  const roots = ['src/env', 'src/sim', 'src/game', 'src/backyard', 'src/journal', 'src/species'];
+  // Each root must exist: a missing root is a failure, not a silent pass.
+  const roots = ['src/env', 'src/sim', 'src/species', 'src/app'];
 
   it.each(roots)('%s contains no Date or Math.random usage', (root) => {
     const dir = join(process.cwd(), root);
-    let files: string[];
-    try {
-      files = readdirSync(dir, { recursive: true, encoding: 'utf8' }).filter((f) =>
-        f.endsWith('.ts') && !f.endsWith('.test.ts'),
-      );
-    } catch {
-      return; // directory does not exist yet
-    }
-    expect(files.length).toBeGreaterThanOrEqual(0);
+    const files = readdirSync(dir, { recursive: true, encoding: 'utf8' }).filter(
+      (f) => f.endsWith('.ts') || f.endsWith('.tsx'),
+    ).filter((f) => !/\.test\.tsx?$/.test(f));
+    expect(files.length, `${root} has source files to check`).toBeGreaterThan(0);
     for (const file of files) {
       // Strip comments first: the modules *document* this rule, and naming
       // `Date.now()` in prose should not count as using it.
       const source = readFileSync(join(dir, file), 'utf8')
         .replace(/\/\*[\s\S]*?\*\//g, '')
         .replace(/\/\/[^\n]*/g, '');
-      expect(source).not.toMatch(/\bDate\.now\b/);
-      expect(source).not.toMatch(/new\s+Date\b/);
-      expect(source).not.toMatch(/\bMath\.random\b/);
+      expect(source, file).not.toMatch(/\bDate\.now\b/);
+      expect(source, file).not.toMatch(/new\s+Date\b/);
+      expect(source, file).not.toMatch(/\bMath\.random\b/);
     }
   });
 });

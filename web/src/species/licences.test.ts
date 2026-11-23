@@ -140,11 +140,13 @@ describe('credits', () => {
     }
   });
 
-  it('states the share-alike boundary when a share-alike clip ships', () => {
+  it('states the share-alike boundary that matches what ships', () => {
     const shareAlike = catalogue.flatMap(shipped).filter((variant) => licenceFacts(variant.license).shareAlike);
     if (shareAlike.length > 0) {
       expect(onDisk).toMatch(/stay CC BY-SA/);
       for (const variant of shareAlike) expect(onDisk).toContain(variant.clip);
+    } else {
+      expect(onDisk).toMatch(/None of the shipped clips is share-alike/);
     }
   });
 });
@@ -171,7 +173,7 @@ describe('the validator refuses what the policy forbids', () => {
     const variant = record.songs[0];
     if (!variant) throw new Error('fixture has no shipped song');
     (variant as { sourceUrl: string }).sourceUrl = 'https://example.invalid/other-recording.mp3';
-    expect(validateRecord(record).join('\n')).toMatch(/credit\/citation|sourceUrl/);
+    expect(validateRecord(record).join('\n')).toMatch(/but its sourceUrl is/);
   });
 });
 
