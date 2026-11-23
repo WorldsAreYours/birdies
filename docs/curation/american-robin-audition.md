@@ -76,7 +76,7 @@ Approve, or give me a start time and I will re-cut and re-measure — the point 
 | `A08` | robin, cardinal and red-winged blackbird | rejected as a whisper-song variant — not a solo robin. |
 | `A09` | one prominent robin, other robins audible behind it | one bird for the shape of the delivery, not for the count: 71.5/min is a chorus rate and an upper bound for a single male. |
 | `A10` | blackbird and robin | hissellly attribution unsafe — the buzz may be the blackbird. Variant blocked, and so is its candidate clip. |
-| `A13` | clean and prominent, just one robin | single bird confirmed. Song vs call: **can't say** — not separable by ear on this file, so 43/min stays an upper bound on song rather than a song rate. |
+| `A13` | clean and prominent, just one robin | single bird confirmed. Song vs call: **can't say** — not separable by ear on this file, so 43/min is carried as a declared simplification, not a song count. |
 | `A19` | prominent robin, plus a blue jay | calls are there, mixed with another species. Still no call name. |
 | `A20` | just a robin | approved as the second dawn voice: different region, nothing else in the file. |
 
@@ -155,10 +155,10 @@ curation one, so it waits for an explicit go-ahead.
   other species, so `repertoire.shipped` stays at 1.
 - **A20 is the one new shippable voice** — a second dawn male with a regional
   accent, which is what D3 (multi-regional or not) was waiting on.
-- **Dusk stays at 43/min, as an upper bound.** A13 was auditioned and the listener
-  could not tell song from call, so the file is recorded as "can't say" rather
-  than promoted to a song rate. That is the answer the sheet exists to make
-  acceptable.
+- **Dusk stays at 43/min, as a declared simplification.** A13 was auditioned and the
+  listener could not tell song from call, so the file is recorded as "can't say" and
+  the figure is a design choice rather than a count. That is the answer the sheet
+  exists to make acceptable.
 - **`calls[]` stays empty.** Two recordings carry calls; neither carries a name,
   and a name is what the array needs.
 - **`verified` stays false**, and now for a sharper reason: the recording the

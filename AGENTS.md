@@ -126,7 +126,9 @@ tools/curation/              Python helpers for fetching/picking Commons audio
   failing if `public/audio/CREDITS.txt` no longer matches the records. Unrecognised
   licences fail closed. Record recordist and licence per clip, and the archive's or
   recordist's song/call label per recording; a file with no published label is not usable for a
-  song or call claim, and the ledger marks it `blocked`. Provenance for **every**
+  song or call claim, and the ledger marks it `blocked`. A file becomes usable in this order:
+  licence and provenance, label, signal QA, then BirdNET as the last species check; counting
+  is not a step in that chain. Provenance for **every**
   audio file in the corpus (not just the shipped clips) is `docs/curation/audio-sources.json`,
   generated and audited by `tools/curation/sources.py`: `--check` fails on a changed digest,
   a `ready` file with a missing field (including the label), a derivative whose licence diverges from its source,

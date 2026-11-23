@@ -5,9 +5,15 @@ recording contains and how often the bird does it. The defects already found in 
 current chain live in the tracker under the `Audio pipeline audit` milestone; this memo
 does not restate their status.
 
-**One-sentence diagnosis:** the pipeline is measuring *elements* (the short units of
-robin song) with a detector that has never been calibrated, then calling those counts
-"songs" and scheduling a ten-second clip for each one.
+**Status (2026-11-23): the counter this memo examines is no longer in the pipeline.**
+Counting was retired in favour of the source's song/call label, and BirdNET is the last
+species check before a file is usable. The memo is kept because it establishes the unit
+vocabulary and records why each measured figure was withdrawn.
+
+**One-sentence diagnosis (historical):** the pipeline was measuring *elements* (the short
+units of robin song) with a detector that had never been calibrated, then calling those
+counts "songs" and scheduling a ten-second clip for each one. That is why counting was
+retired.
 
 Terms are defined on first use because they are the whole argument.
 

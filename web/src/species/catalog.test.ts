@@ -121,8 +121,9 @@ describe('validator rules', () => {
 
   it('rejects a counted claim with no citation', () => {
     const record = clone();
-    // @ts-expect-error deliberately breaking the invariant under test
-    record.cadence.dusk.citationId = null;
+    const claim = record.cadence.dusk as { method: string; citationId: string | null };
+    claim.method = 'counted';
+    claim.citationId = null;
     expect(validateRecord(record).join(' ')).toMatch(/counted but has no citation/);
   });
 
@@ -135,8 +136,9 @@ describe('validator rules', () => {
 
   it('rejects a machine-counted song rate', () => {
     const record = clone();
-    const claim = record.cadence.dusk as { unit: string };
+    const claim = record.cadence.dawn as { unit: string; method: string };
     claim.unit = 'song';
+    claim.method = 'counted';
     expect(validateRecord(record).join(' ')).toMatch(/song rate without an annotation/);
   });
 

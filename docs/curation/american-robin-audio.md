@@ -1,8 +1,12 @@
 # American Robin — sound curation, session 1
 
-Status: **research complete; audition outstanding.** Nothing here has been
-listened to yet, so everything derived from audio below is machine-measured and
-the shipped record stays `verified: false`.
+Status: **research complete; audition answered 2026-11-22.** The shipped record
+stays `verified: false` for the reasons in §7, not because the audio is unheard.
+
+A file becomes usable in this order: **licence and provenance → the source's
+song/call label → signal QA → BirdNET as the last species check.** Counting is not a
+step. It was retired after it produced a thrush, a rumble count, and an element
+rate labelled as a song rate.
 
 > Terminology: this note predates the unit standard. Where it says "phrases" or
 > "bursts", the 120 ms counter is counting *elements* as defined in
@@ -223,9 +227,10 @@ may cite them. A remark line is quoted below where one exists, but a remark is n
 `~/.hermes/skills/media/audio-corpus-curation/scripts/measure_cadence.py`
 (25 ms frames, threshold at 35 % of the file's own dynamic range, gaps under
 120 ms merged, bursts under 60 ms discarded), reported over the *active span*.
-**The counter is type-blind**: it counts call notes as happily as song phrases,
-which is why A05 (a call) shows 70/min and A22 (a call) shows 10/min. It
-measures a rhythm, not a behaviour.
+**The counter is retired from the pipeline.** It is kept here as the record of what it
+measured and why each figure was withdrawn; no step in curation or in the game uses it
+now. Classification comes from the source's label, and BirdNET is the last species
+check before a file is usable.
 
 Coverage now available, by the recordists' own labels:
 
@@ -269,10 +274,10 @@ The shape of the day, from the literature:
   response to the moment: in Seger et al. (2011), "neither song length nor rate
   was related to noise level" for robins.
 
-That converts one placeholder into data: `cadence.dusk` can move from a declared
-20/min to a **measured 43.0/min** (single recording, one bird, mixed call and
-song, so the figure is an upper bound on song alone). Morning and midday have a
-documented *shape* but still no rate; they stay declared simplifications.
+That gives dusk a documented *shape* but not a rate. The record carries 43/min as a
+**declared simplification** (single recording, one bird, mixed call and song, so it
+cannot be a song count). The old 20/min was no better; what changed is that the shape
+is now sourced. Morning and midday stay declared simplifications for the same reason.
 
 ## 4. Repertoire — the number the record was missing
 
