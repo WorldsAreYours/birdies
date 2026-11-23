@@ -288,22 +288,6 @@ def build(corpus: Path) -> dict:
             "sha256": sha256,
         })
 
-    review = Path.home() / "birdie-review"
-    for clip in sorted(review.glob("*.mp3")):
-        m = re.search(r"xc(\d+)", clip.name)
-        source = next((x for x in entries if m and x["recordingId"] == "xc" + m.group(1)), None)
-        if source is None:
-            continue
-        _, sha256, size = digests(clip)
-        derivatives.append({
-            "id": slug(clip.stem),
-            "kind": "ear-review-copy",
-            "sourceId": source["id"],
-            "licence": source["licence"]["id"],
-            "storage": {"path": str(clip), "bytes": size},
-            "sha256": sha256,
-        })
-
     for clip in sorted((corpus / "candidates").glob("*.mp3")):
         m = re.search(r"xc(\d+)", clip.name)
         source = next((x for x in entries if m and x["recordingId"] == "xc" + m.group(1)), None)
@@ -312,9 +296,11 @@ def build(corpus: Path) -> dict:
         _, sha256, size = digests(clip)
         derivatives.append({
             "id": unique(slug(clip.stem)),
-            "kind": "ear-review-copy",
+            "kind": "ear-review-cut",
             "sourceId": source["id"],
             "licence": source["licence"]["id"],
+            "note": "byte-identical copy handed over in ~/birdie-review for the ear pass; "
+                    "the corpus copy is the one this ledger tracks",
             "storage": {"path": str(clip.relative_to(corpus)), "bytes": size},
             "sha256": sha256,
         })

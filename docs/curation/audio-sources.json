@@ -1645,42 +1645,10 @@
   },
   {
    "id": "robin-dawn-xc128490-from344-0s-12s",
-   "kind": "ear-review-copy",
+   "kind": "ear-review-cut",
    "sourceId": "a09",
    "licence": "cc-by-sa-3.0",
-   "storage": {
-    "path": "/home/hermes/birdie-review/robin-dawn-xc128490-from344.0s-12s.mp3",
-    "bytes": 145197
-   },
-   "sha256": "2b351fa067a77131c215d472745fd67a10dfbe70798dd2214503e340de32000d"
-  },
-  {
-   "id": "robin-dusk-xc132864-from164-0s-12s",
-   "kind": "ear-review-copy",
-   "sourceId": "a13",
-   "licence": "cc-by-sa-3.0",
-   "storage": {
-    "path": "/home/hermes/birdie-review/robin-dusk-xc132864-from164.0s-12s.mp3",
-    "bytes": 145197
-   },
-   "sha256": "ee143344c607f55e81eb521842217cd03343070b209c9bc448d1359f831b141a"
-  },
-  {
-   "id": "robin-hisselly-xc129105-from36-0s-12s",
-   "kind": "ear-review-copy",
-   "sourceId": "a10",
-   "licence": "cc-by-sa-3.0",
-   "storage": {
-    "path": "/home/hermes/birdie-review/robin-hisselly-xc129105-from36.0s-12s.mp3",
-    "bytes": 145197
-   },
-   "sha256": "17d129ac445d34fad5efd8b27a12f294cc15aaebcd9f56aec7f4f5ec71de3c9d"
-  },
-  {
-   "id": "robin-dawn-xc128490-from344-0s-12s",
-   "kind": "ear-review-copy",
-   "sourceId": "a09",
-   "licence": "cc-by-sa-3.0",
+   "note": "byte-identical copy handed over in ~/birdie-review for the ear pass; the corpus copy is the one this ledger tracks",
    "storage": {
     "path": "candidates/robin-dawn-xc128490-from344.0s-12s.mp3",
     "bytes": 145197
@@ -1689,9 +1657,10 @@
   },
   {
    "id": "robin-dusk-xc132864-from164-0s-12s",
-   "kind": "ear-review-copy",
+   "kind": "ear-review-cut",
    "sourceId": "a13",
    "licence": "cc-by-sa-3.0",
+   "note": "byte-identical copy handed over in ~/birdie-review for the ear pass; the corpus copy is the one this ledger tracks",
    "storage": {
     "path": "candidates/robin-dusk-xc132864-from164.0s-12s.mp3",
     "bytes": 145197
@@ -1700,9 +1669,10 @@
   },
   {
    "id": "robin-hisselly-xc129105-from36-0s-12s",
-   "kind": "ear-review-copy",
+   "kind": "ear-review-cut",
    "sourceId": "a10",
    "licence": "cc-by-sa-3.0",
+   "note": "byte-identical copy handed over in ~/birdie-review for the ear pass; the corpus copy is the one this ledger tracks",
    "storage": {
     "path": "candidates/robin-hisselly-xc129105-from36.0s-12s.mp3",
     "bytes": 145197
