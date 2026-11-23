@@ -3,12 +3,12 @@ import type { SpeciesRecord } from '../types.js';
 /**
  * American Robin — Turdus migratorius.
  *
- * STATUS: PROVISIONAL (`verified: false`). The shipped clip has now been
- * auditioned — one clean robin, and BirdNET agrees — and the dawn figure is
- * re-anchored on it after the previous source turned out to be a Hermit Thrush.
- * The morning and midday rates are still declared simplifications, the song type
- * is unclassified, and the call vocabulary is unwritten. Every unsourced or
- * unconfirmed field is listed in `provisional` and renders as provisional.
+ * STATUS: PROVISIONAL (`verified: false`). The shipped clip has been auditioned —
+ * one clean robin, and BirdNET agrees — and dawn is anchored on Johnson (2006)'s
+ * published floor rather than on a measurement. The morning, midday and dusk rates
+ * are declared simplifications, the song type is unclassified, and the call
+ * vocabulary is unwritten. Every unsourced or unconfirmed field is listed in
+ * `provisional` and renders as provisional.
  *
  * What is *not* in dispute:
  * - It is among the earliest birds to sing at dawn, and the song is a repeated
@@ -86,10 +86,10 @@ export const americanRobin: SpeciesRecord = {
     dusk: {
       perMinute: 43,
       unit: 'element',
-      method: 'counted',
-      citationId: 'xc132864',
+      method: 'simplified',
+      citationId: null,
       note:
-        'Counted from XC132864 — the recordist\'s note reads "Singing from 15m up at top of spruce tree in campground just before sundown": 144 elements over 200.8 s of active span = 43.0/min. The recordist labels the file "call, song", so this element rate includes calls and is an upper bound on song elements; it is one bird on one evening, enough to replace a placeholder and not enough to be a population figure. It sits where the literature puts evening song: Miller 1958 describes a second, lesser peak before roosting. Auditioned by ear: one clean, prominent robin and no other species; the listener could not tell song from call on this file, so the mix the recordist\'s own label implies is unresolved.',
+        'Declared choice for the evening peak, not a measurement. Miller 1958 documents a lesser second peak before roosting, so the shape is sourced; the magnitude is ours. The recording that prompted it (XC132864) is labelled by its recordist "call, song", and the 2026-11-22 audition confirmed one bird but could not separate song from call, so no song rate can be counted from it. 43 is kept as the chosen magnitude because it sits below the dawn floor and above midday; the 43/min count it came from is withdrawn as a rate, not as a description of what that file contains.',
     },
     night: {
       perMinute: 0,
@@ -124,7 +124,7 @@ export const americanRobin: SpeciesRecord = {
     child:
       'The robin is the bird hopping on the grass. He tips his head to listen for worms, then pulls one out of the ground. He wakes up early — sometimes before the sun does — and sings and sings.',
     birder:
-      'Turdus migratorius. Among the earliest singers in the dawn chorus; the song is a rapid, continuous series of discrete repeated units rather than discrete bouts, built from whistle elements (clear, 1.5–4 kHz) and hisselly or whisper elements (wider-band, more complex). Males hold 6–25 whistle element types and combine them into groups of 3–8, singing whistle elements 5–10 times more often than hisselly ones; most elements are invented rather than imitated, so the song varies regionally. Dawn is the peak of song activity and evening a lesser second peak; song largely stops around noon. Song period runs from late February or early March to late July or early August. Usually sings from a high perch in a tree, forages primarily on the ground for soft-bodied invertebrates, locating prey by sight and sometimes by sound. Breeds across most of North America; northern populations largely withdraw in winter, though the species overwinters well into the northern United States, often in flocks feeding on fruit. This record is provisional: the morning and midday rates are declared simplifications, the dawn figure is one male in one Newfoundland recording whose dawn attribution is presumed, the song type is unclassified, and the call vocabulary is unwritten.',
+      'Turdus migratorius. Among the earliest singers in the dawn chorus; the song is a rapid, continuous series of discrete repeated units rather than discrete bouts, built from whistle elements (clear, 1.5–4 kHz) and hisselly or whisper elements (wider-band, more complex). Males hold 6–25 whistle element types and combine them into groups of 3–8, singing whistle elements 5–10 times more often than hisselly ones; most elements are invented rather than imitated, so the song varies regionally. Dawn is the peak of song activity and evening a lesser second peak; song largely stops around noon. Song period runs from late February or early March to late July or early August. Usually sings from a high perch in a tree, forages primarily on the ground for soft-bodied invertebrates, locating prey by sight and sometimes by sound. Breeds across most of North America; northern populations largely withdraw in winter, though the species overwinters well into the northern United States, often in flocks feeding on fruit. This record is provisional: the morning, midday and dusk rates are declared simplifications, the dawn figure is a published floor rather than a measurement, the song type is unclassified, and the call vocabulary is unwritten.',
   },
 
   sources: [
@@ -196,10 +196,10 @@ export const americanRobin: SpeciesRecord = {
 
   verified: false,
   provisional: [
-    'cadence.dawn — counted mechanically from one male in one recording and not verified by ear beyond the shipped clip; the recordist labels the file "adult, male, song", so the dawn attribution is presumed rather than stated',
+    'cadence.dawn — 60 elements/min is Johnson (2006)\'s published floor, not a measurement; the recording that corroborates it is one male in one file whose dawn attribution is presumed',
     'cadence.morning — magnitude is a declared simplification (its shape is sourced to Miller 1958)',
     'cadence.midday — magnitude is a declared simplification (its shape is sourced to Slagsvold 1996)',
-    'cadence.dusk — measured from one bird on one evening, from a file the recordist labels "call, song"; the 2026-11-22 audition confirmed one bird but could not separate song from call, so song alone is below 43/min',
+    'cadence.dusk — magnitude is a declared simplification; the file behind it is labelled "call, song" and the 2026-11-22 audition could not separate the two, so no song rate is counted',
     'repertoire.documented — 6–25 is a published range, not a census; the hisselly repertoire is unquantified',
     'songs — one clip ships and its song type is unclassified; only the first 10 s of its source are usable because the recording turns mixed after that, and the auditioned candidates for named variants were rejected (A08 carries a cardinal and a red-winged blackbird, A10 a blackbird)',
     'calls — empty; A06 carries a call buried in white noise and A19 a robin under a blue jay, and no call type has been named',

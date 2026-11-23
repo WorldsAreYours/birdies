@@ -1,0 +1,19 @@
+Birdie — audio credits
+======================
+
+Every recording below comes from a public archive, and each clip ships under the
+licence named with it. The Birdie source code has its own licence; the audio does
+not inherit it, and a clip's licence does not extend to the code.
+
+American Robin (Turdus migratorius)
+-----------------------------------
+
+audio/american-robin/pillar-carol-01.mp3
+  Recorded by Doug Hynes.
+  Licence: CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/
+  Source: https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC570791.mp3
+  Changed for Birdie: cut from 0.0–10.0 s of the source, downmixed to mono, resampled to 32 kHz, high-pass filtered at 150 Hz and loudness-normalised to -18 LUFS by tools/curation/render.py.
+
+Share-alike
+-----------
+The clips marked CC BY-SA stay CC BY-SA wherever they are copied, and this notice and the credit above must travel with them: audio/american-robin/pillar-carol-01.mp3. They are licensed separately from the app code, which may be sold or closed without affecting them.

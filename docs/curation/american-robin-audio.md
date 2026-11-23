@@ -1,8 +1,13 @@
 # American Robin — sound curation, session 1
 
-Status: **research complete; audition outstanding.** Nothing here has been
-listened to yet, so everything derived from audio below is machine-measured and
-the shipped record stays `verified: false`.
+Status: **research complete; audition answered 2026-11-22.** The shipped record
+stays `verified: false` for the reasons in §7, not because the audio is unheard.
+
+A file becomes usable in this order: **licence and provenance → the source's
+song/call label → signal QA → BirdNET as the last species check.** Counting is not a
+step. It was retired after it produced a thrush, a rumble count, and an element
+rate labelled as a song rate. The shipped clip's verdict is in
+`docs/curation/species-checks.json`, bound to the file's SHA-256.
 
 > Terminology: this note predates the unit standard. Where it says "phrases" or
 > "bursts", the 120 ms counter is counting *elements* as defined in
@@ -20,12 +25,16 @@ All 26 matched the SHA1 the Commons API reports for them, so the local copies ar
 the auditable originals. Four are the same recording mirrored twice (an `.ogg`
 plus an XC-tagged `.mp3`), leaving **22 distinct recordings**.
 
-| Licence | Files | Notes |
+| Licence | Distinct recordings | Notes |
 |---|---|---|
 | Public domain | 3 | G. McGrane (song, 46 s), NPS Yellowstone (3.5 s), NPS/MSU Acoustic Atlas (call, 37 s) |
 | CC BY-SA 3.0 | 10 | nine Xeno-canto mirrors + one 2007 Commons upload (GFDL/CC BY-SA, uploader `Mdf`) |
 | CC BY-SA 4.0 | 9 | Xeno-canto mirrors, 2019–2021 |
 | CC0 / CC BY / NC / ND | 0 | no plain-attribution tier exists in this set, and nothing here blocks a paid tier |
+
+The table counts distinct recordings (22). By file it is 26: fourteen CC BY-SA 3.0,
+nine CC BY-SA 4.0 and three public domain, because four recordings are mirrored
+twice (an `.ogg` plus an XC-tagged `.mp3`).
 
 Two consequences worth stating rather than discovering later:
 
@@ -39,12 +48,156 @@ Two consequences worth stating rather than discovering later:
   and the uploader is `Mdf`. Attributable as "Mdf (Wikimedia Commons)"; not usable
   if we need a named recordist.
 
+### How the rule is enforced
+
+`web/src/species/licence-policy.json` is the only list of licences Birdie may ship,
+and the `License` type derives from it, so a licence cannot be added in one place
+only. Three gates read that one file:
+
+- `tools/curation/licence.py` decides **before a download**: `fetch_audio.py` refuses
+  a refused licence and records the refusal under `rejected` in the manifest, rather
+  than leaving the file silently absent. `--check-manifest` audits a manifest that
+  predates the gate; `--stamp-manifest` writes the canonical licence id into each
+  entry.
+- `web/scripts/prepare-audio.sh` refuses a source whose declared licence is not
+  permitted, before `curl` runs.
+- `web/src/species/licences.test.ts` fails on a clip whose licence is not permitted or
+  whose credit is incomplete, and on audio in `public/audio/` that no record
+  declares; `prebuild` fails if `public/audio/CREDITS.txt` no longer matches the
+  records.
+
+NC and ND fail closed, and so does an unrecognised string: unknown means
+all-rights-reserved until someone proves otherwise.
+
+### Macaulay Library: 14 assets, 4 usable
+
+The Macaulay shortlist was assembled before the gate existed, so it was audited with
+`tools/curation/macaulay_assets.py` (2026-11-22; manifest at
+`~/projects/birdie-curation/american-robin/macaulay/manifest.json`). The payload
+carries `licenseId` alone — `LICENSE<n>` — and the asset page shows no licence
+version, no deed URL.
+
+| `licenseId` | assets | verdict |
+|---|---|---|
+| LICENSE10 (CC0) | 4 — ML163452761, ML550453001, ML56579161, ML57543841 | permitted |
+| LICENSE2 | 3 — ML94261, ML168300, ML206448 | no published mapping → all rights reserved |
+| LICENSE4 | 2 — ML100124941, ML321642131 | no published mapping → all rights reserved |
+| LICENSE5 (CC BY) | 4 — ML618224491, ML619791726, ML631573070, ML635770519 | refused: no published version, so a credit cannot name the licence |
+| LICENSE8 (CC BY-NC) | 1 — ML230039991 | refused: non-commercial |
+
+Three consequences worth stating rather than discovering later:
+
+- The three top-rated robin recordings (ML94261, ML168300, ML206448) are
+  all-rights-reserved. They were used to check species and density and can never
+  ship; anything measured from them is corroboration, not a shippable source.
+- Four CC0 assets are the only Macaulay audio usable as-is.
+- A Macaulay CC BY clip is not "clean" by default. The licence class is the whole of
+  what the archive publishes, so the version would have to be recorded by hand
+  before the clip could carry an attribution — which is why the gate refuses it
+  instead of guessing.
+
+### Provenance: where each file came from, and what it still needs
+
+The gate answers whether a licence is permitted. It cannot answer whether a *particular*
+file is usable, because that depends on facts outside the licence string: the page it came
+from, who recorded it, which version of the licence that page names, and whether the bytes
+we hold are the bytes the source published. Those facts live in
+`docs/curation/audio-sources.json`: one entry per file, with a digest, the licence as
+published, and a list of anything still unverified. The masters (~75 MB) stay outside git in
+`~/projects/birdie-curation`; the ledger is the versioned half, so a lost disk costs the
+audio, not the provenance.
+
+Every file is in one of three states:
+
+- **ready** — permitted licence, the archive's or recordist's song/call label, and
+  recordist, source page, licence version (or public-domain basis) and digest are recorded.
+  Use is allowed subject to the credit the licence requires; for the shipped clip that
+  credit is generated into `CREDITS.txt`.
+- **blocked** — the licence *family* is permitted but a named field is missing. The file is
+  not usable until someone does that one thing. This is the state that needs a human.
+- **refused** — not permitted, unrecognised, or published without a mapping. No amount of
+  local work changes that.
+
+What "verified" means depends on the source, and the difference is the point:
+
+- **Wikimedia Commons** publishes a SHA1 per file, so verification there means our copy
+  hashes to the published value. All 26 do.
+- **Macaulay** publishes neither a digest nor a licence version. Verification there means
+  we recorded the SHA-256 of the first download, which can be re-checked but not compared
+  against the archive. Its `licenseId` codes also carry no version, so a permitted class is
+  still `blocked` until the version is supplied from a deed or from the recordist in writing.
+- **Public domain** is not a licence with a deed; it needs a basis (a US federal work, or a
+  release by the recordist). The basis is recorded per file rather than assumed.
+- **CC BY-SA** puts the obligation on the derivative: the clip we ship must stay CC BY-SA
+  and carry the credit. The ledger therefore links every derived file — audition cut,
+  ear-review cut, shipped clip — to its source and fails if the licences diverge or a refused
+  source has a derivative.
+
+<!-- BEGIN SOURCES TABLE (generated by tools/curation/sources.py --table) -->
+
+| file | type | library | licence | status | what is needed before use |
+|---|---|---|---|---|---|
+| A01 | — | Wikimedia Commons | cc-by-sa-4.0 | blocked | record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite |
+| A02 | — | Wikimedia Commons | cc-by-sa-4.0 | blocked | record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite |
+| A03 | — | Wikimedia Commons | public-domain | blocked | record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite |
+| A04 | — | Wikimedia Commons | public-domain | blocked | record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite |
+| A05 | call (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| A06 | call (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| A07 | call (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| A08 | song (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| A09 | song (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| A10 | song (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| A11 | song, call (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| A12 | call (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| A13 | song, call (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| A14 | call (Type) | Wikimedia Commons | cc-by-sa-4.0 | ready | none — credit recorded |
+| A15 | song, call (Type) | Wikimedia Commons | cc-by-sa-4.0 | ready | none — credit recorded |
+| A16 | call (Type) | Wikimedia Commons | cc-by-sa-4.0 | ready | none — credit recorded |
+| A17 | call (Type) | Wikimedia Commons | cc-by-sa-4.0 | ready | none — credit recorded |
+| A18 | song (Type) | Wikimedia Commons | cc-by-sa-4.0 | ready | none — credit recorded |
+| A19 | call (Type) | Wikimedia Commons | cc-by-sa-4.0 | ready | none — credit recorded |
+| A20 | song (Type) | Wikimedia Commons | cc-by-sa-4.0 | ready | none — credit recorded |
+| A21 | — | Wikimedia Commons | cc-by-sa-3.0 | blocked | name the recordist: the file metadata has no recordist; the uploader is Mdf and the template is {{Self|GFDL|Cc-by-sa-3.0-migrated}}, so either find the original Xeno-canto recordist or credit "Mdf (Wikimedia Commons)"; record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite |
+| A22 | — | Wikimedia Commons | public-domain | blocked | record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite |
+| ML100124941 | song (tag) | Macaulay Library | LICENSE4 (LICENSE4, no version) | refused | 'LICENSE4' is not a licence the policy recognises |
+| ML163452761 | song (tag) | Macaulay Library | cc0 | ready | none — no attribution required |
+| ML168300 | song (tag) | Macaulay Library | LICENSE2 (LICENSE2, no version) | refused | 'LICENSE2' is not a licence the policy recognises |
+| ML206448 | song (tag) | Macaulay Library | LICENSE2 (LICENSE2, no version) | refused | 'LICENSE2' is not a licence the policy recognises |
+| ML230039991 | song (tag) | Macaulay Library | CC BY-NC (LICENSE8, no version) | refused | 'CC BY-NC' is non-commercial |
+| ML321642131 | song (tag) | Macaulay Library | LICENSE4 (LICENSE4, no version) | refused | 'LICENSE4' is not a licence the policy recognises |
+| ML550453001 | song (tag) | Macaulay Library | cc0 | ready | none — no attribution required |
+| ML56579161 | song (tag) | Macaulay Library | cc0 | ready | none — no attribution required |
+| ML57543841 | song (tag) | Macaulay Library | cc0 | ready | none — no attribution required |
+| ML618224491 | song (tag) | Macaulay Library | CC BY (LICENSE5, no version) | blocked | record the licence version from a deed or written confirmation: the archive publishes the class (LICENSE5) and never the version, so the attribution cannot name the licence it is made under |
+| ML619791726 | song (tag) | Macaulay Library | CC BY (LICENSE5, no version) | blocked | record the licence version from a deed or written confirmation: the archive publishes the class (LICENSE5) and never the version, so the attribution cannot name the licence it is made under |
+| ML631573070 | song (tag) | Macaulay Library | CC BY (LICENSE5, no version) | blocked | record the licence version from a deed or written confirmation: the archive publishes the class (LICENSE5) and never the version, so the attribution cannot name the licence it is made under |
+| ML635770519 | song (tag) | Macaulay Library | CC BY (LICENSE5, no version) | blocked | record the licence version from a deed or written confirmation: the archive publishes the class (LICENSE5) and never the version, so the attribution cannot name the licence it is made under |
+| ML94261 | call, song (tag) | Macaulay Library | LICENSE2 (LICENSE2, no version) | refused | 'LICENSE2' is not a licence the policy recognises |
+| Turdus migratorius - American Robin XC107523.mp3 | call (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| Turdus migratorius - American Robin XC112597.mp3 | call (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| Turdus migratorius - American Robin XC75498.mp3 | call (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+| Turdus migratorius - American Robin XC75499.mp3 | song (Type) | Wikimedia Commons | cc-by-sa-3.0 | ready | none — credit recorded |
+
+<!-- END SOURCES TABLE -->
+
+`python3 tools/curation/sources.py --write` regenerates the ledger from the manifests and
+re-hashes every master. `--check` fails if a file changed, a `ready` entry has nothing behind
+a required field, a derivative has no source or the wrong licence, any audio file in the
+corpus or in `public/audio/` is unaccounted for, or the table above is stale. `--report`
+prints the same information with the outstanding act spelled out per file.
+
+Ten files are `blocked`. Six Commons files carry no song/call label anywhere in their
+metadata (#21), and A21 among them also has no recordist; four Macaulay CC BY assets have no
+published licence version (#19). Nothing else in the corpus needs a human before use.
+
 ## 2. What the recordings contain
 
-This is the thing the provisional record said it could not establish without
-ears. It is now mostly established *without* ears, because the Commons mirrors of
-Xeno-canto files carry the recordist's own `Type:` field, and the un-mirrored ones
-state the context in a `Remarks` line:
+This is the thing the provisional record said it could not establish without ears. It is
+now established *without* ears for sixteen of the twenty-two recordings, because the Commons
+mirrors of Xeno-canto files carry the recordist's own `Type:` field — sometimes on a second
+mirror of the same recording rather than the audition copy. The other six (A01–A04, A21,
+A22) carry no `Type:` anywhere, so the ledger marks them `blocked` and no song or call claim
+may cite them. A remark line is quoted below where one exists, but a remark is not a label:
 
 | # | len | licence | XC type | recordist | recordist's own account | phrases | bursts/min |
 |---|---|---|---|---|---|---|---|
@@ -75,9 +228,10 @@ state the context in a `Remarks` line:
 `~/.hermes/skills/media/audio-corpus-curation/scripts/measure_cadence.py`
 (25 ms frames, threshold at 35 % of the file's own dynamic range, gaps under
 120 ms merged, bursts under 60 ms discarded), reported over the *active span*.
-**The counter is type-blind**: it counts call notes as happily as song phrases,
-which is why A05 (a call) shows 70/min and A22 (a call) shows 10/min. It
-measures a rhythm, not a behaviour.
+**The counter is retired from the pipeline.** It is kept here as the record of what it
+measured and why each figure was withdrawn; no step in curation or in the game uses it
+now. Classification comes from the source's label, and BirdNET is the last species
+check before a file is usable.
 
 Coverage now available, by the recordists' own labels:
 
@@ -121,10 +275,10 @@ The shape of the day, from the literature:
   response to the moment: in Seger et al. (2011), "neither song length nor rate
   was related to noise level" for robins.
 
-That converts one placeholder into data: `cadence.dusk` can move from a declared
-20/min to a **measured 43.0/min** (single recording, one bird, mixed call and
-song, so the figure is an upper bound on song alone). Morning and midday have a
-documented *shape* but still no rate; they stay declared simplifications.
+That gives dusk a documented *shape* but not a rate. The record carries 43/min as a
+**declared simplification** (single recording, one bird, mixed call and song, so it
+cannot be a song count). The old 20/min was no better; what changed is that the shape
+is now sourced. Morning and midday stay declared simplifications for the same reason.
 
 ## 4. Repertoire — the number the record was missing
 
@@ -187,43 +341,38 @@ does not.
 1. **What each file sounds like.** Partly answered by the 2026-11-22 audition.
    A09 is one prominent bird with other robins audible behind it; A10 carries a
    blackbird as well as the robin, so its buzz is not attributable to the robin;
-   A08 carries a cardinal and a red-winged blackbird. Still open: A04, the source
-   of the shipped clip, which no one has heard — and whose description says
-   "Robins", plural, exactly the multi-individual caveat already in the record.
+   A08 carries a cardinal and a red-winged blackbird. A04 is withdrawn: its first
+   33 s is Hermit Thrush, so it cannot back a robin claim.
 2. **Call names.** Nothing yet. A06 has a call under a wash of white noise and
    A19 a robin under a blue jay; neither produced a name, and no source read
    gives a taxonomy (ground-predator alarm, nest threat, flight call) with the
    names a birder uses. `calls[]` stays empty.
 3. **Morning and midday rates.** Shape sourced, magnitude not.
 4. **BNA.** The authoritative account has not been read.
-5. **Whether the measured dawn rate belongs to dawn.** A09's own recordist says
-   "before dawn", which is better evidence than A04's, but a recording's
-   timestamp is not a study design.
+5. **Dawn attribution.** The record uses Johnson's pre-dawn males rather than a
+   timestamp on one Newfoundland recording.
 
 ## 8. Recommendation
 
-Ship a robin with a defensible spread rather than one loop, accepting CC BY-SA
-for most of it, and keep the PD McGrane clip as the attribution-light fallback:
+Ship the A20 opening as the robin's voice. The PD McGrane fallback is gone: its
+first 33 s is Hermit Thrush.
 
 | Role | Recording | Why |
 |---|---|---|
-| dawn carol | **A20, first 10 s** (CC BY-SA 4.0) | shipped 2026-11-22: auditioned as "very robin focused" for the opening 10 s; BirdNET 0.85 in every window; 50.1/min rendered vs 51.2/min file average. Dawn is anchored here |
+| dawn carol | **A20, first 10 s** (CC BY-SA 4.0) | shipped 2026-11-22: auditioned as "very robin focused" for the opening 10 s; BirdNET 0.71–0.85 in every complete window; the recordist labels the file "adult, male, song". The record's dawn figure is Johnson's published floor, not a count from this clip |
 | dawn corroboration | A09 (CC BY-SA 3.0) | auditioned: one prominent bird with a chorus behind it, 7 min of material; 71.5/min is a chorus upper bound |
 | hisselly song | A10 (CC BY-SA 3.0) | **blocked** — auditioned and a blackbird is in the file |
 | whisper song | A15 (CC BY-SA) | A08 **rejected** (cardinal + red-winged blackbird); A15 still unheard |
 | second dawn male | A20 (CC BY-SA 4.0) | **approved 2026-11-22** — robin only, different region |
 | call: contact/flight | A06 (CC BY-SA 3.0) | **not shippable** — a call, but white noise throughout; unnamed |
 | call: flock/agitation | A19 or A14 (CC BY-SA 4.0) | A19 has a blue jay over the robin; A14 still unheard |
-| PD fallback | A04 (PD) | already shipped; still unauditioned |
+| PD fallback | A04 (PD) | **withdrawn** — first 33 s is Hermit Thrush; cannot ship |
 
 Do not ship A01/A02/A03 — 1.5–9 s with no stated context is not enough to justify
 a label. Do not use A11 for cadence — 200 birds.
 
-Candidate 12 s clips, cut so that the *rendered* audio measures at its parent
-recording's average density (an earlier cut chosen by source-space window counts
-measured 75–80/min once rendered — the "do not ship the densest window" trap — so
-windows are now chosen by rendering each candidate through the shipping pipeline
-and measuring the result):
+The 12 s candidates below were cut by measuring rendered density. Counting is
+retired, so they are kept as audition history, not as shipping candidates.
 
 ```
 candidates/robin-dawn-xc128490-from344.0s-12s.mp3      14 bursts = 71.6/min  (parent 71.5)

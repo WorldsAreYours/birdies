@@ -17,11 +17,12 @@ import subprocess
 import sys
 import tempfile
 
+import render as renderer
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 MEASURE = os.path.expanduser(
     "~/.hermes/skills/media/audio-corpus-curation/scripts/measure_cadence.py"
 )
-LOUDNORM = "loudnorm=I=-18:TP=-1.5:LRA=11"
 
 
 def duration_of(path):
@@ -31,15 +32,6 @@ def duration_of(path):
         capture_output=True, text=True, check=True,
     ).stdout.strip()
     return float(out)
-
-
-def render(src, dst, start, length):
-    subprocess.run(
-        ["ffmpeg", "-v", "error", "-y", "-ss", str(start), "-i", src, "-t", str(length),
-         "-af", LOUDNORM, "-ac", "1", "-ar", "32000",
-         "-codec:a", "libmp3lame", "-b:a", "96k", dst],
-        check=True,
-    )
 
 
 def measure(path):
@@ -70,7 +62,7 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         for start in starts:
             tmp_clip = os.path.join(tmp, "candidate.mp3")
-            render(args.source, tmp_clip, start, args.length)
+            renderer.render(args.source, tmp_clip, start, args.length)
             m = measure(tmp_clip)
             if m:
                 rows.append((start, *m))
@@ -87,7 +79,7 @@ def main():
         mark = "  <- chosen" if start == best[0] else ""
         print(f"  {start:6.1f}  {phrases:7d}  {rate:9.1f}  {span:5.1f}s{mark}")
 
-    render(args.source, args.out, best[0], args.length)
+    renderer.render(args.source, args.out, best[0], args.length)
     print(f"\nwrote {args.out} (from {best[0]}s, {best[1]} phrases, {best[2]}/min)")
 
 

@@ -1,0 +1,1979 @@
+{
+ "version": 1,
+ "generated": "2026-11-23",
+ "why": "A recording is usable only if the file we hold can be traced to a source page that names the recordist, the licence, and what the archive labels the sound. A clip that ships also carries a BirdNET species verdict bound to its digest. The masters live outside git (~/projects/birdie-curation, ~75 MB); this ledger is the versioned part, so the provenance cannot be lost with the disk. It is not a licence grant: the grant is the deed at the source page, and `verification.needs` lists what has not been checked. A file with a permitted licence but an unverified field is `blocked`, not usable.",
+ "policy": "web/src/species/licence-policy.json",
+ "corpusRoot": "/home/hermes/projects/birdie-curation/american-robin",
+ "rebuild": "python3 tools/curation/sources.py --write",
+ "states": {
+  "ready": "permitted licence, the archive's or recordist's song/call label, and recordist, source page, licence version (or PD basis) and digest are recorded",
+  "blocked": "permitted licence family, but a named field is missing; the file cannot be used until it is supplied",
+  "refused": "not permitted, unrecognised, or published without a mapping; unusable short of written permission"
+ },
+ "entries": [
+  {
+   "id": "a01",
+   "auditionId": "A01",
+   "recordingId": "american-robin-turdus-migratorius-guelph-ontario-mp3",
+   "library": "Wikimedia Commons",
+   "title": "File:American Robin (Turdus migratorius) - Guelph, Ontario.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:American_Robin_(Turdus_migratorius)_-_Guelph,_Ontario.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/12/American_Robin_%28Turdus_migratorius%29_-_Guelph%2C_Ontario.mp3",
+   "recordist": "Ryan Hodnett",
+   "label": null,
+   "licence": {
+    "asPublished": "CC BY-SA 4.0",
+    "id": "cc-by-sa-4.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/4.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "blocked",
+   "reason": null,
+   "verification": {
+    "sha1": "e4641524da9977e935149b3070a9d18c7761514a",
+    "sha1MatchesPublished": true,
+    "sha256": "834e714fb054fc11071f61e8c42f68d311728c46e5ee1d273288808385d9f72e",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": [
+     "record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite"
+    ]
+   },
+   "storage": {
+    "master": "source/American_Robin_(Turdus_migratorius)_-_Guelph,_Ontario.mp3",
+    "bytes": 27484,
+    "durationSeconds": 1.51
+   }
+  },
+  {
+   "id": "a02",
+   "auditionId": "A02",
+   "recordingId": "american-robin-turdus-migratorius-guelph-eramosa-ontario-2020-05-20-mp3",
+   "library": "Wikimedia Commons",
+   "title": "File:American Robin (Turdus migratorius) - Guelph-Eramosa, Ontario 2020-05-20.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:American_Robin_(Turdus_migratorius)_-_Guelph-Eramosa,_Ontario_2020-05-20.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fc/American_Robin_%28Turdus_migratorius%29_-_Guelph-Eramosa%2C_Ontario_2020-05-20.mp3",
+   "recordist": "Ryan Hodnett",
+   "label": null,
+   "licence": {
+    "asPublished": "CC BY-SA 4.0",
+    "id": "cc-by-sa-4.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/4.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "blocked",
+   "reason": null,
+   "verification": {
+    "sha1": "b118ef91aadcb09d999e60f93a4766c9dedeb0af",
+    "sha1MatchesPublished": true,
+    "sha256": "e6fec4bf0fe0ca60caf984cc2515c00e2c2d2cdebf8a1bbe6502a33f9c635d20",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": [
+     "record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite"
+    ]
+   },
+   "storage": {
+    "master": "source/American_Robin_(Turdus_migratorius)_-_Guelph-Eramosa,_Ontario_2020-05-20.mp3",
+    "bytes": 130552,
+    "durationSeconds": 9.18
+   }
+  },
+  {
+   "id": "a03",
+   "auditionId": "A03",
+   "recordingId": "american-robin-yellowstone-national-park-ogg",
+   "library": "Wikimedia Commons",
+   "title": "File:American Robin Yellowstone National Park.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:American_Robin_Yellowstone_National_Park.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3d/American_Robin_Yellowstone_National_Park.ogg",
+   "recordist": "National Park Service",
+   "label": null,
+   "licence": {
+    "asPublished": "Public domain",
+    "id": "public-domain",
+    "family": "public-domain",
+    "deed": null,
+    "versionVerified": null,
+    "howVerified": "work of the US National Park Service (US federal government, public domain)"
+   },
+   "status": "blocked",
+   "reason": null,
+   "verification": {
+    "sha1": "fb7f6bfbf447ffbb0f5fadb088aa574148571a30",
+    "sha1MatchesPublished": true,
+    "sha256": "fef47c8ac12f879335d67a96dbb8752ebae49a2fbeb6927efdd5a00efb8c27d2",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": [
+     "record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite"
+    ]
+   },
+   "storage": {
+    "master": "source/American_Robin_Yellowstone_National_Park.ogg",
+    "bytes": 108540,
+    "durationSeconds": 3.47
+   }
+  },
+  {
+   "id": "a04",
+   "auditionId": "A04",
+   "recordingId": "american-robin-ogg",
+   "library": "Wikimedia Commons",
+   "title": "File:American Robin.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:American_Robin.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/American_Robin.ogg",
+   "recordist": "G. McGrane",
+   "label": null,
+   "licence": {
+    "asPublished": "Public domain",
+    "id": "public-domain",
+    "family": "public-domain",
+    "deed": null,
+    "versionVerified": null,
+    "howVerified": "released into the public domain by the recordist on the Commons file page"
+   },
+   "status": "blocked",
+   "reason": null,
+   "verification": {
+    "sha1": "371ff2eaa0a92f3987942f0b1af1b205a7b4fa37",
+    "sha1MatchesPublished": true,
+    "sha256": "e3cf54141471fdc91745dd1979abc113157ba60a6e52880a21093c70fe6f0c4d",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": [
+     "record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite"
+    ]
+   },
+   "storage": {
+    "master": "source/American_Robin.ogg",
+    "bytes": 385225,
+    "durationSeconds": 46.16
+   }
+  },
+  {
+   "id": "a05",
+   "auditionId": "A05",
+   "recordingId": "xc107523",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin - XC107523.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_-_XC107523.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Turdus_migratorius_-_American_Robin_-_XC107523.ogg",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "call",
+    "asPublished": "call",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC107523.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "a947861e7b73ade08237325521f94d75c72d249a",
+    "sha1MatchesPublished": true,
+    "sha256": "68d5813e0a04c12a7725e9ebb9b3d6397aeb9486c1965eac47dc28cc57c8fd04",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_-_XC107523.ogg",
+    "bytes": 317346,
+    "durationSeconds": 23.33
+   }
+  },
+  {
+   "id": "a06",
+   "auditionId": "A06",
+   "recordingId": "xc112597",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin - XC112597.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_-_XC112597.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Turdus_migratorius_-_American_Robin_-_XC112597.ogg",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "call",
+    "asPublished": "flight call",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC112597.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "158c91691b796c86511301cfac5d36bbcc7ea1cd",
+    "sha1MatchesPublished": true,
+    "sha256": "96b97c00088fd56fda6457aeaf43951f0410ba6ce6283c7463dee655a59d8b9d",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_-_XC112597.ogg",
+    "bytes": 155586,
+    "durationSeconds": 10.79
+   }
+  },
+  {
+   "id": "a07",
+   "auditionId": "A07",
+   "recordingId": "xc75498",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin - XC75498.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_-_XC75498.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/11/Turdus_migratorius_-_American_Robin_-_XC75498.ogg",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "call",
+    "asPublished": "call",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC75498.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "fb3d69ed975c578b40bcf4a6f45d35e28c7576ef",
+    "sha1MatchesPublished": true,
+    "sha256": "967095bdf80c873022439afb7f132294c2e1ff1d0a882d1a93533228de18547d",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_-_XC75498.ogg",
+    "bytes": 273136,
+    "durationSeconds": 22.77
+   }
+  },
+  {
+   "id": "a08",
+   "auditionId": "A08",
+   "recordingId": "xc75499",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin - XC75499.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_-_XC75499.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/20/Turdus_migratorius_-_American_Robin_-_XC75499.ogg",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "song",
+    "asPublished": "song",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC75499.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "5237cda73be2e1ada6eeb1e6398e6ed3c7a26816",
+    "sha1MatchesPublished": true,
+    "sha256": "1e0eeab69d9dc5cdd5e9f4407a69d6376fba2ca646ea74d6ccef1f6884954bcb",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_-_XC75499.ogg",
+    "bytes": 351873,
+    "durationSeconds": 29.49
+   }
+  },
+  {
+   "id": "a09",
+   "auditionId": "A09",
+   "recordingId": "xc128490",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC128490.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC128490.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/be/Turdus_migratorius_-_American_Robin_XC128490.ogg",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "song",
+    "asPublished": "song",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC128490.ogg"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "f1ea3f7cb2921bf9614b6a5c0290ee36a02f6ea0",
+    "sha1MatchesPublished": true,
+    "sha256": "996d507747750757e5d68fe8b9d41843dd76544df0f117a4af9a124c780d4612",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC128490.ogg",
+    "bytes": 11052361,
+    "durationSeconds": 441.65
+   }
+  },
+  {
+   "id": "a10",
+   "auditionId": "A10",
+   "recordingId": "xc129105",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC129105.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC129105.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Turdus_migratorius_-_American_Robin_XC129105.ogg",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "song",
+    "asPublished": "song",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC129105.ogg"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "9b318693a6da5494e1b8308a6486546f87ab4b42",
+    "sha1MatchesPublished": true,
+    "sha256": "01dcffcf56119fc73494250d1bf57cc59f565e639faed3071c61e35687115253",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC129105.ogg",
+    "bytes": 4042511,
+    "durationSeconds": 154.39
+   }
+  },
+  {
+   "id": "a11",
+   "auditionId": "A11",
+   "recordingId": "xc130246",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC130246.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC130246.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Turdus_migratorius_-_American_Robin_XC130246.ogg",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "song, call",
+    "asPublished": "call, song",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC130246.ogg"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "d8b5ebcef0dc18f95d127d3cb4842848660f9fd1",
+    "sha1MatchesPublished": true,
+    "sha256": "feb61d0366f77c3c3a9a603266031d5025789fb23ebdd4d43d71a71e2b8d0d29",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC130246.ogg",
+    "bytes": 1290362,
+    "durationSeconds": 50.5
+   }
+  },
+  {
+   "id": "a12",
+   "auditionId": "A12",
+   "recordingId": "xc131093",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC131093.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC131093.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Turdus_migratorius_-_American_Robin_XC131093.ogg",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "call",
+    "asPublished": "call",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC131093.ogg"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "dd99d91123aac8537736ddd5477acaf9e0b51c94",
+    "sha1MatchesPublished": true,
+    "sha256": "33aa62e7c9e8e91d5ef977c1821d2aa6fea5e1b54405d3bf00cf0312bd5329ff",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC131093.ogg",
+    "bytes": 3326063,
+    "durationSeconds": 128.5
+   }
+  },
+  {
+   "id": "a13",
+   "auditionId": "A13",
+   "recordingId": "xc132864",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC132864.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC132864.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Turdus_migratorius_-_American_Robin_XC132864.ogg",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "song, call",
+    "asPublished": "call, song",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC132864.ogg"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "500822377ace7cff2265ddbb0bce04f5b6fc65bf",
+    "sha1MatchesPublished": true,
+    "sha256": "98e3e21d6d265a3a1c20f1ce8cbe4818bdf2dd263e1a070447057b3cc5a3dde7",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC132864.ogg",
+    "bytes": 5143003,
+    "durationSeconds": 207.62
+   }
+  },
+  {
+   "id": "a14",
+   "auditionId": "A14",
+   "recordingId": "xc174852",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC174852.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC174852.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/28/Turdus_migratorius_-_American_Robin_XC174852.mp3",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "call",
+    "asPublished": "call",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC174852.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 4.0",
+    "id": "cc-by-sa-4.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/4.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "c3fb2c2a109afb236bcc05c9f9b08a990894f685",
+    "sha1MatchesPublished": true,
+    "sha256": "8ce696169f6daf4af631d97ee84460aecaf8f0888fe080f73e24aaf2b18b9d9b",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC174852.mp3",
+    "bytes": 636396,
+    "durationSeconds": 26.35
+   }
+  },
+  {
+   "id": "a15",
+   "auditionId": "A15",
+   "recordingId": "xc175222",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC175222.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC175222.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/Turdus_migratorius_-_American_Robin_XC175222.mp3",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "song, call",
+    "asPublished": "call, whisper song",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC175222.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 4.0",
+    "id": "cc-by-sa-4.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/4.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "dca961fb5b638bcf0f31c0004262426215cf32b2",
+    "sha1MatchesPublished": true,
+    "sha256": "3ebebdc08125c660e5c9aaa5b2402b5645f1698db1ead07dad6cbc7ede9b9521",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC175222.mp3",
+    "bytes": 3209250,
+    "durationSeconds": 133.55
+   }
+  },
+  {
+   "id": "a16",
+   "auditionId": "A16",
+   "recordingId": "xc254483",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC254483.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC254483.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Turdus_migratorius_-_American_Robin_XC254483.mp3",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "call",
+    "asPublished": "call",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC254483.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 4.0",
+    "id": "cc-by-sa-4.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/4.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "ff1c0d0b9a318d6d1e60d49c615c8f1eb6958c65",
+    "sha1MatchesPublished": true,
+    "sha256": "f9340343447e8c188b9825a088135d68e4d1754af8f8cc23769631a1a1c82418",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC254483.mp3",
+    "bytes": 898841,
+    "durationSeconds": 37.77
+   }
+  },
+  {
+   "id": "a17",
+   "auditionId": "A17",
+   "recordingId": "xc254484",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC254484.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC254484.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Turdus_migratorius_-_American_Robin_XC254484.mp3",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "call",
+    "asPublished": "call",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC254484.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 4.0",
+    "id": "cc-by-sa-4.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/4.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "9a7d11a3564a12691993ba375062411201ccb5b0",
+    "sha1MatchesPublished": true,
+    "sha256": "227ed2a47ed448f9fb29daf9daab1eeb642d7db76327c3b71a9261afd6e5d72e",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC254484.mp3",
+    "bytes": 767705,
+    "durationSeconds": 32.87
+   }
+  },
+  {
+   "id": "a18",
+   "auditionId": "A18",
+   "recordingId": "xc566186",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC566186.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC566186.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Turdus_migratorius_-_American_Robin_XC566186.mp3",
+   "recordist": "radrat",
+   "label": {
+    "verdict": "song",
+    "asPublished": "juvenile, sex uncertain, song",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC566186.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 4.0",
+    "id": "cc-by-sa-4.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/4.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "fd73bf5965f6c60892e6a24d078ad9e4413fe683",
+    "sha1MatchesPublished": true,
+    "sha256": "9c96f95feb809b247e70658fc4efd917df64e5dd8e94560ccf1c2dd527ce3850",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC566186.mp3",
+    "bytes": 545137,
+    "durationSeconds": 33.75
+   }
+  },
+  {
+   "id": "a19",
+   "auditionId": "A19",
+   "recordingId": "xc569292",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC569292.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC569292.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Turdus_migratorius_-_American_Robin_XC569292.mp3",
+   "recordist": "Eric B",
+   "label": {
+    "verdict": "call",
+    "asPublished": "adult, call, male",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC569292.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 4.0",
+    "id": "cc-by-sa-4.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/4.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "e435057c23f287db7eae944a2e2d7f8064df432c",
+    "sha1MatchesPublished": true,
+    "sha256": "59986314c36b0a3ea5a0b3cab93765360b31e35f0142f3352cdfd03cd23a427e",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC569292.mp3",
+    "bytes": 654404,
+    "durationSeconds": 59.01
+   }
+  },
+  {
+   "id": "a20",
+   "auditionId": "A20",
+   "recordingId": "xc570791",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC570791.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC570791.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/16/Turdus_migratorius_-_American_Robin_XC570791.mp3",
+   "recordist": "Doug Hynes",
+   "label": {
+    "verdict": "song",
+    "asPublished": "adult, male, song",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC570791.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 4.0",
+    "id": "cc-by-sa-4.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/4.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "bfa3fd3c973e3cc94321e9e349bff9b76cba0fcf",
+    "sha1MatchesPublished": true,
+    "sha256": "ce85004ba336e224a51e348754e854bab5c3341ccb049e9751ab9a61f1b2abff",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC570791.mp3",
+    "bytes": 1756665,
+    "durationSeconds": 43.78
+   }
+  },
+  {
+   "id": "a21",
+   "auditionId": "A21",
+   "recordingId": "turdus-migratorius-003-ogg",
+   "library": "Wikimedia Commons",
+   "title": "File:Turdus-migratorius-003.ogg",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus-migratorius-003.ogg",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Turdus-migratorius-003.ogg",
+   "recordist": null,
+   "label": null,
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "blocked",
+   "reason": null,
+   "verification": {
+    "sha1": "05a35640b45334dd8af84b63a1aac6dac70460fb",
+    "sha1MatchesPublished": true,
+    "sha256": "4a5f480643c43e3604caee841c05667abb9b30216bc0a911f5af91af86f61b1d",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": [
+     "name the recordist: the file metadata has no recordist; the uploader is Mdf and the template is {{Self|GFDL|Cc-by-sa-3.0-migrated}}, so either find the original Xeno-canto recordist or credit \"Mdf (Wikimedia Commons)\"",
+     "record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite"
+    ]
+   },
+   "storage": {
+    "master": "source/Turdus-migratorius-003.ogg",
+    "bytes": 856737,
+    "durationSeconds": 87.86
+   }
+  },
+  {
+   "id": "a22",
+   "auditionId": "A22",
+   "recordingId": "yellowstone-sound-library-american-robin-001-mp3",
+   "library": "Wikimedia Commons",
+   "title": "File:Yellowstone sound library - American Robin - 001.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Yellowstone_sound_library_-_American_Robin_-_001.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Yellowstone_sound_library_-_American_Robin_-_001.mp3",
+   "recordist": "NPS & MSU Acoustic Atlas/Jennifer Jerrett",
+   "label": null,
+   "licence": {
+    "asPublished": "Public domain",
+    "id": "public-domain",
+    "family": "public-domain",
+    "deed": null,
+    "versionVerified": null,
+    "howVerified": "NPS & MSU Acoustic Atlas recording, published as public domain"
+   },
+   "status": "blocked",
+   "reason": null,
+   "verification": {
+    "sha1": "ae10affc52a6ff0353f97bedced42b57dcf81e63",
+    "sha1MatchesPublished": true,
+    "sha256": "7a2700bbe2233505ccf592e9e06a4b196a0feb4d2d7a4773ed5f2f110696a001",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": [
+     "record the song/call label: neither this file nor another mirror of the same recording carries the recordist's Type: field, so a song or call claim has nothing to cite"
+    ]
+   },
+   "storage": {
+    "master": "source/Yellowstone_sound_library_-_American_Robin_-_001.mp3",
+    "bytes": 598352,
+    "durationSeconds": 36.94
+   }
+  },
+  {
+   "id": "ml100124941",
+   "auditionId": null,
+   "recordingId": "ml100124941",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML100124941",
+   "sourceUrl": "https://macaulaylibrary.org/asset/100124941",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/100124941/mp3",
+   "recordist": "Ian Hearn",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "LICENSE4",
+    "id": null,
+    "family": null,
+    "code": "LICENSE4",
+    "deed": null,
+    "versionVerified": false,
+    "howVerified": null
+   },
+   "status": "refused",
+   "reason": "'LICENSE4' is not a licence the policy recognises",
+   "verification": {
+    "sha1": "3e78d813d9e85a1678dda861419ad62e264b83ed",
+    "sha1MatchesPublished": null,
+    "sha256": "6df5f6ea5dd5f9e4bc806076bad4f8490c061f4f2df092b68bc8fc570e10cd06",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "macaulay/ML100124941.mp3",
+    "bytes": 922368,
+    "durationSeconds": 28.82
+   }
+  },
+  {
+   "id": "ml163452761",
+   "auditionId": null,
+   "recordingId": "ml163452761",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML163452761",
+   "sourceUrl": "https://macaulaylibrary.org/asset/163452761",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/163452761/mp3",
+   "recordist": "Darrell Peterson",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "no_playback",
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "CC0",
+    "id": "cc0",
+    "family": "cc0",
+    "code": "LICENSE10",
+    "deed": null,
+    "versionVerified": true,
+    "howVerified": "Macaulay licence code LICENSE10 = CC0"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "156fa18b7b805e6140675a95fbb89447f3d5679c",
+    "sha1MatchesPublished": null,
+    "sha256": "15b9f56653f7254cc4e66b9ce08cc5d6f74fa7ec2a0e15fab4e5a13ead2b4415",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "macaulay/ML163452761.mp3",
+    "bytes": 3916800,
+    "durationSeconds": 122.4
+   }
+  },
+  {
+   "id": "ml168300",
+   "auditionId": null,
+   "recordingId": "ml168300",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML168300",
+   "sourceUrl": "https://macaulaylibrary.org/asset/168300",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/168300/mp3",
+   "recordist": "Wil Hershberger",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "archive",
+     "no_playback",
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "LICENSE2",
+    "id": null,
+    "family": null,
+    "code": "LICENSE2",
+    "deed": null,
+    "versionVerified": false,
+    "howVerified": null
+   },
+   "status": "refused",
+   "reason": "'LICENSE2' is not a licence the policy recognises",
+   "verification": {
+    "sha1": "831f5cdbbf155452ea0b02051d8c37b51b2e416f",
+    "sha1MatchesPublished": null,
+    "sha256": "da57ed61cc6f96fcb840d220256d6a9ee39f2b9807cb5ebf1b910e388f9fa1bb",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "macaulay/ML168300.mp3",
+    "bytes": 8706048,
+    "durationSeconds": 272.06
+   }
+  },
+  {
+   "id": "ml206448",
+   "auditionId": null,
+   "recordingId": "ml206448",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML206448",
+   "sourceUrl": "https://macaulaylibrary.org/asset/206448",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/206448/mp3",
+   "recordist": "Bob McGuire",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "archive",
+     "no_playback",
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "LICENSE2",
+    "id": null,
+    "family": null,
+    "code": "LICENSE2",
+    "deed": null,
+    "versionVerified": false,
+    "howVerified": null
+   },
+   "status": "refused",
+   "reason": "'LICENSE2' is not a licence the policy recognises",
+   "verification": {
+    "sha1": "0558bdeff870b402b7ad9bcb2704bb2bcee6db07",
+    "sha1MatchesPublished": null,
+    "sha256": "7eaca7e93468e74937307fe4240932ed26661db254a7c9f5bc95c3485b078dd3",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "macaulay/ML206448.mp3",
+    "bytes": 5281536,
+    "durationSeconds": 165.05
+   }
+  },
+  {
+   "id": "ml230039991",
+   "auditionId": null,
+   "recordingId": "ml230039991",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML230039991",
+   "sourceUrl": "https://macaulaylibrary.org/asset/230039991",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/230039991/mp3",
+   "recordist": "Andrew Spencer",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "no_playback",
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "CC BY-NC",
+    "id": null,
+    "family": "cc-by-nc",
+    "code": "LICENSE8",
+    "deed": null,
+    "versionVerified": false,
+    "howVerified": "Macaulay licence code LICENSE8 = CC BY-NC"
+   },
+   "status": "refused",
+   "reason": "'CC BY-NC' is non-commercial",
+   "verification": {
+    "sha1": "dbdf964636ac6038da473bef2fc26b09c40cf2b8",
+    "sha1MatchesPublished": null,
+    "sha256": "197a469aefeb0c086267dd06e6271df8a389b902b90ce4c9dd1e0e1b373c5167",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "macaulay/ML230039991.mp3",
+    "bytes": 4273152,
+    "durationSeconds": 133.54
+   }
+  },
+  {
+   "id": "ml321642131",
+   "auditionId": null,
+   "recordingId": "ml321642131",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML321642131",
+   "sourceUrl": "https://macaulaylibrary.org/asset/321642131",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/321642131/mp3",
+   "recordist": "Taylor Sturm",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "dawn_song",
+     "no_playback",
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "LICENSE4",
+    "id": null,
+    "family": null,
+    "code": "LICENSE4",
+    "deed": null,
+    "versionVerified": false,
+    "howVerified": null
+   },
+   "status": "refused",
+   "reason": "'LICENSE4' is not a licence the policy recognises",
+   "verification": {
+    "sha1": "d48421318dbcc37cd33423ecf122f26ea4a26c4e",
+    "sha1MatchesPublished": null,
+    "sha256": "3be52401599cffa3a86475dcc13e011b644f20a87baeb04bb78a3dfa5670aa2f",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "macaulay/ML321642131.mp3",
+    "bytes": 2317824,
+    "durationSeconds": 72.43
+   }
+  },
+  {
+   "id": "ml550453001",
+   "auditionId": null,
+   "recordingId": "ml550453001",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML550453001",
+   "sourceUrl": "https://macaulaylibrary.org/asset/550453001",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/550453001/mp3",
+   "recordist": "David Liebl",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "CC0",
+    "id": "cc0",
+    "family": "cc0",
+    "code": "LICENSE10",
+    "deed": null,
+    "versionVerified": true,
+    "howVerified": "Macaulay licence code LICENSE10 = CC0"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "430e788b15a034e7e98d1bfbc947c797df94da58",
+    "sha1MatchesPublished": null,
+    "sha256": "de593a8a6da05b62ed39605ea9da6bd521f30910b35be02b4baf0a48440585a5",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "macaulay/ML550453001.mp3",
+    "bytes": 1325568,
+    "durationSeconds": 41.42
+   }
+  },
+  {
+   "id": "ml56579161",
+   "auditionId": null,
+   "recordingId": "ml56579161",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML56579161",
+   "sourceUrl": "https://macaulaylibrary.org/asset/56579161",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/56579161/mp3",
+   "recordist": "Darrell Peterson",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "no_playback",
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "CC0",
+    "id": "cc0",
+    "family": "cc0",
+    "code": "LICENSE10",
+    "deed": null,
+    "versionVerified": true,
+    "howVerified": "Macaulay licence code LICENSE10 = CC0"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "d0bf0b796f5ea9b6b44afcab115d9d694ec155da",
+    "sha1MatchesPublished": null,
+    "sha256": "1ee39fc978f1d222e6be34478f5781d03dbe6796a34b28ece0b1b8cd72d99c79",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "macaulay/ML56579161.mp3",
+    "bytes": 2216448,
+    "durationSeconds": 69.26
+   }
+  },
+  {
+   "id": "ml57543841",
+   "auditionId": null,
+   "recordingId": "ml57543841",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML57543841",
+   "sourceUrl": "https://macaulaylibrary.org/asset/57543841",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/57543841/mp3",
+   "recordist": "David Suddjian",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "no_playback",
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "CC0",
+    "id": "cc0",
+    "family": "cc0",
+    "code": "LICENSE10",
+    "deed": null,
+    "versionVerified": true,
+    "howVerified": "Macaulay licence code LICENSE10 = CC0"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "0a18de0b657fecd824653202267eea994ee66481",
+    "sha1MatchesPublished": null,
+    "sha256": "0ae46a86cc0f4732e2c6aa5767f614f986560cbe49c1ce9208c458e3e40a4feb",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "macaulay/ML57543841.mp3",
+    "bytes": 1115904,
+    "durationSeconds": 34.87
+   }
+  },
+  {
+   "id": "ml618224491",
+   "auditionId": null,
+   "recordingId": "ml618224491",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML618224491",
+   "sourceUrl": "https://macaulaylibrary.org/asset/618224491",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/618224491/mp3",
+   "recordist": "Dan Tallman",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "CC BY",
+    "id": null,
+    "family": "cc-by",
+    "code": "LICENSE5",
+    "deed": null,
+    "versionVerified": false,
+    "howVerified": null
+   },
+   "status": "blocked",
+   "reason": null,
+   "verification": {
+    "sha1": "c579ac8d13c72fce8ad531f328c5fb05d2778503",
+    "sha1MatchesPublished": null,
+    "sha256": "a1d5efa6282b4232ec24de4dfacda42049a1aaf4cc53f1835354e5087a117efc",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": [
+     "record the licence version from a deed or written confirmation: the archive publishes the class (LICENSE5) and never the version, so the attribution cannot name the licence it is made under"
+    ]
+   },
+   "storage": {
+    "master": "macaulay/ML618224491.mp3",
+    "bytes": 1138944,
+    "durationSeconds": 35.59
+   }
+  },
+  {
+   "id": "ml619791726",
+   "auditionId": null,
+   "recordingId": "ml619791726",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML619791726",
+   "sourceUrl": "https://macaulaylibrary.org/asset/619791726",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/619791726/mp3",
+   "recordist": "Mark Oberle",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "CC BY",
+    "id": null,
+    "family": "cc-by",
+    "code": "LICENSE5",
+    "deed": null,
+    "versionVerified": false,
+    "howVerified": null
+   },
+   "status": "blocked",
+   "reason": null,
+   "verification": {
+    "sha1": "aad481b1949565279557cd971526014fa4c4eec8",
+    "sha1MatchesPublished": null,
+    "sha256": "410eb5fbef70a83048f2b34ea76b6946922496604b586e5002916bc641f49f66",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": [
+     "record the licence version from a deed or written confirmation: the archive publishes the class (LICENSE5) and never the version, so the attribution cannot name the licence it is made under"
+    ]
+   },
+   "storage": {
+    "master": "macaulay/ML619791726.mp3",
+    "bytes": 384000,
+    "durationSeconds": 12.0
+   }
+  },
+  {
+   "id": "ml631573070",
+   "auditionId": null,
+   "recordingId": "ml631573070",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML631573070",
+   "sourceUrl": "https://macaulaylibrary.org/asset/631573070",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/631573070/mp3",
+   "recordist": "James (Jim) Holmes",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "no_playback",
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "CC BY",
+    "id": null,
+    "family": "cc-by",
+    "code": "LICENSE5",
+    "deed": null,
+    "versionVerified": false,
+    "howVerified": null
+   },
+   "status": "blocked",
+   "reason": null,
+   "verification": {
+    "sha1": "185a1567a6a78ce8baac563017a85fe38e390d8f",
+    "sha1MatchesPublished": null,
+    "sha256": "5a96b945e59692933ff6d7cd799d721b82de36325a8c6667b48fb15e0ca5e05e",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": [
+     "record the licence version from a deed or written confirmation: the archive publishes the class (LICENSE5) and never the version, so the attribution cannot name the licence it is made under"
+    ]
+   },
+   "storage": {
+    "master": "macaulay/ML631573070.mp3",
+    "bytes": 753408,
+    "durationSeconds": 23.54
+   }
+  },
+  {
+   "id": "ml635770519",
+   "auditionId": null,
+   "recordingId": "ml635770519",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML635770519",
+   "sourceUrl": "https://macaulaylibrary.org/asset/635770519",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/635770519/mp3",
+   "recordist": "James (Jim) Holmes",
+   "label": {
+    "verdict": "song",
+    "asPublished": [
+     "no_playback",
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "CC BY",
+    "id": null,
+    "family": "cc-by",
+    "code": "LICENSE5",
+    "deed": null,
+    "versionVerified": false,
+    "howVerified": null
+   },
+   "status": "blocked",
+   "reason": null,
+   "verification": {
+    "sha1": "87821d35525bc75702263071e90ec0caf75149e4",
+    "sha1MatchesPublished": null,
+    "sha256": "6625fec7767efcfc12c8674a0d14a97baa986a29965ee918be02395638a723da",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": [
+     "record the licence version from a deed or written confirmation: the archive publishes the class (LICENSE5) and never the version, so the attribution cannot name the licence it is made under"
+    ]
+   },
+   "storage": {
+    "master": "macaulay/ML635770519.mp3",
+    "bytes": 678912,
+    "durationSeconds": 21.22
+   }
+  },
+  {
+   "id": "ml94261",
+   "auditionId": null,
+   "recordingId": "ml94261",
+   "library": "Macaulay Library (Cornell Lab of Ornithology)",
+   "title": "ML94261",
+   "sourceUrl": "https://macaulaylibrary.org/asset/94261",
+   "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/94261/mp3",
+   "recordist": "Wil Hershberger",
+   "label": {
+    "verdict": "call, song",
+    "asPublished": [
+     "archive",
+     "call",
+     "dawn_song",
+     "no_playback",
+     "song"
+    ],
+    "basis": "archive-tag",
+    "source": "Macaulay asset tags"
+   },
+   "licence": {
+    "asPublished": "LICENSE2",
+    "id": null,
+    "family": null,
+    "code": "LICENSE2",
+    "deed": null,
+    "versionVerified": false,
+    "howVerified": null
+   },
+   "status": "refused",
+   "reason": "'LICENSE2' is not a licence the policy recognises",
+   "verification": {
+    "sha1": "7bfe04203a0ea7243f252f8d56d53605477ce101",
+    "sha1MatchesPublished": null,
+    "sha256": "8a64a95980ddee62c29e598d1fb0ac9d1f7d8b4e8b0ba1285be29a0429c3587d",
+    "hashBasis": "first download on this host (the archive publishes no digest)",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "macaulay/ML94261.mp3",
+    "bytes": 5547264,
+    "durationSeconds": 173.35
+   }
+  },
+  {
+   "id": "turdus-migratorius-american-robin-xc107523",
+   "auditionId": null,
+   "recordingId": "xc107523",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC107523.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC107523.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Turdus_migratorius_-_American_Robin_XC107523.mp3",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "call",
+    "asPublished": "call",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC107523.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "2564126f0287101583a3dab0a1980a7cc5905ee8",
+    "sha1MatchesPublished": true,
+    "sha256": "77c6dd816cad2087a8e327b38cb9c2ce7082011f58939d54d148aafd8ec6d533",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC107523.mp3",
+    "bytes": 377948,
+    "durationSeconds": 23.37
+   }
+  },
+  {
+   "id": "turdus-migratorius-american-robin-xc112597",
+   "auditionId": null,
+   "recordingId": "xc112597",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC112597.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC112597.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Turdus_migratorius_-_American_Robin_XC112597.mp3",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "call",
+    "asPublished": "flight call",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC112597.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "c2e0fa74f64d41e90841c96b85a3535f4bb1c1e7",
+    "sha1MatchesPublished": true,
+    "sha256": "40d76fad3540df6836252304ddeee2cdcb94d8fdaf851b8ee0164cc2763ad07d",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC112597.mp3",
+    "bytes": 177306,
+    "durationSeconds": 10.83
+   }
+  },
+  {
+   "id": "turdus-migratorius-american-robin-xc75498",
+   "auditionId": null,
+   "recordingId": "xc75498",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC75498.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC75498.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Turdus_migratorius_-_American_Robin_XC75498.mp3",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "call",
+    "asPublished": "call",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC75498.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "ab81ac3fb2bd2e6327f8abbc78c23f2a26764a1a",
+    "sha1MatchesPublished": true,
+    "sha256": "bf91163e2fecc2bdcb9f2185db5ca4db995d5634d589eb69edf7b9bcfa79e032",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC75498.mp3",
+    "bytes": 370047,
+    "durationSeconds": 22.8
+   }
+  },
+  {
+   "id": "turdus-migratorius-american-robin-xc75499",
+   "auditionId": null,
+   "recordingId": "xc75499",
+   "library": "Wikimedia Commons (Xeno-canto mirror)",
+   "title": "File:Turdus migratorius - American Robin XC75499.mp3",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turdus_migratorius_-_American_Robin_XC75499.mp3",
+   "fileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Turdus_migratorius_-_American_Robin_XC75499.mp3",
+   "recordist": "Jonathon Jongsma",
+   "label": {
+    "verdict": "song",
+    "asPublished": "song",
+    "basis": "recordist-type",
+    "source": "Commons extmetadata Type field on File:Turdus migratorius - American Robin XC75499.mp3"
+   },
+   "licence": {
+    "asPublished": "CC BY-SA 3.0",
+    "id": "cc-by-sa-3.0",
+    "family": "cc-by-sa",
+    "deed": "https://creativecommons.org/licenses/by-sa/3.0",
+    "versionVerified": true,
+    "howVerified": "versioned deed URL in the Commons file metadata"
+   },
+   "status": "ready",
+   "reason": null,
+   "verification": {
+    "sha1": "5793f50994119706ffc1014d60b11d4f36cdf3be",
+    "sha1MatchesPublished": true,
+    "sha256": "e1245c4ee75581cf3c87b46ca238d57dd815489d6d1cdaf0f02c3226e0e63a21",
+    "hashBasis": "published SHA1 matched",
+    "checkedOn": "2026-11-23",
+    "needs": []
+   },
+   "storage": {
+    "master": "source/Turdus_migratorius_-_American_Robin_XC75499.mp3",
+    "bytes": 477962,
+    "durationSeconds": 29.54
+   }
+  }
+ ],
+ "derivatives": [
+  {
+   "id": "A01",
+   "kind": "audition-cut",
+   "sourceId": "a01",
+   "licence": "cc-by-sa-4.0",
+   "storage": {
+    "path": "audition/A01-american_robin_(turdus_migratorius)_-_guelph,_ontario.mp3",
+    "bytes": 18637,
+    "fromSeconds": 0.0,
+    "durationSeconds": 1.51
+   },
+   "sha256": "c7d34fbd27accc1521518133ad64f2203b60f88118880173467f3c124fdf8902"
+  },
+  {
+   "id": "A02",
+   "kind": "audition-cut",
+   "sourceId": "a02",
+   "licence": "cc-by-sa-4.0",
+   "storage": {
+    "path": "audition/A02-american_robin_(turdus_migratorius)_-_guelph-eramosa,_ontario_2020-05-20.mp3",
+    "bytes": 110653,
+    "fromSeconds": 0.0,
+    "durationSeconds": 9.18
+   },
+   "sha256": "8aea511addbbcfb0edb4eedc67a4e8a81a73a7396e31f03d160d4c2873a9ca02"
+  },
+  {
+   "id": "A03",
+   "kind": "audition-cut",
+   "sourceId": "a03",
+   "licence": "public-domain",
+   "storage": {
+    "path": "audition/A03-american_robin_yellowstone_national_park.mp3",
+    "bytes": 42813,
+    "fromSeconds": 0.0,
+    "durationSeconds": 3.47
+   },
+   "sha256": "2942e7fcd75849c80596d487f294b89c786904710e53cb355a46f72767fd54f7"
+  },
+  {
+   "id": "A04",
+   "kind": "audition-cut",
+   "sourceId": "a04",
+   "licence": "public-domain",
+   "storage": {
+    "path": "audition/A04-american_robin.mp3",
+    "bytes": 555165,
+    "fromSeconds": 0.0,
+    "durationSeconds": 46.16
+   },
+   "sha256": "686dff829d0a87b0240b6a0128812634c2a685f34aabcdd41592d548c2e7a7c4"
+  },
+  {
+   "id": "A05",
+   "kind": "audition-cut",
+   "sourceId": "a05",
+   "licence": "cc-by-sa-3.0",
+   "storage": {
+    "path": "audition/A05-xc107523.mp3",
+    "bytes": 280845,
+    "fromSeconds": 0.0,
+    "durationSeconds": 23.33
+   },
+   "sha256": "1f6bb8be3ac508fc7c40168cd74aaeb2cb7b02a5c23e1d3a289992f120a8bfac"
+  },
+  {
+   "id": "A06",
+   "kind": "audition-cut",
+   "sourceId": "a06",
+   "licence": "cc-by-sa-3.0",
+   "storage": {
+    "path": "audition/A06-xc112597.mp3",
+    "bytes": 130509,
+    "fromSeconds": 0.0,
+    "durationSeconds": 10.79
+   },
+   "sha256": "08e72617267427ba479b867b43e865ab7b84fee42d068c11bc9355457a36b52e"
+  },
+  {
+   "id": "A07",
+   "kind": "audition-cut",
+   "sourceId": "a07",
+   "licence": "cc-by-sa-3.0",
+   "storage": {
+    "path": "audition/A07-xc75498.mp3",
+    "bytes": 274365,
+    "fromSeconds": 0.0,
+    "durationSeconds": 22.77
+   },
+   "sha256": "e97e5467162cac7abdcf58fb427bf07dac089658fc94d5bec02327fb3ceae351"
+  },
+  {
+   "id": "A08",
+   "kind": "audition-cut",
+   "sourceId": "a08",
+   "licence": "cc-by-sa-3.0",
+   "storage": {
+    "path": "audition/A08-xc75499.mp3",
+    "bytes": 355149,
+    "fromSeconds": 0.0,
+    "durationSeconds": 29.49
+   },
+   "sha256": "0c327c7791dbb424c4a1dd36d3b39fb7ecaab5bfd6295df45ebb500f3b52f434"
+  },
+  {
+   "id": "A09",
+   "kind": "audition-cut",
+   "sourceId": "a09",
+   "licence": "cc-by-sa-3.0",
+   "storage": {
+    "path": "audition/A09-xc128490.mp3",
+    "bytes": 721053,
+    "fromSeconds": 110.4,
+    "durationSeconds": 60
+   },
+   "sha256": "d7eecccce5edc89b27e14e176418e9d401245ed7e59b3bf3038bb129b05f3eda"
+  },
+  {
+   "id": "A10",
+   "kind": "audition-cut",
+   "sourceId": "a10",
+   "licence": "cc-by-sa-3.0",
+   "storage": {
+    "path": "audition/A10-xc129105.mp3",
+    "bytes": 721053,
+    "fromSeconds": 38.6,
+    "durationSeconds": 60
+   },
+   "sha256": "58ac35e1f9bc26a01a071f6659b90af4b7b35f134a0a23dedca3c5d04ba3977a"
+  },
+  {
+   "id": "A11",
+   "kind": "audition-cut",
+   "sourceId": "a11",
+   "licence": "cc-by-sa-3.0",
+   "storage": {
+    "path": "audition/A11-xc130246.mp3",
+    "bytes": 607005,
+    "fromSeconds": 0.0,
+    "durationSeconds": 50.5
+   },
+   "sha256": "d874905d5e90d56d528aa3708f19f29a7963803152a6703af3b2e07cf0872ce1"
+  },
+  {
+   "id": "A12",
+   "kind": "audition-cut",
+   "sourceId": "a12",
+   "licence": "cc-by-sa-3.0",
+   "storage": {
+    "path": "audition/A12-xc131093.mp3",
+    "bytes": 721053,
+    "fromSeconds": 32.1,
+    "durationSeconds": 60
+   },
+   "sha256": "4263fe7e209c97ba534542da601e9e5b8e20b902245225469ac4c73abc3b08a9"
+  },
+  {
+   "id": "A13",
+   "kind": "audition-cut",
+   "sourceId": "a13",
+   "licence": "cc-by-sa-3.0",
+   "storage": {
+    "path": "audition/A13-xc132864.mp3",
+    "bytes": 721053,
+    "fromSeconds": 51.9,
+    "durationSeconds": 60
+   },
+   "sha256": "c5129736c1593f61bad7f338371825cba23fc814dea1a60004f248cf4bc86abd"
+  },
+  {
+   "id": "A14",
+   "kind": "audition-cut",
+   "sourceId": "a14",
+   "licence": "cc-by-sa-4.0",
+   "storage": {
+    "path": "audition/A14-xc174852.mp3",
+    "bytes": 317487,
+    "fromSeconds": 0.0,
+    "durationSeconds": 26.35
+   },
+   "sha256": "a563e4333bc494fd2e36f8a7904c78de1249ba32e8a67a62d1b01a0ee7a4de34"
+  },
+  {
+   "id": "A15",
+   "kind": "audition-cut",
+   "sourceId": "a15",
+   "licence": "cc-by-sa-4.0",
+   "storage": {
+    "path": "audition/A15-xc175222.mp3",
+    "bytes": 721701,
+    "fromSeconds": 33.4,
+    "durationSeconds": 60
+   },
+   "sha256": "2c226b8d3115d3b036d8412d1f54353dbd24ad08625f7dca3ea94ff49cf9c135"
+  },
+  {
+   "id": "A16",
+   "kind": "audition-cut",
+   "sourceId": "a16",
+   "licence": "cc-by-sa-4.0",
+   "storage": {
+    "path": "audition/A16-xc254483.mp3",
+    "bytes": 476156,
+    "fromSeconds": 0.0,
+    "durationSeconds": 37.77
+   },
+   "sha256": "dccaa603ddfcdd2930862a83e6e76b85d8de045824aa446be830efe474106a5b"
+  },
+  {
+   "id": "A17",
+   "kind": "audition-cut",
+   "sourceId": "a17",
+   "licence": "cc-by-sa-4.0",
+   "storage": {
+    "path": "audition/A17-xc254484.mp3",
+    "bytes": 411788,
+    "fromSeconds": 0.0,
+    "durationSeconds": 32.87
+   },
+   "sha256": "e8acd05de4f81bebe7c689e9e748740204a2e878d4aaf099e5eb7ad7b40a2a8e"
+  },
+  {
+   "id": "A18",
+   "kind": "audition-cut",
+   "sourceId": "a18",
+   "licence": "cc-by-sa-4.0",
+   "storage": {
+    "path": "audition/A18-xc566186.mp3",
+    "bytes": 406083,
+    "fromSeconds": 0.0,
+    "durationSeconds": 33.75
+   },
+   "sha256": "002a960c0b67dcb98115c1b657f090defd66b97e8ce76fab5991e8f7476362cc"
+  },
+  {
+   "id": "A19",
+   "kind": "audition-cut",
+   "sourceId": "a19",
+   "licence": "cc-by-sa-4.0",
+   "storage": {
+    "path": "audition/A19-xc569292.mp3",
+    "bytes": 709156,
+    "fromSeconds": 0.0,
+    "durationSeconds": 59.01
+   },
+   "sha256": "e7f26368b35783f8daa6cb129b310d8cb62cfad59160e73a494bffac4567aa24"
+  },
+  {
+   "id": "A20",
+   "kind": "audition-cut",
+   "sourceId": "a20",
+   "licence": "cc-by-sa-4.0",
+   "storage": {
+    "path": "audition/A20-xc570791.mp3",
+    "bytes": 526123,
+    "fromSeconds": 0.0,
+    "durationSeconds": 43.78
+   },
+   "sha256": "b352326c92646dd42b23ce41f7f15430ef440f3ee3ac53dc58c787794bab4b87"
+  },
+  {
+   "id": "A21",
+   "kind": "audition-cut",
+   "sourceId": "a21",
+   "licence": "cc-by-sa-3.0",
+   "storage": {
+    "path": "audition/A21-turdus-migratorius-003.mp3",
+    "bytes": 721053,
+    "fromSeconds": 22.0,
+    "durationSeconds": 60
+   },
+   "sha256": "9c77719d1f1e940b87cc9aa4427755646404b41d09033e7923998eb226b250a8"
+  },
+  {
+   "id": "A22",
+   "kind": "audition-cut",
+   "sourceId": "a22",
+   "licence": "public-domain",
+   "storage": {
+    "path": "audition/A22-yellowstone_sound_library_-_american_robin_-_001.mp3",
+    "bytes": 449348,
+    "fromSeconds": 0.0,
+    "durationSeconds": 36.94
+   },
+   "sha256": "69e4fd2b9d34ebdb8fa7713a13d47a12f16066a26fcc1b129376b0e748e6b602"
+  },
+  {
+   "id": "robin-dawn-xc128490-from344-0s-12s",
+   "kind": "ear-review-cut",
+   "sourceId": "a09",
+   "licence": "cc-by-sa-3.0",
+   "note": "byte-identical copy handed over in ~/birdie-review for the ear pass; the corpus copy is the one this ledger tracks",
+   "storage": {
+    "path": "candidates/robin-dawn-xc128490-from344.0s-12s.mp3",
+    "bytes": 145197
+   },
+   "sha256": "2b351fa067a77131c215d472745fd67a10dfbe70798dd2214503e340de32000d"
+  },
+  {
+   "id": "robin-dusk-xc132864-from164-0s-12s",
+   "kind": "ear-review-cut",
+   "sourceId": "a13",
+   "licence": "cc-by-sa-3.0",
+   "note": "byte-identical copy handed over in ~/birdie-review for the ear pass; the corpus copy is the one this ledger tracks",
+   "storage": {
+    "path": "candidates/robin-dusk-xc132864-from164.0s-12s.mp3",
+    "bytes": 145197
+   },
+   "sha256": "ee143344c607f55e81eb521842217cd03343070b209c9bc448d1359f831b141a"
+  },
+  {
+   "id": "robin-hisselly-xc129105-from36-0s-12s",
+   "kind": "ear-review-cut",
+   "sourceId": "a10",
+   "licence": "cc-by-sa-3.0",
+   "note": "byte-identical copy handed over in ~/birdie-review for the ear pass; the corpus copy is the one this ledger tracks",
+   "storage": {
+    "path": "candidates/robin-hisselly-xc129105-from36.0s-12s.mp3",
+    "bytes": 145197
+   },
+   "sha256": "17d129ac445d34fad5efd8b27a12f294cc15aaebcd9f56aec7f4f5ec71de3c9d"
+  },
+  {
+   "id": "pillar-carol-01",
+   "kind": "shipped-clip",
+   "sourceId": "a20",
+   "licence": "cc-by-sa-4.0",
+   "storage": {
+    "path": "web/public/audio/american-robin/pillar-carol-01.mp3",
+    "bytes": 121339,
+    "fromSeconds": 0,
+    "durationSeconds": 10.04
+   },
+   "sha256": "c303512bf0a27eaa39f2e10d82ab9fa2fb71b9a8ffa3dc0343c9a94dad7ddecc",
+   "speciesCheck": {
+    "path": "web/public/audio/american-robin/pillar-carol-01.mp3",
+    "sha256": "c303512bf0a27eaa39f2e10d82ab9fa2fb71b9a8ffa3dc0343c9a94dad7ddecc",
+    "expected": "American Robin",
+    "model": "BirdNET 3.0, ONNX fp32 (birdnet 1.5.1)",
+    "minConfidence": 0.1,
+    "windows": 4,
+    "completeWindows": 3,
+    "positiveCompleteWindows": 3,
+    "scores": [
+     0.715,
+     0.849,
+     0.763,
+     0.023
+    ],
+    "verdict": "pass",
+    "checkedOn": "2026-11-23"
+   }
+  }
+ ]
+}

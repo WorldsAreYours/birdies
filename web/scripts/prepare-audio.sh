@@ -8,8 +8,8 @@
 #
 # Each block records: the source URL, the exact SHA-256 of the download we used,
 # the trim points, and why. If a hash does not match, the file changed upstream —
-# stop and re-measure rather than silently shipping different audio, because the
-# cadence figures in species/records/*.ts were counted from the file below.
+# stop and re-run the checks rather than silently shipping different audio, because
+# the record's provenance and the species verdict are tied to these exact bytes.
 
 set -euo pipefail
 
@@ -18,8 +18,20 @@ mkdir -p "$WORK"
 OUT="public/audio/american-robin"
 mkdir -p "$OUT"
 
-fetch() { # url dest expected_sha256
+# Every fetch must declare its licence, and the licence must be permitted by
+# web/src/species/licence-policy.json. This is the last gate before bytes land in
+# the build: NC or ND (or an unrecognised name) stops here and not in review.
+licence_ok() { # licence-name licence-url
+  python3 ../tools/curation/licence.py --classify "$1" --url "$2" || {
+    echo "REFUSED: $1 is not a licence Birdie may ship (see web/src/species/licence-policy.json)" >&2
+    exit 1
+  }
+}
+
+fetch() { # url dest expected_sha256 licence-name licence-url
   local url="$1" dest="$2" want="$3"
+  licence_ok "${4:?licence name required}" "${5:?licence url required}"
+
   if [ ! -f "$dest" ]; then
     echo "fetching $(basename "$dest")"
     curl -sL --fail -o "$dest" "$url"
@@ -49,18 +61,19 @@ fetch() { # url dest expected_sha256
 #
 #    Shipped clip: 0.0 s + 10 s. The opening stretch is one clean robin; the
 #    recording turns mixed after ~10 s (Yellow-rumped Warbler, crows), so the
-#    clip stops there. Rendered through this pipeline the window measures 50.1
-#    phrases/min over an 8.4 s active span against the file's 51.2/min average,
-#    so it sits just below average density rather than at the busiest window.
+#    clip stops there. The recordist labels the file "adult, male, song"; the
+#    record's dawn figure is Johnson's published floor, and no count from this
+#    window is used as a rate. BirdNET re-checked the clipped bytes on 2026-11-23:
+#    American Robin in 3 of 3 complete windows
+#    (docs/curation/species-checks.json).
 # ---------------------------------------------------------------------------
 SRC1="$WORK/Turdus_migratorius_-_American_Robin_XC570791.mp3"
 fetch "https://upload.wikimedia.org/wikipedia/commons/1/16/Turdus_migratorius_-_American_Robin_XC570791.mp3" \
-      "$SRC1" "ce85004ba336e224a51e348754e854bab5c3341ccb049e9751ab9a61f1b2abff"
+      "$SRC1" "ce85004ba336e224a51e348754e854bab5c3341ccb049e9751ab9a61f1b2abff" \
+      "CC BY-SA 4.0" "https://creativecommons.org/licenses/by-sa/4.0/"
 
-ffmpeg -v error -y -ss 0 -t 10 -i "$SRC1" \
-  -ac 1 -ar 32000 -codec:a libmp3lame -b:a 96k \
-  "$OUT/pillar-carol-01.mp3"
-echo "built $OUT/pillar-carol-01.mp3"
+python3 ../tools/curation/render.py "$SRC1" \
+  --out "$OUT/pillar-carol-01.mp3" --start 0 --length 10 --report
 
 # ---------------------------------------------------------------------------
 # Pending audition — located but NOT shipped, because classifying them as song

@@ -87,8 +87,9 @@ this repo still does by hand what it should do from data.
   would replace the floor.
 - **Morning and midday are declared simplifications.** The shape is sourced (Miller 1958,
   Slagsvold 1996); the magnitudes are not. A quantified study closes both.
-- **Dusk is an upper bound.** 43/min counted off a file labelled "call, song", and the
-  audition could not separate song from call. Recorded as "can't say", not as a song rate.
+- **Dusk is a declared simplification.** Miller 1958 documents a lesser evening peak, but
+  the file behind the figure is labelled "call, song" and the audition could not separate
+  the two, so nothing is counted. 43/min is a chosen magnitude, not a measurement.
 - **The shipped clip's song type is unclassified.** One clip ships, called "Song
   (unclassified)". Naming a type is ear work not yet done.
 - **`calls[]` is empty.** Two recordings carry calls — A06 under white noise, A19 under a

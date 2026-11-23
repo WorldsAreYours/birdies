@@ -28,7 +28,7 @@ below are recorded.
 Answered 2026-11-22; kept as the record of what each file was asked to settle.
 Rows are in file order, which is also how the folder sorts.
 
-| File | Listen for | Answer |
+| File | Listen for | Question asked |
 |---|---|---|
 | `A06-xc112597.mp3` (whole, 0:10) | labelled "flight call" | does it match what you'd call a flight call? |
 | `A08-xc75499.mp3` (whole, 0:29) | "whispery song" after the recordist approached. Is the quiet, complex delivery clearly different from A09? | distinct enough to ship as its own variant? |
@@ -76,7 +76,7 @@ Approve, or give me a start time and I will re-cut and re-measure — the point 
 | `A08` | robin, cardinal and red-winged blackbird | rejected as a whisper-song variant — not a solo robin. |
 | `A09` | one prominent robin, other robins audible behind it | one bird for the shape of the delivery, not for the count: 71.5/min is a chorus rate and an upper bound for a single male. |
 | `A10` | blackbird and robin | hissellly attribution unsafe — the buzz may be the blackbird. Variant blocked, and so is its candidate clip. |
-| `A13` | clean and prominent, just one robin | single bird confirmed. Song vs call: **can't say** — not separable by ear on this file, so 43/min stays an upper bound on song rather than a song rate. |
+| `A13` | clean and prominent, just one robin | single bird confirmed. Song vs call: **can't say** — not separable by ear on this file, so 43/min is carried as a declared simplification, not a song count. |
 | `A19` | prominent robin, plus a blue jay | calls are there, mixed with another species. Still no call name. |
 | `A20` | just a robin | approved as the second dawn voice: different region, nothing else in the file. |
 
@@ -98,15 +98,13 @@ Still open:
 
   **Settled.** BirdNET confirms the ear (section below), and on the strength of it
   the shipped clip is now the first 10 s of `A20` — the part the listener called
-  "very robin focused" — with the mixed tail left out. Dawn is re-anchored on the
-  measured single male at 51.2/min. This bullet stays as the record of why.
+  "very robin focused" — with the mixed tail left out. Dawn was later anchored on
+  Johnson's published floor; the 51.2/min count referred to here was withdrawn.
+  This bullet stays as the record of why.
 
-  Candidate replacement: `A20` (Doug Hynes, Newfoundland, robin and nothing else,
-  approved by ear earlier today). A 12 s cut from 6.0 s of A20 measures 10 phrases
-  = 51.1/min against the parent's 51.2, so it sits at average density. It is in the
-  review folder as `A20-candidate-dawn-12s.mp3` and needs an ear before it ships,
-  because "robin only, different region" was approved as a second voice, not
-  necessarily as the first one.
+  A20 was the replacement and shipped as the first dawn voice on 2026-11-22. The
+  12 s cut in the review folder (`A20-candidate-dawn-12s.mp3`) was the approval
+  copy; its 51.1/min measurement belongs to the retired counting, not the claim.
 - **The three candidate clips** — approve, or give a start time.
 
 ## Machine check — BirdNET, 2026-11-22
@@ -125,14 +123,17 @@ the older V2.4 TFLite model — use the official package.
 
 | Recording | Windows | What it says |
 |---|---|---|
-| `A04` (the shipped clip's source) | 16 | Hermit Thrush 0.87–0.93 in 11 of 16 windows, i.e. 0–31 s. American Robin 0.81 in exactly one window, at 42 s. |
-| `pillar-carol-01.mp3` (what ships) | 4 | Hermit Thrush 0.93 in 3 of 4 windows; no robin in the clip at all. |
+| `A04` (withdrawn source) | 16 | Hermit Thrush 0.87–0.93 in 11 of 16 windows, i.e. 0–31 s. American Robin 0.81 in exactly one window, at 42 s. |
+| `pillar-carol-01.mp3` (what ships, rebuilt from A20) | 4 | 2026-11-23, threshold 0.1: American Robin 0.715 / 0.849 / 0.763 in 3 of 3 complete windows; the 1 s tail scores 0.023. The thrush result of 2026-11-22 belongs to the withdrawn A04 clip. |
 | `A09-xc128490` | 20 | American Robin 0.73–0.92 in 20 of 20 windows. |
 | `A20-xc570791` | 15 | American Robin 0.70–0.89 in 14 of 15 windows. |
 | `A20` candidate cut (6.0 s, 12 s) | 4 | American Robin 0.84 in 4 of 4 windows. |
 
 So the ear and the model agree: the "continuous carol" that the 67.7/min figure
-was counted from is a Hermit Thrush, and the shipped clip is a Hermit Thrush.
+was counted from is a Hermit Thrush. That clip was replaced on 2026-11-22 with the
+first 10 s of A20, and the current bytes are checked again in
+`docs/curation/species-checks.json`: American Robin in every complete window
+(0.715–0.849), bound to the file's SHA-256.
 
 What this does **not** establish: BirdNET reports species presence per 3 s
 window, not individuals, and it cannot decide song vs call. Its confidence is
@@ -142,44 +143,35 @@ is not a marginal call. Both readings would have to be wrong in the same
 direction.
 
 Consequences recorded in the species record rather than here: the dawn figure is
-withdrawn in substance, and the shipped clip is marked a placeholder that must
-not ship as robin song. Replacing the audio is a product decision, not a
-curation one, so it waits for an explicit go-ahead.
+Johnson's published floor rather than the withdrawn count, and the shipped clip is
+the A20 opening. Further replacement is a product decision, not a curation one.
 
 ## What the answers changed
 
-- **Dawn stays at 67.7/min from A04.** A09's 71.5/min was corroboration, and the
-  audition demoted it from "one bird" to "one prominent bird in a chorus", so it
-  cannot replace the primary figure.
+- **Dawn moved off the A04 count.** The 67.7/min belongs to a Hermit Thrush, so the
+  record now carries Johnson's published floor; A09's 71.5/min stays a chorus upper
+  bound and corroboration only.
 - **No hissellly variant and no whisper variant.** Both source recordings carry
   other species, so `repertoire.shipped` stays at 1.
 - **A20 is the one new shippable voice** — a second dawn male with a regional
   accent, which is what D3 (multi-regional or not) was waiting on.
-- **Dusk stays at 43/min, as an upper bound.** A13 was auditioned and the listener
-  could not tell song from call, so the file is recorded as "can't say" rather
-  than promoted to a song rate. That is the answer the sheet exists to make
-  acceptable.
+- **Dusk stays at 43/min, as a declared simplification.** A13 was auditioned and the
+  listener could not tell song from call, so the file is recorded as "can't say" and
+  the figure is a design choice rather than a count. That is the answer the sheet
+  exists to make acceptable.
 - **`calls[]` stays empty.** Two recordings carry calls; neither carries a name,
   and a name is what the array needs.
-- **`verified` stays false**, and now for a sharper reason: the recording the
-  shipped clip comes from (A04) has still not been auditioned, so "the audio has
-  not been verified by ear" remains literally true.
+- **`verified` stays false**, for the reasons the record lists: the song type is
+  unclassified, no call is named, and the dawn attribution is presumed from a
+  published floor rather than stated by the recording.
 
-## What I do with your answers
+## What this establishes
 
-- Song/whisper/hisselly confirmed → those become named `songs` variants with
-  `songTypeName`, `recordist`, licence and trim points; `repertoire.shipped`
-  rises; `verified` can move to true only when every remaining claim has a
-  citation.
-- One bird confirmed on A09 → the dawn figure is no longer caveated for
-  multi-individual, and 71.5/min over 7 min 21 s becomes the record's dawn rate
-  instead of 67.7/min over 38 s.
-- A04 confirmed as multi-bird → it should stop being the shipped dawn clip even
-  though it is the licence-cleanest one.
-- Call names → `calls[]` stops being empty.
-
-Anything you cannot tell from a 60 s excerpt is a legitimate "can't say", and
-gets recorded as such rather than averaged into a guess.
+Anything you cannot tell from a 60 s excerpt is a legitimate "can't say", and gets
+recorded as such rather than averaged into a guess. The plan this sheet was written
+against — A09 as the dawn rate, A04 as the shipped clip, 67.7/min as the figure —
+was superseded by the answers above: A09 is a chorus, A04 is a thrush, and the
+record now uses Johnson's published floor with A20 as the shipped voice.
 
 ## Findings (fill in, or tell me and I will)
 

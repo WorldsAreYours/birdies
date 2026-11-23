@@ -231,8 +231,10 @@ says so instead of promoting an element count into the gap.
 ## 7. What this changed in the repo
 
 - `CadenceClaim.songsPerMinute` is now `perMinute` plus `unit`; every figure in
-  `web/src/species/records/american-robin.ts` carries `unit: 'element'`, and the
-  two script counts are `method: 'counted'` rather than `measured`.
+  `web/src/species/records/american-robin.ts` carries `unit: 'element'`. No figure is
+  `counted`: dawn is a published floor, morning, midday and dusk are declared
+  simplifications, and the counter that produced the old counts is retired from the
+  pipeline.
 - `SongVariant` has `clipUnit`; the shipped 10 s clip is `'excerpt'`.
 - `sim/rate.ts` returns the unit with the rate; `sim/simulate.ts` stamps it on each
   event; the validator rejects a clip that would overlap itself at the stated rate.
