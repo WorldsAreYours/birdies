@@ -124,10 +124,12 @@ tools/curation/              Python helpers for fetching/picking Commons audio
   licence is not permitted, and `licences.test.ts` fails the build on a bad licence,
   a missing recordist or unreferenced audio in `public/audio/`, with `prebuild`
   failing if `public/audio/CREDITS.txt` no longer matches the records. Unrecognised
-  licences fail closed. Record recordist and licence per clip. Provenance for **every**
+  licences fail closed. Record recordist and licence per clip, and the archive's or
+  recordist's song/call label per recording; a file with no published label is not usable for a
+  song or call claim, and the ledger marks it `blocked`. Provenance for **every**
   audio file in the corpus (not just the shipped clips) is `docs/curation/audio-sources.json`,
   generated and audited by `tools/curation/sources.py`: `--check` fails on a changed digest,
-  a `ready` file with a missing field, a derivative whose licence diverges from its source,
+  a `ready` file with a missing field (including the label), a derivative whose licence diverges from its source,
   orphan audio, or a stale table in the curation doc. A file with a permitted licence but an
   unverified field is `blocked`, not usable.
 

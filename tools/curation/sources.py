@@ -121,6 +121,50 @@ def family_of(canonical: str | None) -> str | None:
     return m.group(1) if m else canonical
 
 
+# Macaulay's tag vocabulary includes workflow markers as well as vocalisation
+# types. Only these describe what the file is; `no_playback`, `archive` and
+# friends must never be read as a type.
+MACAULAY_TYPE_TAGS = {
+    "song": "song",
+    "dawn_song": "song",
+    "whisper_song": "song",
+    "call": "call",
+    "flight_call": "call",
+    "alarm_call": "call",
+}
+
+
+def macaulay_label(tags: list[str] | None) -> dict | None:
+    if not tags:
+        return None
+    kinds = sorted({MACAULAY_TYPE_TAGS[t] for t in tags if t in MACAULAY_TYPE_TAGS})
+    if not kinds:
+        return None
+    return {
+        "verdict": ", ".join(kinds),
+        "asPublished": list(tags),
+        "basis": "archive-tag",
+        "source": "Macaulay asset tags",
+    }
+
+
+def commons_label(xc_type: str | None, carried_by: str | None = None) -> dict | None:
+    """The recordist's own `Type:` field, normalised to song and/or call."""
+    if not xc_type:
+        return None
+    text = " ".join(xc_type.lower().replace(",", " ").split())
+    kinds = [k for k in ("song", "call") if k in text]
+    if not kinds:
+        return None
+    return {
+        "verdict": ", ".join(kinds),
+        "asPublished": xc_type,
+        "basis": "recordist-type",
+        "source": "Commons extmetadata Type field" + (f" on {carried_by}" if carried_by else ""),
+    }
+
+
+
 def build(corpus: Path) -> dict:
     commons_manifest = json.loads((corpus / "manifest.json").read_text())
     macaulay_manifest = json.loads((corpus / "macaulay" / "manifest.json").read_text())
@@ -128,6 +172,14 @@ def build(corpus: Path) -> dict:
 
     audition_ids = {e["local"]: e["auditionId"] for e in audition if e.get("auditionId")}
     used_ids: set[str] = set()
+
+    # Some XC recordings are mirrored twice: the audition .ogg and a later .mp3
+    # whose Commons description carries the recordist's `Type:` field. The label
+    # belongs to the recording, not the file, so a sibling can carry it for both.
+    commons_labels: dict[str, tuple[str, str]] = {}
+    for e in commons_manifest["files"]:
+        if e.get("xcType"):
+            commons_labels.setdefault(recording_key(e["title"]), (e["xcType"], e["title"]))
 
     def unique(base: str) -> str:
         candidate, n = base, 2
@@ -157,6 +209,14 @@ def build(corpus: Path) -> dict:
         basis = PD_BASIS.get(e["title"]) if canonical == "public-domain" else None
         if canonical == "public-domain" and not basis:
             needs.append("record the public-domain basis from the file page")
+        label_type = commons_labels.get(recording_key(e["title"]))
+        label = commons_label(label_type[0], label_type[1]) if label_type else None
+        if label is None:
+            needs.append(
+                "record the song/call label: neither this file nor another mirror of the "
+                "same recording carries the recordist's Type: field, so a song or call "
+                "claim has nothing to cite"
+            )
         if e.get("sha1") and sha1 != e["sha1"]:
             needs.append("local file does not match the published SHA1 — re-download")
         if not e.get("sourceUrl"):
@@ -184,6 +244,7 @@ def build(corpus: Path) -> dict:
             "sourceUrl": e.get("sourceUrl"),
             "fileUrl": e.get("fileUrl"),
             "recordist": recordist,
+            "label": label,
             "licence": licence_obj,
             "status": "refused" if not allowed else ("blocked" if needs else "ready"),
             "reason": None if allowed else reason,
@@ -218,6 +279,12 @@ def build(corpus: Path) -> dict:
                 allowed, canonical, reason = True, None, None
             version_known = bool(mapped and mapped[2] and canonical in ("cc0", "public-domain"))
             needs: list[str] = []
+            label = macaulay_label(e.get("tags"))
+            if label is None:
+                needs.append(
+                    "record the song/call label: the asset carries no functional tag, so a "
+                    "song or call claim has nothing to cite"
+                )
             if allowed and not version_known:
                 needs.append(
                     "record the licence version from a deed or written confirmation: the "
@@ -238,6 +305,7 @@ def build(corpus: Path) -> dict:
                 "fileUrl": "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/"
                            + e["assetId"].removeprefix("ML") + "/mp3",
                 "recordist": e.get("recordist") or None,
+                "label": label,
                 "licence": {
                     "asPublished": e.get("license"),
                     "id": canonical,
@@ -322,7 +390,8 @@ def build(corpus: Path) -> dict:
         "generated": "2026-11-23",
         "why": (
             "A recording is usable only if the file we hold can be traced to a source page "
-            "that names the recordist and the licence. The masters live outside git "
+            "that names the recordist, the licence, and what the archive labels the sound. "
+            "The masters live outside git "
             "(~/projects/birdie-curation, ~75 MB); this ledger is the versioned part, so the "
             "provenance cannot be lost with the disk. It is not a licence grant: the grant is "
             "the deed at the source page, and `verification.needs` lists what has not been "
@@ -333,7 +402,7 @@ def build(corpus: Path) -> dict:
         "corpusRoot": str(corpus),
         "rebuild": "python3 tools/curation/sources.py --write",
         "states": {
-            "ready": "permitted licence, and recordist, source page, licence version (or PD basis) and digest are recorded",
+            "ready": "permitted licence, the archive's or recordist's song/call label, and recordist, source page, licence version (or PD basis) and digest are recorded",
             "blocked": "permitted licence family, but a named field is missing; the file cannot be used until it is supplied",
             "refused": "not permitted, unrecognised, or published without a mapping; unusable short of written permission",
         },
@@ -343,8 +412,8 @@ def build(corpus: Path) -> dict:
 
 
 def table(ledger: dict) -> str:
-    rows = ["| file | library | licence | status | what is needed before use |",
-            "|---|---|---|---|---|"]
+    rows = ["| file | type | library | licence | status | what is needed before use |",
+            "|---|---|---|---|---|---|"]
     for e in ledger["entries"]:
         lic = e["licence"]["id"] or e["licence"]["asPublished"]
         if e["licence"].get("code") and not e["licence"]["versionVerified"]:
@@ -356,7 +425,12 @@ def table(ledger: dict) -> str:
             need = e.get("reason") or "not permitted"
         label = e["title"] if e["library"].startswith("Macaulay") else (
             e.get("auditionId") or e["title"].replace("File:", ""))
-        rows.append(f"| {label} | {e['library'].split(' (')[0]} | {lic} | {e['status']} | {need} |")
+        kind = "—"
+        if e.get("label"):
+            kind = e["label"]["verdict"] + (
+                " (tag)" if e["label"]["basis"] == "archive-tag" else " (Type)")
+        rows.append(f"| {label} | {kind} | {e['library'].split(' (')[0]} | {lic} | "
+                    f"{e['status']} | {need} |")
     return "\n".join(rows)
 
 
@@ -394,6 +468,8 @@ def check(corpus: Path) -> int:
         if e["status"] == "ready":
             if not e["recordist"]:
                 failures.append(f"{e['id']}: ready but no recordist")
+            if not e.get("label") or not e["label"].get("verdict"):
+                failures.append(f"{e['id']}: ready but no song/call label")
             if not e["sourceUrl"]:
                 failures.append(f"{e['id']}: ready but no source page")
             if e["verification"]["needs"]:
@@ -412,6 +488,15 @@ def check(corpus: Path) -> int:
             continue
         if src["status"] == "refused":
             failures.append(f"{d['id']}: derivative of refused source {src['id']}")
+        # A shipped clip is a song variant in a record. The ledger has to be able to
+        # back that claim with a published label, or the record is asserting a type
+        # the corpus does not document.
+        if d["kind"] == "shipped-clip":
+            verdict = (src.get("label") or {}).get("verdict") or ""
+            if "song" not in verdict:
+                failures.append(
+                    f"{d['id']}: shipped clip's source {src['id']} has no song label"
+                )
         if src["licence"]["id"] and d["licence"] != src["licence"]["id"]:
             if not (src["licence"]["id"].startswith("cc-by-sa")
                     and d["licence"].startswith("cc-by-sa")):

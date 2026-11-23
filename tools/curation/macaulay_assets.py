@@ -155,6 +155,10 @@ def asset_record(html: str, asset_id: str) -> dict:
             "recordist": resolve(arr, value.get("userDisplayName")) or "",
             "equipment": resolve(arr, value.get("recorder")) or "",
             "mediaNotes": resolve(arr, value.get("mediaNotes")) or "",
+            # The archive's functional tags: song, dawn_song, call, flight_call,
+            # no_playback … This is the only published statement of what the file
+            # is, so the ledger records it rather than inferring a type.
+            "tags": resolve(arr, value.get("tags")) or [],
             "obsDate": resolve(arr, value.get("obsDtDisplay")) or "",
             "scientificName": (taxon.get("sciName") if isinstance(taxon, dict) else "") or "",
             "commonName": (taxon.get("comName") if isinstance(taxon, dict) else "") or "",
@@ -225,6 +229,7 @@ def main() -> int:
             "recordist": info["recordist"],
             "equipment": info["equipment"],
             "mediaNotes": info["mediaNotes"],
+            "tags": info["tags"],
             "obsDate": info["obsDate"],
             "scientificName": info["scientificName"],
             "commonName": info["commonName"],
