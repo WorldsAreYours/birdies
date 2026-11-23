@@ -16,12 +16,10 @@ Normalised to matched loudness, mono, 32 kHz — so differences you hear are the
 birds, not the levels. Any player will do; `mpv A09*` or copy the folder to a
 phone.
 
-If you have no shell on the host, the same audio is mirrored on the temporary
-branch `tmp/robin-audition` — open that branch, then "Code → Download ZIP". The
-files that still need an ear are in `tmp/robin-audition/review/`, with the
-questions in `review/README.txt`; the full set stays in `audition/` and
-`candidates/` for pass 2 and provenance. That branch is disposable: delete it once the answers
-below are recorded.
+The temporary branch `tmp/robin-audition` that mirrored the pack has been deleted,
+because the answers below are recorded. Without a shell on the host, the recordings
+can be fetched from the Wikimedia Commons sources listed in
+`docs/curation/audio-sources.json`, and the clips re-cut with `tools/curation/render.py`.
 
 ## Pass 1 — five minutes, seven files
 
@@ -103,8 +101,8 @@ Still open:
   This bullet stays as the record of why.
 
   A20 was the replacement and shipped as the first dawn voice on 2026-11-22. The
-  12 s cut in the review folder (`A20-candidate-dawn-12s.mp3`) was the approval
-  copy; its 51.1/min measurement belongs to the retired counting, not the claim.
+  12 s cut (`A20-candidate-dawn-12s.mp3`, from the review pack since deleted) was the
+  approval copy; its 51.1/min measurement belongs to the retired counting, not the claim.
 - **The three candidate clips** — approve, or give a start time.
 
 ## Machine check — BirdNET, 2026-11-22
